@@ -1,0 +1,2212 @@
+"Variable","Annotation","Modifier","Comment"
+"[stopped]","[]","[PUBLIC]","Optional.empty"
+"[notLaunched]","[]","[PUBLIC]","Optional.empty"
+"[installed]","[]","[PUBLIC]","Optional.empty"
+"[enabled]","[]","[PUBLIC]","Optional.empty"
+"[lastDisableAppCaller]","[]","[PUBLIC]","Optional.empty"
+"[disabledComponents]","[]","[PUBLIC]","Optional.empty"
+"[enabledComponents]","[]","[PUBLIC]","Optional.empty"
+"[ERROR_SERVER = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Server sends error status.
+ */
+]"
+"[ERROR_CLIENT = 5]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Other client side errors.
+ */
+]"
+"[ERROR_SPEECH_TIMEOUT = 6]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * No speech input
+ */
+]"
+"[ERROR_NO_MATCH = 7]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * No recognition result matched.
+ */
+]"
+"[ERROR_RECOGNIZER_BUSY = 8]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * RecognitionService busy.
+ */
+]"
+"[ERROR_INSUFFICIENT_PERMISSIONS = 9]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Insufficient permissions
+ */
+]"
+"[MSG_START = 1]","[]","[PRIVATE, STATIC, FINAL]","Optional[/**
+ * action codes
+ */
+]"
+"[MSG_STOP = 2]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[MSG_CANCEL = 3]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[MSG_CHANGE_LISTENER = 4]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[mService]","[]","[PRIVATE]","Optional[/**
+ * The actual RecognitionService endpoint
+ */
+]"
+"[mConnection]","[]","[PRIVATE]","Optional[/**
+ * The connection to the actual service
+ */
+]"
+"[mContext]","[]","[PRIVATE, FINAL]","Optional[/**
+ * Context with which the manager was created
+ */
+]"
+"[mServiceComponent]","[]","[PRIVATE, FINAL]","Optional[/**
+ * Component to direct service intent to
+ */
+]"
+"[mHandler = new Handler() {
+
+    @Override
+    public void handleMessage(Message msg) {
+        switch(msg.what) {
+            case MSG_START:
+                handleStartListening((Intent) msg.obj);
+                break;
+            case MSG_STOP:
+                handleStopMessage();
+                break;
+            case MSG_CANCEL:
+                handleCancelMessage();
+                break;
+            case MSG_CHANGE_LISTENER:
+                handleChangeListener((RecognitionListener) msg.obj);
+                break;
+        }
+    }
+}]","[]","[PRIVATE]","Optional[/**
+ * Handler that will execute the main tasks
+ */
+]"
+"[mPendingTasks = new LinkedList<Message>()]","[]","[PRIVATE, FINAL]","Optional[/**
+ * Temporary queue, saving the messages until the connection will be established, afterwards,
+ * only mHandler will receive the messages
+ */
+]"
+"[mListener = new InternalListener()]","[]","[PRIVATE, FINAL]","Optional[/**
+ * The Listener that will receive all the callbacks
+ */
+]"
+"[mInternalListener]","[]","[PRIVATE]","Optional.empty"
+"[MSG_BEGINNING_OF_SPEECH = 1]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[MSG_BUFFER_RECEIVED = 2]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[MSG_END_OF_SPEECH = 3]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[MSG_ERROR = 4]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[MSG_READY_FOR_SPEECH = 5]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[MSG_RESULTS = 6]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[MSG_PARTIAL_RESULTS = 7]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[MSG_RMS_CHANGED = 8]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[MSG_ON_EVENT = 9]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[mInternalHandler = new Handler() {
+
+    @Override
+    public void handleMessage(Message msg) {
+        if (mInternalListener == null) {
+            return;
+        }
+        switch(msg.what) {
+            case MSG_BEGINNING_OF_SPEECH:
+                mInternalListener.onBeginningOfSpeech();
+                break;
+            case MSG_BUFFER_RECEIVED:
+                mInternalListener.onBufferReceived((byte[]) msg.obj);
+                break;
+            case MSG_END_OF_SPEECH:
+                mInternalListener.onEndOfSpeech();
+                break;
+            case MSG_ERROR:
+                mInternalListener.onError((Integer) msg.obj);
+                break;
+            case MSG_READY_FOR_SPEECH:
+                mInternalListener.onReadyForSpeech((Bundle) msg.obj);
+                break;
+            case MSG_RESULTS:
+                mInternalListener.onResults((Bundle) msg.obj);
+                break;
+            case MSG_PARTIAL_RESULTS:
+                mInternalListener.onPartialResults((Bundle) msg.obj);
+                break;
+            case MSG_RMS_CHANGED:
+                mInternalListener.onRmsChanged((Float) msg.obj);
+                break;
+            case MSG_ON_EVENT:
+                mInternalListener.onEvent(msg.arg1, (Bundle) msg.obj);
+                break;
+        }
+    }
+}]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[ACCENT_VERTICAL_LINE_ABOVE = '\u02C8']","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[ACCENT_VERTICAL_LINE_BELOW = '\u02CC']","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[ACCENT_GRAVE_LEGACY = '`']","[]","[PRIVATE, STATIC, FINAL]","Optional[/* Legacy dead key display characters used in previous versions of the API.
+     * We still support these characters by mapping them to their non-legacy version. */
+]"
+"[ACCENT_CIRCUMFLEX_LEGACY = '^']","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[ACCENT_TILDE_LEGACY = '~']","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[CHAR_SPACE = ' ']","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[sCombiningToAccent = new SparseIntArray()]","[]","[PRIVATE, STATIC, FINAL]","Optional[/**
+ * Maps Unicode combining diacritical to display-form dead key.
+ */
+]"
+"[sAccentToCombining = new SparseIntArray()]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[sDeadKeyCache = new SparseIntArray()]","[]","[PRIVATE, STATIC, FINAL]","Optional[/**
+ * Maps combinations of (display-form) combining key and second character
+ * to combined output character.
+ * These mappings are derived from the Unicode NFC tables as needed.
+ */
+]"
+"[sDeadKeyBuilder = new StringBuilder()]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[CREATOR = new Parcelable.Creator<KeyCharacterMap>() {
+
+    public KeyCharacterMap createFromParcel(Parcel in) {
+        return new KeyCharacterMap(in);
+    }
+
+    public KeyCharacterMap[] newArray(int size) {
+        return new KeyCharacterMap[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[mPtr]","[]","[PRIVATE]","Optional.empty"
+"[META_LENGTH = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[displayLabel]","[]","[PUBLIC]","Optional[/**
+ * The display label (see {@link #getDisplayLabel}).
+ */
+]"
+"[number]","[]","[PUBLIC]","Optional[/**
+ * The ""number"" value (see {@link #getNumber}).
+ */
+]"
+"[meta = new char[META_LENGTH]]","[]","[PUBLIC]","Optional[/**
+ * The character that will be generated in various meta states
+ * (the same ones used for {@link #get} and defined as
+ * {@link KeyEvent#META_SHIFT_ON} and {@link KeyEvent#META_ALT_ON}).
+ * <table>
+ * <tr><th>Index</th><th align=""left"">Value</th></tr>
+ * <tr><td>0</td><td>no modifiers</td></tr>
+ * <tr><td>1</td><td>caps</td></tr>
+ * <tr><td>2</td><td>alt</td></tr>
+ * <tr><td>3</td><td>caps + alt</td></tr>
+ * </table>
+ */
+]"
+"[MAX_RECYCLED = 10]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[sRecycleLock = new Object()]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[sRecycleBin]","[]","[PRIVATE, STATIC]","Optional.empty"
+"[sRecycledCount]","[]","[PRIVATE, STATIC]","Optional.empty"
+"[next]","[]","[PRIVATE]","Optional.empty"
+"[keyCode]","[]","[PUBLIC]","Optional.empty"
+"[metaState]","[]","[PUBLIC]","Optional.empty"
+"[PAIRING_VARIANT_DISPLAY_PASSKEY = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The user will be prompted to enter the passkey displayed on remote device
+ * This is used for Bluetooth 2.1 pairing.
+ * @hide
+ */
+]"
+"[PAIRING_VARIANT_DISPLAY_PIN = 5]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The user will be prompted to enter the PIN displayed on remote device.
+ * This is used for Bluetooth 2.0 pairing.
+ * @hide
+ */
+]"
+"[PAIRING_VARIANT_OOB_CONSENT = 6]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The user will be prompted to accept or deny the OOB pairing request
+ * @hide
+ */
+]"
+"[EXTRA_UUID = ""android.bluetooth.device.extra.UUID""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used as an extra field in {@link #ACTION_UUID} intents,
+ * Contains the {@link android.os.ParcelUuid}s of the remote device which
+ * is a parcelable version of {@link UUID}.
+ */
+]"
+"[sService]","[]","[PRIVATE, STATIC]","Optional[/**
+ * Lazy initialization. Guaranteed final after first object constructed, or
+ * getService() called.
+ * TODO: Unify implementation of sService amongst BluetoothFoo API's
+ */
+]"
+"[mAddress]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mStateChangeCallback = new IBluetoothManagerCallback.Stub() {
+
+    public void onBluetoothServiceUp(IBluetooth bluetoothService) throws RemoteException {
+        synchronized (BluetoothDevice.class) {
+            sService = bluetoothService;
+        }
+    }
+
+    public void onBluetoothServiceDown() throws RemoteException {
+        synchronized (BluetoothDevice.class) {
+            sService = null;
+        }
+    }
+}]","[]","[STATIC]","Optional.empty"
+"[CREATOR = new Parcelable.Creator<BluetoothDevice>() {
+
+    public BluetoothDevice createFromParcel(Parcel in) {
+        return new BluetoothDevice(in.readString());
+    }
+
+    public BluetoothDevice[] newArray(int size) {
+        return new BluetoothDevice[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[rel_utime]","[]","[PUBLIC]","Optional.empty"
+"[rel_stime]","[]","[PUBLIC]","Optional.empty"
+"[base_minfaults]","[]","[PUBLIC]","Optional.empty"
+"[base_majfaults]","[]","[PUBLIC]","Optional.empty"
+"[rel_minfaults]","[]","[PUBLIC]","Optional.empty"
+"[rel_majfaults]","[]","[PUBLIC]","Optional.empty"
+"[active]","[]","[PUBLIC]","Optional.empty"
+"[working]","[]","[PUBLIC]","Optional.empty"
+"[added]","[]","[PUBLIC]","Optional.empty"
+"[removed]","[]","[PUBLIC]","Optional.empty"
+"[sLoadComparator = new Comparator<Stats>() {
+
+    public final int compare(Stats sta, Stats stb) {
+        int ta = sta.rel_utime + sta.rel_stime;
+        int tb = stb.rel_utime + stb.rel_stime;
+        if (ta != tb) {
+            return ta > tb ? -1 : 1;
+        }
+        if (sta.added != stb.added) {
+            return sta.added ? -1 : 1;
+        }
+        if (sta.removed != stb.removed) {
+            return sta.added ? -1 : 1;
+        }
+        return 0;
+    }
+}]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[profileFile]","[]","[]","Optional.empty"
+"[profileFd]","[]","[]","Optional.empty"
+"[autoStopProfiler]","[]","[]","Optional.empty"
+"[activityInfo]","[]","[]","Optional.empty"
+"[compatInfo]","[]","[]","Optional.empty"
+"[packageInfo]","[]","[]","Optional.empty"
+"[pendingResults]","[]","[]","Optional.empty"
+"[pendingIntents]","[]","[]","Optional.empty"
+"[startsNotResumed]","[]","[]","Optional.empty"
+"[isForward]","[]","[]","Optional.empty"
+"[pendingConfigChanges]","[]","[]","Optional.empty"
+"[onlyLocalRequest]","[]","[]","Optional.empty"
+"[mPendingRemoveWindow]","[]","[]","Optional.empty"
+"[mPendingRemoveWindowManager]","[]","[]","Optional.empty"
+"[mNames]","[]","[FINAL]","Optional.empty"
+"[mProvider]","[]","[FINAL]","Optional.empty"
+"[mLocalProvider]","[]","[FINAL]","Optional.empty"
+"[mHolder]","[]","[FINAL]","Optional.empty"
+"[intents]","[]","[]","Optional.empty"
+"[token]","[]","[]","Optional.empty"
+"[intent]","[]","[]","Optional.empty"
+"[info]","[]","[]","Optional.empty"
+"[compatInfo]","[]","[]","Optional.empty"
+"[appInfo]","[]","[]","Optional.empty"
+"[compatInfo]","[]","[]","Optional.empty"
+"[backupMode]","[]","[]","Optional.empty"
+"[token]","[]","[]","Optional.empty"
+"[info]","[]","[]","Optional.empty"
+"[compatInfo]","[]","[]","Optional.empty"
+"[intent]","[]","[]","Optional.empty"
+"[token]","[]","[]","Optional.empty"
+"[intent]","[]","[]","Optional.empty"
+"[rebind]","[]","[]","Optional.empty"
+"[token]","[]","[]","Optional.empty"
+"[taskRemoved]","[]","[]","Optional.empty"
+"[startId]","[]","[]","Optional.empty"
+"[flags]","[]","[]","Optional.empty"
+"[args]","[]","[]","Optional.empty"
+"[info]","[]","[]","Optional.empty"
+"[processName]","[]","[]","Optional.empty"
+"[appInfo]","[]","[]","Optional.empty"
+"[providers]","[]","[]","Optional.empty"
+"[instrumentationName]","[]","[]","Optional.empty"
+"[instrumentationArgs]","[]","[]","Optional.empty"
+"[instrumentationWatcher]","[]","[]","Optional.empty"
+"[instrumentationUiAutomationConnection]","[]","[]","Optional.empty"
+"[debugMode]","[]","[]","Optional.empty"
+"[enableOpenGlTrace]","[]","[]","Optional.empty"
+"[restrictedBackupMode]","[]","[]","Optional.empty"
+"[persistent]","[]","[]","Optional.empty"
+"[config]","[]","[]","Optional.empty"
+"[compatInfo]","[]","[]","Optional.empty"
+"[initProfileFile]","[]","[]","Optional[/**
+ * Initial values for {@link Profiler}.
+ */
+]"
+"[initProfileFd]","[]","[]","Optional.empty"
+"[initAutoStopProfiler]","[]","[]","Optional.empty"
+"[profileFile]","[]","[]","Optional.empty"
+"[profileFd]","[]","[]","Optional.empty"
+"[autoStopProfiler]","[]","[]","Optional.empty"
+"[profiling]","[]","[]","Optional.empty"
+"[handlingProfiling]","[]","[]","Optional.empty"
+"[fd]","[]","[]","Optional.empty"
+"[token]","[]","[]","Optional.empty"
+"[prefix]","[]","[]","Optional.empty"
+"[args]","[]","[]","Optional.empty"
+"[token]","[]","[]","Optional.empty"
+"[results]","[]","[]","Optional.empty"
+"[context]","[]","[]","Optional.empty"
+"[what]","[]","[]","Optional.empty"
+"[who]","[]","[]","Optional.empty"
+"[path]","[]","[]","Optional.empty"
+"[fd]","[]","[]","Optional.empty"
+"[path]","[]","[]","Optional.empty"
+"[fd]","[]","[]","Optional.empty"
+"[pkg]","[]","[]","Optional.empty"
+"[info]","[]","[]","Optional.empty"
+"[activityToken]","[]","[]","Optional.empty"
+"[requestToken]","[]","[]","Optional.empty"
+"[requestType]","[]","[]","Optional.empty"
+"[HEAP_COLUMN = ""%13s %8s %8s %8s %8s %8s %8s""]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[ONE_COUNT_COLUMN = ""%21s %8d""]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[TWO_COUNT_COLUMNS = ""%21s %8d %21s %8d""]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[DB_INFO_FORMAT = ""  %8s %8s %14s %14s  %s""]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[ACTIVITY_THREAD_CHECKIN_VERSION = 1]","[]","[PRIVATE, STATIC, FINAL]","Optional[// Formatting for checkin service - update version if row format changes
+]"
+"[LAUNCH_ACTIVITY = 100]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PAUSE_ACTIVITY = 101]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PAUSE_ACTIVITY_FINISHING = 102]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[STOP_ACTIVITY_SHOW = 103]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[STOP_ACTIVITY_HIDE = 104]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SHOW_WINDOW = 105]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[HIDE_WINDOW = 106]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[RESUME_ACTIVITY = 107]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SEND_RESULT = 108]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[DESTROY_ACTIVITY = 109]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[BIND_APPLICATION = 110]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[EXIT_APPLICATION = 111]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[NEW_INTENT = 112]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[RECEIVER = 113]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CREATE_SERVICE = 114]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SERVICE_ARGS = 115]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[STOP_SERVICE = 116]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[REQUEST_THUMBNAIL = 117]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONFIGURATION_CHANGED = 118]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CLEAN_UP_CONTEXT = 119]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[GC_WHEN_IDLE = 120]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[BIND_SERVICE = 121]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[UNBIND_SERVICE = 122]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[DUMP_SERVICE = 123]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[LOW_MEMORY = 124]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ACTIVITY_CONFIGURATION_CHANGED = 125]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[RELAUNCH_ACTIVITY = 126]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROFILER_CONTROL = 127]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CREATE_BACKUP_AGENT = 128]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[DESTROY_BACKUP_AGENT = 129]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SUICIDE = 130]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[REMOVE_PROVIDER = 131]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ENABLE_JIT = 132]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[DISPATCH_PACKAGE_BROADCAST = 133]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SCHEDULE_CRASH = 134]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[DUMP_HEAP = 135]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[DUMP_ACTIVITY = 136]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SLEEPING = 137]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SET_CORE_SETTINGS = 138]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[UPDATE_PACKAGE_COMPATIBILITY_INFO = 139]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TRIM_MEMORY = 140]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[DUMP_PROVIDER = 141]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[UNSTABLE_PROVIDER_DIED = 142]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[REQUEST_ACTIVITY_EXTRAS = 143]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[mResDir]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mDisplayId]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mOverrideConfiguration]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mScale]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mHash]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mMainThreadConfig = new Configuration()]","[]","[PRIVATE]","Optional.empty"
+"[sCurrentBroadcastIntent = new ThreadLocal<Intent>()]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[mThumbnailWidth = -1]","[]","[PRIVATE]","Optional.empty"
+"[mThumbnailHeight = -1]","[]","[PRIVATE]","Optional.empty"
+"[mAvailThumbnailBitmap = null]","[]","[PRIVATE]","Optional.empty"
+"[mThumbnailCanvas = null]","[]","[PRIVATE]","Optional.empty"
+"[activity]","[]","[]","Optional.empty"
+"[state]","[]","[]","Optional.empty"
+"[thumbnail]","[]","[]","Optional.empty"
+"[description]","[]","[]","Optional.empty"
+"[holder]","[]","[PUBLIC, FINAL]","Optional.empty"
+"[client]","[]","[PUBLIC, FINAL]","Optional.empty"
+"[stableCount]","[]","[PUBLIC]","Optional.empty"
+"[unstableCount]","[]","[PUBLIC]","Optional.empty"
+"[removePending]","[]","[PUBLIC]","Optional[// here.
+]"
+"[dropBox]","[]","[PRIVATE]","Optional.empty"
+"[EXTRA_LOCAL_ONLY = ""android.intent.extra.LOCAL_ONLY""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used to indicate that a {@link #ACTION_GET_CONTENT} intent should only return
+ * data that is on the local device.  This is a boolean extra; the default
+ * is false.  If true, an implementation of ACTION_GET_CONTENT should only allow
+ * the user to select media that is already on the device, not requiring it
+ * be downloaded from a remote service when opened.  Another way to look
+ * at it is that such content should generally have a ""_data"" column to the
+ * path of the content on local external storage.
+ */
+]"
+"[EXTRA_ALLOW_MULTIPLE = ""android.intent.extra.ALLOW_MULTIPLE""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used to indicate that a {@link #ACTION_GET_CONTENT} intent can allow the
+ * user to select and return multiple items.  This is a boolean extra; the default
+ * is false.  If true, an implementation of ACTION_GET_CONTENT is allowed to
+ * present the user with a UI where they can pick multiple items that are all
+ * returned to the caller.  When this happens, they should be returned as
+ * the {@link #getClipData()} part of the result Intent.
+ */
+]"
+"[EXTRA_USER_HANDLE = ""android.intent.extra.user_handle""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The userHandle carried with broadcast intents related to addition, removal and switching of
+ * users
+ * - {@link #ACTION_USER_ADDED}, {@link #ACTION_USER_REMOVED} and {@link #ACTION_USER_SWITCHED}.
+ * @hide
+ */
+]"
+"[EXTRA_RESTRICTIONS_LIST = ""android.intent.extra.restrictions_list""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Extra used in the response from a BroadcastReceiver that handles
+ * {@link #ACTION_GET_RESTRICTION_ENTRIES}. The type of the extra is
+ * <code>ArrayList&lt;RestrictionEntry&gt;</code>.
+ */
+]"
+"[EXTRA_RESTRICTIONS_BUNDLE = ""android.intent.extra.restrictions_bundle""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Extra sent in the intent to the BroadcastReceiver that handles
+ * {@link #ACTION_GET_RESTRICTION_ENTRIES}. The type of the extra is a Bundle containing
+ * the restrictions as key/value pairs.
+ */
+]"
+"[EXTRA_RESTRICTIONS_INTENT = ""android.intent.extra.restrictions_intent""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Extra used in the response from a BroadcastReceiver that handles
+ * {@link #ACTION_GET_RESTRICTION_ENTRIES}.
+ */
+]"
+"[FLAG_GRANT_READ_URI_PERMISSION = 0x00000001]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, the recipient of this Intent will be granted permission to
+ * perform read operations on the Uri in the Intent's data and any URIs
+ * specified in its ClipData.  When applying to an Intent's ClipData,
+ * all URIs as well as recursive traversals through data or other ClipData
+ * in Intent items will be granted; only the grant flags of the top-level
+ * Intent are used.
+ */
+]"
+"[FLAG_GRANT_WRITE_URI_PERMISSION = 0x00000002]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, the recipient of this Intent will be granted permission to
+ * perform write operations on the Uri in the Intent's data and any URIs
+ * specified in its ClipData.  When applying to an Intent's ClipData,
+ * all URIs as well as recursive traversals through data or other ClipData
+ * in Intent items will be granted; only the grant flags of the top-level
+ * Intent are used.
+ */
+]"
+"[FLAG_FROM_BACKGROUND = 0x00000004]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Can be set by the caller to indicate that this Intent is coming from
+ * a background operation, not from direct user interaction.
+ */
+]"
+"[FLAG_DEBUG_LOG_RESOLUTION = 0x00000008]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A flag you can enable for debugging: when set, log messages will be
+ * printed during the resolution of this intent to show you what has
+ * been found to create the final resolved list.
+ */
+]"
+"[FLAG_EXCLUDE_STOPPED_PACKAGES = 0x00000010]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, this intent will not match any components in packages that
+ * are currently stopped.  If this is not set, then the default behavior
+ * is to include such applications in the result.
+ */
+]"
+"[FLAG_INCLUDE_STOPPED_PACKAGES = 0x00000020]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, this intent will always match any components in packages that
+ * are currently stopped.  This is the default behavior when
+ * {@link #FLAG_EXCLUDE_STOPPED_PACKAGES} is not set.  If both of these
+ * flags are set, this one wins (it allows overriding of exclude for
+ * places where the framework may automatically set the exclude flag).
+ */
+]"
+"[FLAG_ACTIVITY_NO_HISTORY = 0x40000000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, the new activity is not kept in the history stack.  As soon as
+ * the user navigates away from it, the activity is finished.  This may also
+ * be set with the {@link android.R.styleable#AndroidManifestActivity_noHistory
+ * noHistory} attribute.
+ */
+]"
+"[FLAG_ACTIVITY_SINGLE_TOP = 0x20000000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, the activity will not be launched if it is already running
+ * at the top of the history stack.
+ */
+]"
+"[FLAG_ACTIVITY_NEW_TASK = 0x10000000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, this activity will become the start of a new task on this
+ * history stack.  A task (from the activity that started it to the
+ * next task activity) defines an atomic group of activities that the
+ * user can move to.  Tasks can be moved to the foreground and background;
+ * all of the activities inside of a particular task always remain in
+ * the same order.  See
+ * <a href=""{@docRoot}guide/topics/fundamentals/tasks-and-back-stack.html"">Tasks and Back
+ * Stack</a> for more information about tasks.
+ *
+ * <p>This flag is generally used by activities that want
+ * to present a ""launcher"" style behavior: they give the user a list of
+ * separate things that can be done, which otherwise run completely
+ * independently of the activity launching them.
+ *
+ * <p>When using this flag, if a task is already running for the activity
+ * you are now starting, then a new activity will not be started; instead,
+ * the current task will simply be brought to the front of the screen with
+ * the state it was last in.  See {@link #FLAG_ACTIVITY_MULTIPLE_TASK} for a flag
+ * to disable this behavior.
+ *
+ * <p>This flag can not be used when the caller is requesting a result from
+ * the activity being launched.
+ */
+]"
+"[FLAG_ACTIVITY_MULTIPLE_TASK = 0x08000000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <strong>Do not use this flag unless you are implementing your own
+ * top-level application launcher.</strong>  Used in conjunction with
+ * {@link #FLAG_ACTIVITY_NEW_TASK} to disable the
+ * behavior of bringing an existing task to the foreground.  When set,
+ * a new task is <em>always</em> started to host the Activity for the
+ * Intent, regardless of whether there is already an existing task running
+ * the same thing.
+ *
+ * <p><strong>Because the default system does not include graphical task management,
+ * you should not use this flag unless you provide some way for a user to
+ * return back to the tasks you have launched.</strong>
+ *
+ * <p>This flag is ignored if
+ * {@link #FLAG_ACTIVITY_NEW_TASK} is not set.
+ *
+ * <p>See
+ * <a href=""{@docRoot}guide/topics/fundamentals/tasks-and-back-stack.html"">Tasks and Back
+ * Stack</a> for more information about tasks.
+ */
+]"
+"[FLAG_ACTIVITY_CLEAR_TOP = 0x04000000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, and the activity being launched is already running in the
+ * current task, then instead of launching a new instance of that activity,
+ * all of the other activities on top of it will be closed and this Intent
+ * will be delivered to the (now on top) old activity as a new Intent.
+ *
+ * <p>For example, consider a task consisting of the activities: A, B, C, D.
+ * If D calls startActivity() with an Intent that resolves to the component
+ * of activity B, then C and D will be finished and B receive the given
+ * Intent, resulting in the stack now being: A, B.
+ *
+ * <p>The currently running instance of activity B in the above example will
+ * either receive the new intent you are starting here in its
+ * onNewIntent() method, or be itself finished and restarted with the
+ * new intent.  If it has declared its launch mode to be ""multiple"" (the
+ * default) and you have not set {@link #FLAG_ACTIVITY_SINGLE_TOP} in
+ * the same intent, then it will be finished and re-created; for all other
+ * launch modes or if {@link #FLAG_ACTIVITY_SINGLE_TOP} is set then this
+ * Intent will be delivered to the current instance's onNewIntent().
+ *
+ * <p>This launch mode can also be used to good effect in conjunction with
+ * {@link #FLAG_ACTIVITY_NEW_TASK}: if used to start the root activity
+ * of a task, it will bring any currently running instance of that task
+ * to the foreground, and then clear it to its root state.  This is
+ * especially useful, for example, when launching an activity from the
+ * notification manager.
+ *
+ * <p>See
+ * <a href=""{@docRoot}guide/topics/fundamentals/tasks-and-back-stack.html"">Tasks and Back
+ * Stack</a> for more information about tasks.
+ */
+]"
+"[FLAG_ACTIVITY_FORWARD_RESULT = 0x02000000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set and this intent is being used to launch a new activity from an
+ * existing one, then the reply target of the existing activity will be
+ * transfered to the new activity.  This way the new activity can call
+ * {@link android.app.Activity#setResult} and have that result sent back to
+ * the reply target of the original activity.
+ */
+]"
+"[FLAG_ACTIVITY_PREVIOUS_IS_TOP = 0x01000000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set and this intent is being used to launch a new activity from an
+ * existing one, the current activity will not be counted as the top
+ * activity for deciding whether the new intent should be delivered to
+ * the top instead of starting a new one.  The previous activity will
+ * be used as the top, with the assumption being that the current activity
+ * will finish itself immediately.
+ */
+]"
+"[FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS = 0x00800000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, the new activity is not kept in the list of recently launched
+ * activities.
+ */
+]"
+"[FLAG_ACTIVITY_BROUGHT_TO_FRONT = 0x00400000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This flag is not normally set by application code, but set for you by
+ * the system as described in the
+ * {@link android.R.styleable#AndroidManifestActivity_launchMode
+ * launchMode} documentation for the singleTask mode.
+ */
+]"
+"[FLAG_ACTIVITY_RESET_TASK_IF_NEEDED = 0x00200000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, and this activity is either being started in a new task or
+ * bringing to the top an existing task, then it will be launched as
+ * the front door of the task.  This will result in the application of
+ * any affinities needed to have that task in the proper state (either
+ * moving activities to or from it), or simply resetting that task to
+ * its initial state if needed.
+ */
+]"
+"[FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY = 0x00100000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This flag is not normally set by application code, but set for you by
+ * the system if this activity is being launched from history
+ * (longpress home key).
+ */
+]"
+"[FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET = 0x00080000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, this marks a point in the task's activity stack that should
+ * be cleared when the task is reset.  That is, the next time the task
+ * is brought to the foreground with
+ * {@link #FLAG_ACTIVITY_RESET_TASK_IF_NEEDED} (typically as a result of
+ * the user re-launching it from home), this activity and all on top of
+ * it will be finished so that the user does not return to them, but
+ * instead returns to whatever activity preceeded it.
+ *
+ * <p>This is useful for cases where you have a logical break in your
+ * application.  For example, an e-mail application may have a command
+ * to view an attachment, which launches an image view activity to
+ * display it.  This activity should be part of the e-mail application's
+ * task, since it is a part of the task the user is involved in.  However,
+ * if the user leaves that task, and later selects the e-mail app from
+ * home, we may like them to return to the conversation they were
+ * viewing, not the picture attachment, since that is confusing.  By
+ * setting this flag when launching the image viewer, that viewer and
+ * any activities it starts will be removed the next time the user returns
+ * to mail.
+ */
+]"
+"[FLAG_ACTIVITY_NO_USER_ACTION = 0x00040000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, this flag will prevent the normal {@link android.app.Activity#onUserLeaveHint}
+ * callback from occurring on the current frontmost activity before it is
+ * paused as the newly-started activity is brought to the front.
+ *
+ * <p>Typically, an activity can rely on that callback to indicate that an
+ * explicit user action has caused their activity to be moved out of the
+ * foreground. The callback marks an appropriate point in the activity's
+ * lifecycle for it to dismiss any notifications that it intends to display
+ * ""until the user has seen them,"" such as a blinking LED.
+ *
+ * <p>If an activity is ever started via any non-user-driven events such as
+ * phone-call receipt or an alarm handler, this flag should be passed to {@link
+ * Context#startActivity Context.startActivity}, ensuring that the pausing
+ * activity does not think the user has acknowledged its notification.
+ */
+]"
+"[FLAG_ACTIVITY_REORDER_TO_FRONT = 0X00020000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set in an Intent passed to {@link Context#startActivity Context.startActivity()},
+ * this flag will cause the launched activity to be brought to the front of its
+ * task's history stack if it is already running.
+ *
+ * <p>For example, consider a task consisting of four activities: A, B, C, D.
+ * If D calls startActivity() with an Intent that resolves to the component
+ * of activity B, then B will be brought to the front of the history stack,
+ * with this resulting order:  A, C, D, B.
+ *
+ * This flag will be ignored if {@link #FLAG_ACTIVITY_CLEAR_TOP} is also
+ * specified.
+ */
+]"
+"[FLAG_ACTIVITY_NO_ANIMATION = 0X00010000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set in an Intent passed to {@link Context#startActivity Context.startActivity()},
+ * this flag will prevent the system from applying an activity transition
+ * animation to go to the next activity state.  This doesn't mean an
+ * animation will never run -- if another activity change happens that doesn't
+ * specify this flag before the activity started here is displayed, then
+ * that transition will be used.  This flag can be put to good use
+ * when you are going to do a series of activity operations but the
+ * animation seen by the user shouldn't be driven by the first activity
+ * change but rather a later one.
+ */
+]"
+"[FLAG_ACTIVITY_CLEAR_TASK = 0X00008000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set in an Intent passed to {@link Context#startActivity Context.startActivity()},
+ * this flag will cause any existing task that would be associated with the
+ * activity to be cleared before the activity is started.  That is, the activity
+ * becomes the new root of an otherwise empty task, and any old activities
+ * are finished.  This can only be used in conjunction with {@link #FLAG_ACTIVITY_NEW_TASK}.
+ */
+]"
+"[FLAG_ACTIVITY_TASK_ON_HOME = 0X00004000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set in an Intent passed to {@link Context#startActivity Context.startActivity()},
+ * this flag will cause a newly launching task to be placed on top of the current
+ * home activity task (if there is one).  That is, pressing back from the task
+ * will always return the user to home even if that was not the last activity they
+ * saw.   This can only be used in conjunction with {@link #FLAG_ACTIVITY_NEW_TASK}.
+ */
+]"
+"[FLAG_RECEIVER_REGISTERED_ONLY = 0x40000000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, when sending a broadcast only registered receivers will be
+ * called -- no BroadcastReceiver components will be launched.
+ */
+]"
+"[FLAG_RECEIVER_REPLACE_PENDING = 0x20000000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, when sending a broadcast the new broadcast will replace
+ * any existing pending broadcast that matches it.  Matching is defined
+ * by {@link Intent#filterEquals(Intent) Intent.filterEquals} returning
+ * true for the intents of the two broadcasts.  When a match is found,
+ * the new broadcast (and receivers associated with it) will replace the
+ * existing one in the pending broadcast list, remaining at the same
+ * position in the list.
+ *
+ * <p>This flag is most typically used with sticky broadcasts, which
+ * only care about delivering the most recent values of the broadcast
+ * to their receivers.
+ */
+]"
+"[FLAG_RECEIVER_FOREGROUND = 0x10000000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, when sending a broadcast the recipient is allowed to run at
+ * foreground priority, with a shorter timeout interval.  During normal
+ * broadcasts the receivers are not automatically hoisted out of the
+ * background priority class.
+ */
+]"
+"[FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT = 0x08000000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If set, when sending a broadcast <i>before boot has completed</i> only
+ * registered receivers will be called -- no BroadcastReceiver components
+ * will be launched.  Sticky intent state will be recorded properly even
+ * if no receivers wind up being called.  If {@link #FLAG_RECEIVER_REGISTERED_ONLY}
+ * is specified in the broadcast intent, this flag is unnecessary.
+ *
+ * <p>This flag is only for use by system sevices as a convenience to
+ * avoid having to implement a more complex mechanism around detection
+ * of boot completion.
+ *
+ * @hide
+ */
+]"
+"[FLAG_RECEIVER_BOOT_UPGRADE = 0x04000000]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Set when this broadcast is for a boot upgrade, a special mode that
+ * allows the broadcast to be sent before the system is ready and launches
+ * the app process with no providers running in it.
+ * @hide
+ */
+]"
+"[IMMUTABLE_FLAGS = FLAG_GRANT_READ_URI_PERMISSION | FLAG_GRANT_WRITE_URI_PERMISSION]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * @hide Flags that can't be changed with PendingIntent.
+ */
+]"
+"[URI_INTENT_SCHEME = 1 << 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Flag for use with {@link #toUri} and {@link #parseUri}: the URI string
+ * always has the ""intent:"" scheme.  This syntax can be used when you want
+ * to later disambiguate between URIs that are intended to describe an
+ * Intent vs. all others that should be treated as raw URIs.  When used
+ * with {@link #parseUri}, any other scheme will result in a generic
+ * VIEW action for that raw URI.
+ */
+]"
+"[mAction]","[]","[PRIVATE]","Optional.empty"
+"[mData]","[]","[PRIVATE]","Optional.empty"
+"[mType]","[]","[PRIVATE]","Optional.empty"
+"[mPackage]","[]","[PRIVATE]","Optional.empty"
+"[mComponent]","[]","[PRIVATE]","Optional.empty"
+"[mFlags]","[]","[PRIVATE]","Optional.empty"
+"[mCategories]","[]","[PRIVATE]","Optional.empty"
+"[mExtras]","[]","[PRIVATE]","Optional.empty"
+"[mSourceBounds]","[]","[PRIVATE]","Optional.empty"
+"[mSelector]","[]","[PRIVATE]","Optional.empty"
+"[mClipData]","[]","[PRIVATE]","Optional.empty"
+"[FILL_IN_ACTION = 1 << 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Use with {@link #fillIn} to allow the current action value to be
+ * overwritten, even if it is already set.
+ */
+]"
+"[FILL_IN_DATA = 1 << 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Use with {@link #fillIn} to allow the current data or type value
+ * overwritten, even if it is already set.
+ */
+]"
+"[FILL_IN_CATEGORIES = 1 << 2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Use with {@link #fillIn} to allow the current categories to be
+ * overwritten, even if they are already set.
+ */
+]"
+"[FILL_IN_COMPONENT = 1 << 3]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Use with {@link #fillIn} to allow the current component value to be
+ * overwritten, even if it is already set.
+ */
+]"
+"[FILL_IN_PACKAGE = 1 << 4]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Use with {@link #fillIn} to allow the current package value to be
+ * overwritten, even if it is already set.
+ */
+]"
+"[FILL_IN_SOURCE_BOUNDS = 1 << 5]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Use with {@link #fillIn} to allow the current bounds rectangle to be
+ * overwritten, even if it is already set.
+ */
+]"
+"[FILL_IN_SELECTOR = 1 << 6]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Use with {@link #fillIn} to allow the current selector to be
+ * overwritten, even if it is already set.
+ */
+]"
+"[FILL_IN_CLIP_DATA = 1 << 7]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Use with {@link #fillIn} to allow the current ClipData to be
+ * overwritten, even if it is already set.
+ */
+]"
+"[mIntent]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mHashCode]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[CREATOR = new Parcelable.Creator<Intent>() {
+
+    public Intent createFromParcel(Parcel in) {
+        return new Intent(in);
+    }
+
+    public Intent[] newArray(int size) {
+        return new Intent[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[DISPLAY_NAME = DATA1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The name that should be used to display the contact.
+ * <i>Unstructured component of the name should be consistent with
+ * its structured representation.</i>
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[GIVEN_NAME = DATA2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The given name for the contact.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[FAMILY_NAME = DATA3]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The family name for the contact.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[PREFIX = DATA4]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The contact's honorific prefix, e.g. ""Sir""
+ * <P>Type: TEXT</P>
+ */
+]"
+"[MIDDLE_NAME = DATA5]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The contact's middle name
+ * <P>Type: TEXT</P>
+ */
+]"
+"[SUFFIX = DATA6]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The contact's honorific suffix, e.g. ""Jr""
+ */
+]"
+"[PHONETIC_GIVEN_NAME = DATA7]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The phonetic version of the given name for the contact.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[PHONETIC_MIDDLE_NAME = DATA8]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The phonetic version of the additional name for the contact.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[PHONETIC_FAMILY_NAME = DATA9]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The phonetic version of the family name for the contact.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[FULL_NAME_STYLE = DATA10]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The style used for combining given/middle/family name into a full name.
+ * See {@link ContactsContract.FullNameStyle}.
+ *
+ * @hide
+ */
+]"
+"[PHONETIC_NAME_STYLE = DATA11]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The alphabet used for capturing the phonetic name.
+ * See ContactsContract.PhoneticNameStyle.
+ * @hide
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/nickname""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_DEFAULT = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER_NAME = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_MAIDEN_NAME = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_MAINDEN_NAME = 3]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * @deprecated Use TYPE_MAIDEN_NAME instead.
+ */
+]"
+"[TYPE_SHORT_NAME = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_INITIALS = 5]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[NAME = DATA]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The name itself
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/phone_v2""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/phone_v2""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of {@link #CONTENT_URI} providing a directory of
+ * phones.
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(Data.CONTENT_URI, ""phones"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for all data records of the
+ * {@link #CONTENT_ITEM_TYPE} MIME type, combined with the
+ * associated raw contact and aggregate contact data.
+ */
+]"
+"[CONTENT_FILTER_URI = Uri.withAppendedPath(CONTENT_URI, ""filter"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URL for phone lookup using a filter. The filter returns
+ * records of MIME type {@link #CONTENT_ITEM_TYPE}. The filter is applied
+ * to display names as well as phone numbers. The filter argument should be passed
+ * as an additional path segment after this URI.
+ */
+]"
+"[SEARCH_DISPLAY_NAME_KEY = ""search_display_name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A boolean query parameter that can be used with {@link #CONTENT_FILTER_URI}.
+ * If ""1"" or ""true"", display names are searched.  If ""0"" or ""false"", display names
+ * are not searched.  Default is ""1"".
+ */
+]"
+"[SEARCH_PHONE_NUMBER_KEY = ""search_phone_number""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A boolean query parameter that can be used with {@link #CONTENT_FILTER_URI}.
+ * If ""1"" or ""true"", phone numbers are searched.  If ""0"" or ""false"", phone numbers
+ * are not searched.  Default is ""1"".
+ */
+]"
+"[TYPE_HOME = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_MOBILE = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_WORK = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_FAX_WORK = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_FAX_HOME = 5]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_PAGER = 6]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 7]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_CALLBACK = 8]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_CAR = 9]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_COMPANY_MAIN = 10]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_ISDN = 11]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_MAIN = 12]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER_FAX = 13]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_RADIO = 14]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_TELEX = 15]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_TTY_TDD = 16]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_WORK_MOBILE = 17]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_WORK_PAGER = 18]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_ASSISTANT = 19]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_MMS = 20]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[NUMBER = DATA]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The phone number as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[NORMALIZED_NUMBER = DATA4]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The phone number's E164 representation. This value can be omitted in which
+ * case the provider will try to automatically infer it.  (It'll be left null if the
+ * provider fails to infer.)
+ * If present, {@link #NUMBER} has to be set as well (it will be ignored otherwise).
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/email_v2""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/email_v2""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of {@link #CONTENT_URI} providing a directory of email addresses.
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(Data.CONTENT_URI, ""emails"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for all data records of the
+ * {@link #CONTENT_ITEM_TYPE} MIME type, combined with the
+ * associated raw contact and aggregate contact data.
+ */
+]"
+"[CONTENT_LOOKUP_URI = Uri.withAppendedPath(CONTENT_URI, ""lookup"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>
+ * The content:// style URL for looking up data rows by email address. The
+ * lookup argument, an email address, should be passed as an additional path segment
+ * after this URI.
+ * </p>
+ * <p>Example:
+ * <pre>
+ * Uri uri = Uri.withAppendedPath(Email.CONTENT_LOOKUP_URI, Uri.encode(email));
+ * Cursor c = getContentResolver().query(uri,
+ * new String[]{Email.CONTACT_ID, Email.DISPLAY_NAME, Email.DATA},
+ * null, null, null);
+ * </pre>
+ * </p>
+ */
+]"
+"[CONTENT_FILTER_URI = Uri.withAppendedPath(CONTENT_URI, ""filter"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>
+ * The content:// style URL for email lookup using a filter. The filter returns
+ * records of MIME type {@link #CONTENT_ITEM_TYPE}. The filter is applied
+ * to display names as well as email addresses. The filter argument should be passed
+ * as an additional path segment after this URI.
+ * </p>
+ * <p>The query in the following example will return ""Robert Parr (bob@incredibles.com)""
+ * as well as ""Bob Parr (incredible@android.com)"".
+ * <pre>
+ * Uri uri = Uri.withAppendedPath(Email.CONTENT_LOOKUP_URI, Uri.encode(""bob""));
+ * Cursor c = getContentResolver().query(uri,
+ * new String[]{Email.DISPLAY_NAME, Email.DATA},
+ * null, null, null);
+ * </pre>
+ * </p>
+ */
+]"
+"[ADDRESS = DATA1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The email address.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[TYPE_HOME = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_WORK = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_MOBILE = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[DISPLAY_NAME = DATA4]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The display name for the email address
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/postal-address_v2""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/postal-address_v2""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of {@link #CONTENT_URI} providing a directory of
+ * postal addresses.
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(Data.CONTENT_URI, ""postals"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for all data records of the
+ * {@link StructuredPostal#CONTENT_ITEM_TYPE} MIME type.
+ */
+]"
+"[TYPE_HOME = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_WORK = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[FORMATTED_ADDRESS = DATA]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The full, unstructured postal address. <i>This field must be
+ * consistent with any structured data.</i>
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[STREET = DATA4]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Can be street, avenue, road, etc. This element also includes the
+ * house number and room/apartment/flat/floor number.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[POBOX = DATA5]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Covers actual P.O. boxes, drawers, locked bags, etc. This is
+ * usually but not always mutually exclusive with street.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[NEIGHBORHOOD = DATA6]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is used to disambiguate a street address when a city
+ * contains more than one street with the same name, or to specify a
+ * small place whose mail is routed through a larger postal town. In
+ * China it could be a county or a minor city.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[CITY = DATA7]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Can be city, village, town, borough, etc. This is the postal town
+ * and not necessarily the place of residence or place of business.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[REGION = DATA8]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A state, province, county (in Ireland), Land (in Germany),
+ * departement (in France), etc.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[POSTCODE = DATA9]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Postal code. Usually country-wide, but sometimes specific to the
+ * city (e.g. ""2"" in ""Dublin 2, Ireland"" addresses).
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[COUNTRY = DATA10]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The name or code of the country.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/im""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_HOME = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_WORK = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL = DATA5]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This column should be populated with one of the defined
+ * constants, e.g. {@link #PROTOCOL_YAHOO}. If the value of this
+ * column is {@link #PROTOCOL_CUSTOM}, the {@link #CUSTOM_PROTOCOL}
+ * should contain the name of the custom protocol.
+ */
+]"
+"[CUSTOM_PROTOCOL = DATA6]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_CUSTOM = -1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/*
+             * The predefined IM protocol types.
+             */
+]"
+"[PROTOCOL_AIM = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_MSN = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_YAHOO = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_SKYPE = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_QQ = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_GOOGLE_TALK = 5]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_ICQ = 6]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_JABBER = 7]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_NETMEETING = 8]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/organization""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_WORK = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[COMPANY = DATA]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The company as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[TITLE = DATA4]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The position title at this company as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[DEPARTMENT = DATA5]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The department at this company as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[JOB_DESCRIPTION = DATA6]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The job description at this company as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[SYMBOL = DATA7]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The symbol of this company as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[PHONETIC_NAME = DATA8]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The phonetic name of this company as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[OFFICE_LOCATION = DATA9]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The office location of this organization.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[PHONETIC_NAME_STYLE = DATA10]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The alphabet used for capturing the phonetic name.
+ * See {@link ContactsContract.PhoneticNameStyle}.
+ * @hide
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/relation""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_ASSISTANT = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_BROTHER = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_CHILD = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_DOMESTIC_PARTNER = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_FATHER = 5]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_FRIEND = 6]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_MANAGER = 7]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_MOTHER = 8]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_PARENT = 9]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_PARTNER = 10]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_REFERRED_BY = 11]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_RELATIVE = 12]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_SISTER = 13]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_SPOUSE = 14]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[NAME = DATA]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The name of the relative as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/contact_event""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_ANNIVERSARY = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_BIRTHDAY = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[START_DATE = DATA]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The event start date as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/photo""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[PHOTO_FILE_ID = DATA14]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Photo file ID for the display photo of the raw contact.
+ * See {@link ContactsContract.DisplayPhoto}.
+ * <p>
+ * Type: NUMBER
+ */
+]"
+"[PHOTO = DATA15]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Thumbnail photo of the raw contact. This is the raw bytes of an image
+ * that could be inflated using {@link android.graphics.BitmapFactory}.
+ * <p>
+ * Type: BLOB
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/note""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[NOTE = DATA1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The note text.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/group_membership""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[GROUP_ROW_ID = DATA1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The row id of the group that this group membership refers to. Exactly one of
+ * this or {@link #GROUP_SOURCE_ID} must be set when inserting a row.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[GROUP_SOURCE_ID = ""group_sourceid""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The sourceid of the group that this group membership refers to.  Exactly one of
+ * this or {@link #GROUP_ROW_ID} must be set when inserting a row.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/website""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_HOMEPAGE = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_BLOG = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_PROFILE = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_HOME = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_WORK = 5]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_FTP = 6]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 7]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[URL = DATA]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The website URL string.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/sip_address""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_HOME = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_WORK = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SIP_ADDRESS = DATA1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The SIP address.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/identity""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[IDENTITY = DataColumns.DATA1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The identity string.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[NAMESPACE = DataColumns.DATA2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The namespace of the identity string, e.g. ""com.google""
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(Data.CONTENT_URI, ""callables"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Similar to {@link Phone#CONTENT_URI}, but returns callable data instead of only
+ * phone numbers.
+ */
+]"
+"[CONTENT_FILTER_URI = Uri.withAppendedPath(CONTENT_URI, ""filter"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Similar to {@link Phone#CONTENT_FILTER_URI}, but allows users to filter callable
+ * data.
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(Data.CONTENT_URI, ""contactables"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for these data items, which requests a directory of data
+ * rows matching the selection criteria.
+ */
+]"
+"[CONTENT_FILTER_URI = Uri.withAppendedPath(Contactables.CONTENT_URI, ""filter"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for these data items, which allows for a query parameter to
+ * be appended onto the end to filter for data items matching the query.
+ */
+]"
+"[VISIBLE_CONTACTS_ONLY = ""visible_contacts_only""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A boolean parameter for {@link Data#CONTENT_URI}.
+ * This specifies whether or not the returned data items should be filtered to show
+ * data items belonging to visible contacts only.
+ */
+]"
+"[DATA_SET = ""data_set""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The data set within the account that this group belongs to.  This allows
+ * multiple sync adapters for the same account type to distinguish between
+ * each others' group data.
+ *
+ * This is empty by default, and is completely optional.  It only needs to
+ * be populated if multiple sync adapters are entering distinct group data
+ * for the same account type and account name.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[ACCOUNT_TYPE_AND_DATA_SET = ""account_type_and_data_set""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A concatenation of the account type and data set (delimited by a forward
+ * slash) - if the data set is empty, this will be the same as the account
+ * type.  For applications that need to be aware of the data set, this can
+ * be used instead of account type to distinguish sets of data.  This is
+ * never intended to be used for specifying accounts.
+ * @hide
+ */
+]"
+"[TITLE = ""title""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The display title of this group.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[RES_PACKAGE = ""res_package""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The package name to use when creating {@link Resources} objects for
+ * this group. This value is only designed for use when building user
+ * interfaces, and should not be used to infer the owner.
+ *
+ * @hide
+ */
+]"
+"[TITLE_RES = ""title_res""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The display title of this group to load as a resource from
+ * {@link #RES_PACKAGE}, which may be localized.
+ * <P>Type: TEXT</P>
+ *
+ * @hide
+ */
+]"
+"[NOTES = ""notes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Notes about the group.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[SYSTEM_ID = ""system_id""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The ID of this group if it is a System Group, i.e. a group that has a special meaning
+ * to the sync adapter, null otherwise.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[SUMMARY_COUNT = ""summ_count""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The total number of {@link Contacts} that have
+ * {@link CommonDataKinds.GroupMembership} in this group. Read-only value that is only
+ * present when querying {@link Groups#CONTENT_SUMMARY_URI}.
+ * <p>
+ * Type: INTEGER
+ */
+]"
+"[PARAM_RETURN_GROUP_COUNT_PER_ACCOUNT = ""return_group_count_per_account""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A boolean query parameter that can be used with {@link Groups#CONTENT_SUMMARY_URI}.
+ * It will additionally return {@link #SUMMARY_GROUP_COUNT_PER_ACCOUNT}.
+ *
+ * @hide
+ */
+]"
+"[SUMMARY_GROUP_COUNT_PER_ACCOUNT = ""group_count_per_account""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The total number of groups of the account that a group belongs to.
+ * This column is available only when the parameter
+ * {@link #PARAM_RETURN_GROUP_COUNT_PER_ACCOUNT} is specified in
+ * {@link Groups#CONTENT_SUMMARY_URI}.
+ *
+ * For example, when the account ""A"" has two groups ""group1"" and ""group2"", and the account
+ * ""B"" has a group ""group3"", the rows for ""group1"" and ""group2"" return ""2"" and the row for
+ * ""group3"" returns ""1"" for this column.
+ *
+ * Note: This counts only non-favorites, non-auto-add, and not deleted groups.
+ *
+ * Type: INTEGER
+ * @hide
+ */
+]"
+"[SUMMARY_WITH_PHONES = ""summ_phones""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The total number of {@link Contacts} that have both
+ * {@link CommonDataKinds.GroupMembership} in this group, and also have phone numbers.
+ * Read-only value that is only present when querying
+ * {@link Groups#CONTENT_SUMMARY_URI}.
+ * <p>
+ * Type: INTEGER
+ */
+]"
+"[GROUP_VISIBLE = ""group_visible""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Flag indicating if the contacts belonging to this group should be
+ * visible in any user interface.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[DELETED = ""deleted""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The ""deleted"" flag: ""0"" by default, ""1"" if the row has been marked
+ * for deletion. When {@link android.content.ContentResolver#delete} is
+ * called on a group, it is marked for deletion. The sync adaptor
+ * deletes the group on the server and then calls ContactResolver.delete
+ * once more, this time setting the the
+ * {@link ContactsContract#CALLER_IS_SYNCADAPTER} query parameter to
+ * finalize the data removal.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[SHOULD_SYNC = ""should_sync""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether this group should be synced if the SYNC_EVERYTHING settings
+ * is false for this group's account.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[AUTO_ADD = ""auto_add""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Any newly created contacts will automatically be added to groups that have this
+ * flag set to true.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[FAVORITES = ""favorites""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * When a contacts is marked as a favorites it will be automatically added
+ * to the groups that have this flag set, and when it is removed from favorites
+ * it will be removed from these groups.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[GROUP_IS_READ_ONLY = ""group_is_read_only""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The ""read-only"" flag: ""0"" by default, ""1"" if the row cannot be modified or
+ * deleted except by a sync adapter.  See {@link ContactsContract#CALLER_IS_SYNCADAPTER}.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""groups"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table
+ */
+]"
+"[CONTENT_SUMMARY_URI = Uri.withAppendedPath(AUTHORITY_URI, ""groups_summary"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table joined with details data from
+ * {@link ContactsContract.Data}.
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/group""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of a directory of groups.
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/group""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of a single group.
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""aggregation_exceptions"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/aggregation_exception""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of {@link #CONTENT_URI} providing a directory of data.
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/aggregation_exception""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of a {@link #CONTENT_URI} subdirectory of an aggregation exception
+ */
+]"
+"[TYPE = ""type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The type of exception: {@link #TYPE_KEEP_TOGETHER}, {@link #TYPE_KEEP_SEPARATE} or
+ * {@link #TYPE_AUTOMATIC}.
+ *
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[TYPE_AUTOMATIC = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Allows the provider to automatically decide whether the specified raw contacts should
+ * be included in the same aggregate contact or not.
+ */
+]"
+"[TYPE_KEEP_TOGETHER = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Makes sure that the specified raw contacts are included in the same
+ * aggregate contact.
+ */
+]"
+"[TYPE_KEEP_SEPARATE = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Makes sure that the specified raw contacts are NOT included in the same
+ * aggregate contact.
+ */
+]"
+"[RAW_CONTACT_ID1 = ""raw_contact_id1""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A reference to the {@link RawContacts#_ID} of the raw contact that the rule applies to.
+ */
+]"
+"[RAW_CONTACT_ID2 = ""raw_contact_id2""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A reference to the other {@link RawContacts#_ID} of the raw contact that the rule
+ * applies to.
+ */
+]"
+"[ACCOUNT_NAME = ""account_name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The name of the account instance to which this row belongs.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[ACCOUNT_TYPE = ""account_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The type of account to which this row belongs, which when paired with
+ * {@link #ACCOUNT_NAME} identifies a specific account.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[DATA_SET = ""data_set""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The data set within the account that this row belongs to.  This allows
+ * multiple sync adapters for the same account type to distinguish between
+ * each others' data.
+ *
+ * This is empty by default, and is completely optional.  It only needs to
+ * be populated if multiple sync adapters are entering distinct data for
+ * the same account type and account name.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[SHOULD_SYNC = ""should_sync""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Depending on the mode defined by the sync-adapter, this flag controls
+ * the top-level sync behavior for this data source.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[UNGROUPED_VISIBLE = ""ungrouped_visible""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Flag indicating if contacts without any {@link CommonDataKinds.GroupMembership}
+ * entries should be visible in any user interface.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[ANY_UNSYNCED = ""any_unsynced""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Read-only flag indicating if this {@link #SHOULD_SYNC} or any
+ * {@link Groups#SHOULD_SYNC} under this account have been marked as
+ * unsynced.
+ */
+]"
+"[UNGROUPED_COUNT = ""summ_count""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Read-only count of {@link Contacts} from a specific source that have
+ * no {@link CommonDataKinds.GroupMembership} entries.
+ * <p>
+ * Type: INTEGER
+ */
+]"
+"[UNGROUPED_WITH_PHONES = ""summ_phones""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Read-only count of {@link Contacts} from a specific source that have
+ * no {@link CommonDataKinds.GroupMembership} entries, and also have phone numbers.
+ * <p>
+ * Type: INTEGER
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""settings"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/setting""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME-type of {@link #CONTENT_URI} providing a directory of
+ * settings.
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/setting""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME-type of {@link #CONTENT_URI} providing a single setting.
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""provider_status"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table.  Requests to this URI can be
+ * performed on the UI thread because they are always unblocking.
+ *
+ * @hide
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/provider_status""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME-type of {@link #CONTENT_URI} providing a directory of
+ * settings.
+ *
+ * @hide
+ */
+]"
+"[STATUS = ""status""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * An integer representing the current status of the provider.
+ *
+ * @hide
+ */
+]"
+"[STATUS_NORMAL = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Default status of the provider.
+ *
+ * @hide
+ */
+]"
+"[STATUS_UPGRADING = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The status used when the provider is in the process of upgrading.  Contacts
+ * are temporarily unaccessible.
+ *
+ * @hide
+ */
+]"
+"[STATUS_UPGRADE_OUT_OF_MEMORY = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The status used if the provider was in the process of upgrading but ran
+ * out of storage. The DATA1 column will contain the estimated amount of
+ * storage required (in bytes). Update status to STATUS_NORMAL to force
+ * the provider to retry the upgrade.
+ *
+ * @hide
+ */
+]"
+"[STATUS_CHANGING_LOCALE = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The status used during a locale change.
+ *
+ * @hide
+ */
+]"
+"[STATUS_NO_ACCOUNTS_NO_CONTACTS = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The status that indicates that there are no accounts and no contacts
+ * on the device.
+ *
+ * @hide
+ */
+]"
+"[DATA1 = ""data1""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Additional data associated with the status.
+ *
+ * @hide
+ */
+]"
+"[FEEDBACK_URI = Uri.withAppendedPath(Data.CONTENT_URI, ""usagefeedback"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for sending usage feedback.
+ * Must be used with {@link ContentResolver#update(Uri, ContentValues, String, String[])}.
+ */
+]"
+"[DELETE_USAGE_URI = Uri.withAppendedPath(Contacts.CONTENT_URI, ""delete_usage"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for deleting all usage information.
+ * Must be used with {@link ContentResolver#delete(Uri, String, String[])}.
+ * The {@code where} and {@code selectionArgs} parameters are ignored.
+ */
+]"
+"[USAGE_TYPE = ""type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>
+ * Name for query parameter specifying the type of data usage.
+ * </p>
+ */
+]"
+"[USAGE_TYPE_CALL = ""call""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>
+ * Type of usage for voice interaction, which includes phone call, voice chat, and
+ * video chat.
+ * </p>
+ */
+]"
+"[USAGE_TYPE_LONG_TEXT = ""long_text""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>
+ * Type of usage for text interaction involving longer messages, which includes email.
+ * </p>
+ */
+]"
+"[USAGE_TYPE_SHORT_TEXT = ""short_text""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>
+ * Type of usage for text interaction involving shorter messages, which includes SMS,
+ * text chat with email addresses.
+ * </p>
+ */
+]"
+"[ACTION_QUICK_CONTACT = ""com.android.contacts.action.QUICK_CONTACT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Action used to trigger person pivot dialog.
+ * @hide
+ */
+]"
+"[EXTRA_TARGET_RECT = ""target_rect""]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Extra used to specify pivot dialog location in screen coordinates.
+ * @deprecated Use {@link Intent#setSourceBounds(Rect)} instead.
+ * @hide
+ */
+]"
+"[EXTRA_MODE = ""mode""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Extra used to specify size of pivot dialog.
+ * @hide
+ */
+]"
+"[EXTRA_EXCLUDE_MIMES = ""exclude_mimes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Extra used to indicate a list of specific MIME-types to exclude and
+ * not display. Stored as a {@link String} array.
+ * @hide
+ */
+]"
+"[MODE_SMALL = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Small QuickContact mode, usually presented with minimal actions.
+ */
+]"
+"[MODE_MEDIUM = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Medium QuickContact mode, includes actions and light summary describing
+ * the {@link Contacts} entry being shown. This may include social
+ * status and presence details.
+ */
+]"
+"[MODE_LARGE = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Large QuickContact mode, includes actions and larger, card-like summary
+ * of the {@link Contacts} entry being shown. This may include detailed
+ * information, such as a photo.
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""display_photo"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this class, which allows access to full-size photos,
+ * given a key.
+ */
+]"
+"[CONTENT_MAX_DIMENSIONS_URI = Uri.withAppendedPath(AUTHORITY_URI, ""photo_dimensions"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This URI allows the caller to query for the maximum dimensions of a display photo
+ * or thumbnail.  Requests to this URI can be performed on the UI thread because
+ * they are always unblocking.
+ */
+]"
+"[DISPLAY_MAX_DIM = ""display_max_dim""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Queries to {@link ContactsContract.DisplayPhoto#CONTENT_MAX_DIMENSIONS_URI} will
+ * contain this column, populated with the maximum height and width (in pixels)
+ * that will be stored for a display photo.  Larger photos will be down-sized to
+ * fit within a square of this many pixels.
+ */
+]"
+"[THUMBNAIL_MAX_DIM = ""thumbnail_max_dim""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Queries to {@link ContactsContract.DisplayPhoto#CONTENT_MAX_DIMENSIONS_URI} will
+ * contain this column, populated with the height and width (in pixels) for photo
+ * thumbnails.
+ */
+]"
+"[SEARCH_SUGGESTION_CLICKED = ""android.provider.Contacts.SEARCH_SUGGESTION_CLICKED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when a search suggestion is clicked on.
+ */
+]"
+"[SEARCH_SUGGESTION_DIAL_NUMBER_CLICKED = ""android.provider.Contacts.SEARCH_SUGGESTION_DIAL_NUMBER_CLICKED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when a search suggestion for dialing a number
+ * is clicked on.
+ */
+]"
+"[SEARCH_SUGGESTION_CREATE_CONTACT_CLICKED = ""android.provider.Contacts.SEARCH_SUGGESTION_CREATE_CONTACT_CLICKED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when a search suggestion for creating a contact
+ * is clicked on.
+ */
+]"
+"[CONTACTS_DATABASE_CREATED = ""android.provider.Contacts.DATABASE_CREATED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when the contacts database is created. <p> The
+ * READ_CONTACT permission is required to receive these broadcasts.
+ */
+]"
+"[ATTACH_IMAGE = ""com.android.contacts.action.ATTACH_IMAGE""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Starts an Activity that lets the user pick a contact to attach an image to.
+ * After picking the contact it launches the image cropper in face detection mode.
+ */
+]"
+"[INVITE_CONTACT = ""com.android.contacts.action.INVITE_CONTACT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when the user clicks the ""invite to the network"" button
+ * on a contact.  Only sent to an activity which is explicitly registered by a contact
+ * provider which supports the ""invite to the network"" feature.
+ * <p>
+ * {@link Intent#getData()} contains the lookup URI for the contact.
+ */
+]"
+"[SHOW_OR_CREATE_CONTACT = ""com.android.contacts.action.SHOW_OR_CREATE_CONTACT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Takes as input a data URI with a mailto: or tel: scheme. If a single
+ * contact exists with the given data it will be shown. If no contact
+ * exists, a dialog will ask the user if they want to create a new
+ * contact with the provided details filled in. If multiple contacts
+ * share the data the user will be prompted to pick which contact they
+ * want to view.
+ * <p>
+ * For <code>mailto:</code> URIs, the scheme specific portion must be a
+ * raw email address, such as one built using
+ * {@link Uri#fromParts(String, String, String)}.
+ * <p>
+ * For <code>tel:</code> URIs, the scheme specific portion is compared
+ * to existing numbers using the standard caller ID lookup algorithm.
+ * The number must be properly encoded, for example using
+ * {@link Uri#fromParts(String, String, String)}.
+ * <p>
+ * Any extras from the {@link Insert} class will be passed along to the
+ * create activity if there are no contacts to show.
+ * <p>
+ * Passing true for the {@link #EXTRA_FORCE_CREATE} extra will skip
+ * prompting the user when the contact doesn't exist.
+ */
+]"
+"[ACTION_GET_MULTIPLE_PHONES = ""com.android.contacts.action.GET_MULTIPLE_PHONES""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Starts an Activity that lets the user select the multiple phones from a
+ * list of phone numbers which come from the contacts or
+ * {@link #EXTRA_PHONE_URIS}.
+ * <p>
+ * The phone numbers being passed in through {@link #EXTRA_PHONE_URIS}
+ * could belong to the contacts or not, and will be selected by default.
+ * <p>
+ * The user's selection will be returned from
+ * {@link android.app.Activity#onActivityResult(int, int, android.content.Intent)}
+ * if the resultCode is
+ * {@link android.app.Activity#RESULT_OK}, the array of picked phone
+ * numbers are in the Intent's
+ * {@link #EXTRA_PHONE_URIS}; otherwise, the
+ * {@link android.app.Activity#RESULT_CANCELED} is returned if the user
+ * left the Activity without changing the selection.
+ *
+ * @hide
+ */
+]"
+"[ACTION_PROFILE_CHANGED = ""android.provider.Contacts.PROFILE_CHANGED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A broadcast action which is sent when any change has been made to the profile, such
+ * as the profile name or the picture.  A receiver must have
+ * the android.permission.READ_PROFILE permission.
+ *
+ * @hide
+ */
+]"
+"[EXTRA_FORCE_CREATE = ""com.android.contacts.action.FORCE_CREATE""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used with {@link #SHOW_OR_CREATE_CONTACT} to force creating a new
+ * contact if no matching contact found. Otherwise, default behavior is
+ * to prompt user with dialog before creating.
+ * <p>
+ * Type: BOOLEAN
+ */
+]"
+"[EXTRA_CREATE_DESCRIPTION = ""com.android.contacts.action.CREATE_DESCRIPTION""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used with {@link #SHOW_OR_CREATE_CONTACT} to specify an exact
+ * description to be shown when prompting user about creating a new
+ * contact.
+ * <p>
+ * Type: STRING
+ */
+]"
+"[EXTRA_PHONE_URIS = ""com.android.contacts.extra.PHONE_URIS""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used with {@link #ACTION_GET_MULTIPLE_PHONES} as the input or output value.
+ * <p>
+ * The phone numbers want to be picked by default should be passed in as
+ * input value. These phone numbers could belong to the contacts or not.
+ * <p>
+ * The phone numbers which were picked by the user are returned as output
+ * value.
+ * <p>
+ * Type: array of URIs, the tel URI is used for the phone numbers which don't
+ * belong to any contact, the content URI is used for phone id in contacts.
+ *
+ * @hide
+ */
+]"
+"[EXTRA_TARGET_RECT = ""target_rect""]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Optional extra used with {@link #SHOW_OR_CREATE_CONTACT} to specify a
+ * dialog location using screen coordinates. When not specified, the
+ * dialog will be centered.
+ *
+ * @hide
+ */
+]"
+"[EXTRA_MODE = ""mode""]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Optional extra used with {@link #SHOW_OR_CREATE_CONTACT} to specify a
+ * desired dialog style, usually a variation on size. One of
+ * {@link #MODE_SMALL}, {@link #MODE_MEDIUM}, or {@link #MODE_LARGE}.
+ *
+ * @hide
+ */
+]"
+"[MODE_SMALL = 1]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Value for {@link #EXTRA_MODE} to show a small-sized dialog.
+ *
+ * @hide
+ */
+]"
+"[MODE_MEDIUM = 2]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Value for {@link #EXTRA_MODE} to show a medium-sized dialog.
+ *
+ * @hide
+ */
+]"
+"[MODE_LARGE = 3]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Value for {@link #EXTRA_MODE} to show a large-sized dialog.
+ *
+ * @hide
+ */
+]"
+"[EXTRA_EXCLUDE_MIMES = ""exclude_mimes""]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Optional extra used with {@link #SHOW_OR_CREATE_CONTACT} to indicate
+ * a list of specific MIME-types to exclude and not display. Stored as a
+ * {@link String} array.
+ *
+ * @hide
+ */
+]"
+"[LIST_DEFAULT = ""com.android.contacts.action.LIST_DEFAULT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the default contacts list tab.
+ */
+]"
+"[LIST_GROUP_ACTION = ""com.android.contacts.action.LIST_GROUP""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the contacts list tab.
+ */
+]"
+"[GROUP_NAME_EXTRA_KEY = ""com.android.contacts.extra.GROUP""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * When in LIST_GROUP_ACTION mode, this is the group to display.
+ */
+]"
+"[LIST_ALL_CONTACTS_ACTION = ""com.android.contacts.action.LIST_ALL_CONTACTS""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the all contacts list tab.
+ */
+]"
+"[LIST_CONTACTS_WITH_PHONES_ACTION = ""com.android.contacts.action.LIST_CONTACTS_WITH_PHONES""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the contacts with phone numbers list tab.
+ */
+]"
+"[LIST_STARRED_ACTION = ""com.android.contacts.action.LIST_STARRED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the starred contacts list tab.
+ */
+]"
+"[LIST_FREQUENT_ACTION = ""com.android.contacts.action.LIST_FREQUENT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the frequent contacts list tab.
+ */
+]"
+"[LIST_STREQUENT_ACTION = ""com.android.contacts.action.LIST_STREQUENT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the ""strequent"" contacts list tab. It first lists the starred
+ * contacts in alphabetical order and then the frequent contacts in descending
+ * order of the number of times they have been contacted.
+ */
+]"
+"[TITLE_EXTRA_KEY = ""com.android.contacts.extra.TITLE_EXTRA""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A key for to be used as an intent extra to set the activity
+ * title to a custom String value.
+ */
+]"
+"[FILTER_CONTACTS_ACTION = ""com.android.contacts.action.FILTER_CONTACTS""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Activity Action: Display a filtered list of contacts
+ * <p>
+ * Input: Extra field {@link #FILTER_TEXT_EXTRA_KEY} is the text to use for
+ * filtering
+ * <p>
+ * Output: Nothing.
+ */
+]"
+"[FILTER_TEXT_EXTRA_KEY = ""com.android.contacts.extra.FILTER_TEXT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used as an int extra field in {@link #FILTER_CONTACTS_ACTION}
+ * intents to supply the text on which to filter.
+ */
+]"
+"[ACTION = Intent.ACTION_INSERT]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action code to use when adding a contact
+ */
+]"
+"[FULL_MODE = ""full_mode""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If present, forces a bypass of quick insert mode.
+ */
+]"
+"[NAME = ""name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact name.
+ * <P>Type: String</P>
+ */
+]"
+"[PHONETIC_NAME = ""phonetic_name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact phonetic name.
+ * <P>Type: String</P>
+ */
+]"
+"[COMPANY = ""company""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact company.
+ * <P>Type: String</P>
+ */
+]"
+"[JOB_TITLE = ""job_title""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact job title.
+ * <P>Type: String</P>
+ */
+]"
+"[NOTES = ""notes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact notes.
+ * <P>Type: String</P>
+ */
+]"
+"[PHONE = ""phone""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact phone number.
+ * <P>Type: String</P>
+ */
+]"
+"[PHONE_TYPE = ""phone_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact phone number type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Phone},
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[PHONE_ISPRIMARY = ""phone_isprimary""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the phone isprimary flag.
+ * <P>Type: boolean</P>
+ */
+]"
+"[SECONDARY_PHONE = ""secondary_phone""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional second contact phone number.
+ * <P>Type: String</P>
+ */
+]"
+"[SECONDARY_PHONE_TYPE = ""secondary_phone_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional second contact phone number type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Phone},
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[TERTIARY_PHONE = ""tertiary_phone""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional third contact phone number.
+ * <P>Type: String</P>
+ */
+]"
+"[TERTIARY_PHONE_TYPE = ""tertiary_phone_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional third contact phone number type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Phone},
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[EMAIL = ""email""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact email address.
+ * <P>Type: String</P>
+ */
+]"
+"[EMAIL_TYPE = ""email_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact email type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Email}
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[EMAIL_ISPRIMARY = ""email_isprimary""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the email isprimary flag.
+ * <P>Type: boolean</P>
+ */
+]"
+"[SECONDARY_EMAIL = ""secondary_email""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional second contact email address.
+ * <P>Type: String</P>
+ */
+]"
+"[SECONDARY_EMAIL_TYPE = ""secondary_email_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional second contact email type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Email}
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[TERTIARY_EMAIL = ""tertiary_email""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional third contact email address.
+ * <P>Type: String</P>
+ */
+]"
+"[TERTIARY_EMAIL_TYPE = ""tertiary_email_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional third contact email type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Email}
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[POSTAL = ""postal""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact postal address.
+ * <P>Type: String</P>
+ */
+]"
+"[POSTAL_TYPE = ""postal_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact postal address type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.StructuredPostal}
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[POSTAL_ISPRIMARY = ""postal_isprimary""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the postal isprimary flag.
+ * <P>Type: boolean</P>
+ */
+]"
+"[IM_HANDLE = ""im_handle""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an IM handle.
+ * <P>Type: String</P>
+ */
+]"
+"[IM_PROTOCOL = ""im_protocol""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the IM protocol
+ */
+]"
+"[IM_ISPRIMARY = ""im_isprimary""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the IM isprimary flag.
+ * <P>Type: boolean</P>
+ */
+]"
+"[DATA = ""data""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field that allows the client to supply multiple rows of
+ * arbitrary data for a single contact created using the {@link Intent#ACTION_INSERT}
+ * or edited using {@link Intent#ACTION_EDIT}. It is an ArrayList of
+ * {@link ContentValues}, one per data row. Supplying this extra is
+ * similar to inserting multiple rows into the {@link Data} table,
+ * except the user gets a chance to see and edit them before saving.
+ * Each ContentValues object must have a value for {@link Data#MIMETYPE}.
+ * If supplied values are not visible in the editor UI, they will be
+ * dropped.  Duplicate data will dropped.  Some fields
+ * like {@link CommonDataKinds.Email#TYPE Email.TYPE} may be automatically
+ * adjusted to comply with the constraints of the specific account type.
+ * For example, an Exchange contact can only have one phone numbers of type Home,
+ * so the contact editor may choose a different type for this phone number to
+ * avoid dropping the valueable part of the row, which is the phone number.
+ * <p>
+ * Example:
+ * <pre>
+ * ArrayList&lt;ContentValues&gt; data = new ArrayList&lt;ContentValues&gt;();
+ *
+ * ContentValues row1 = new ContentValues();
+ * row1.put(Data.MIMETYPE, Organization.CONTENT_ITEM_TYPE);
+ * row1.put(Organization.COMPANY, ""Android"");
+ * data.add(row1);
+ *
+ * ContentValues row2 = new ContentValues();
+ * row2.put(Data.MIMETYPE, Email.CONTENT_ITEM_TYPE);
+ * row2.put(Email.TYPE, Email.TYPE_CUSTOM);
+ * row2.put(Email.LABEL, ""Green Bot"");
+ * row2.put(Email.ADDRESS, ""android@android.com"");
+ * data.add(row2);
+ *
+ * Intent intent = new Intent(Intent.ACTION_INSERT, Contacts.CONTENT_URI);
+ * intent.putParcelableArrayListExtra(Insert.DATA, data);
+ *
+ * startActivity(intent);
+ * </pre>
+ */
+]"
+"[ACCOUNT = ""com.android.contacts.extra.ACCOUNT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used to specify the account in which to create the new contact.
+ * <p>
+ * If this value is not provided, the user is presented with a disambiguation
+ * dialog to chose an account
+ * <p>
+ * Type: {@link Account}
+ *
+ * @hide
+ */
+]"
+"[DATA_SET = ""com.android.contacts.extra.DATA_SET""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used to specify the data set within the account in which to create the
+ * new contact.
+ * <p>
+ * This value is optional - if it is not specified, the contact will be
+ * created in the base account, with no data set.
+ * <p>
+ * Type: String
+ *
+ * @hide
+ */
+]"
+"[SPLIT_PATTERN = Pattern.compile(""([\\w-\\.]+)@((?:[\\w]+\\.)+)([a-zA-Z]{2,4})|[\\w]+"")]","[]","[PRIVATE, STATIC]","Optional[/**
+ * Pattern for splitting a line into tokens.  This matches e-mail addresses as a single token,
+ * otherwise splitting on any group of non-alphanumeric characters.
+ *
+ * @hide
+ */
+]"
