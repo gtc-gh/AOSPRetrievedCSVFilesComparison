@@ -1,0 +1,2829 @@
+"Variable","Annotation","Modifier","Comment"
+"[TAG = ""BackupAgentHelper""]","[]","[STATIC, FINAL]","Optional.empty"
+"[mDispatcher = new BackupHelperDispatcher()]","[]","[]","Optional.empty"
+"[ZOOM_CONTROLS_TOUCH_PADDING = 20]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[mTouchPaddingScaledSq]","[]","[PRIVATE]","Optional.empty"
+"[mContext]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mWindowManager]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mAutoDismissControls = true]","[]","[PRIVATE]","Optional.empty"
+"[mOwnerView]","[]","[PRIVATE, FINAL]","Optional[/**
+ * The view that is being zoomed by this zoom controller.
+ */
+]"
+"[mOwnerViewRawLocation = new int[2]]","[]","[PRIVATE, FINAL]","Optional[/**
+ * The location of the owner view on the screen. This is recalculated
+ * each time the zoom controller is shown.
+ */
+]"
+"[mContainer]","[]","[PRIVATE, FINAL]","Optional[/**
+ * The container that is added as a window.
+ */
+]"
+"[mContainerLayoutParams]","[]","[PRIVATE]","Optional.empty"
+"[mContainerRawLocation = new int[2]]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mControls]","[]","[PRIVATE]","Optional.empty"
+"[mTouchTargetView]","[]","[PRIVATE]","Optional[/**
+ * The view (or null) that should receive touch events. This will get set if
+ * the touch down hits the container. It will be reset on the touch up.
+ */
+]"
+"[mTouchTargetWindowLocation = new int[2]]","[]","[PRIVATE, FINAL]","Optional[/**
+ * The {@link #mTouchTargetView}'s location in window, set on touch down.
+ */
+]"
+"[mReleaseTouchListenerOnUp]","[]","[PRIVATE]","Optional[/**
+ * If the zoom controller is dismissed but the user is still in a touch
+ * interaction, we set this to true. This will ignore all touch events until
+ * up/cancel, and then set the owner's touch listener to null.
+ * <p>
+ * Otherwise, the owner view would get mismatched events (i.e., touch move
+ * even though it never got the touch down.)
+ */
+]"
+"[mIsVisible]","[]","[PRIVATE]","Optional[/**
+ * Whether the container has been added to the window manager.
+ */
+]"
+"[mTempRect = new Rect()]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mTempIntArray = new int[2]]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mCallback]","[]","[PRIVATE]","Optional.empty"
+"[mPostedVisibleInitializer]","[]","[PRIVATE]","Optional[/**
+ * When showing the zoom, we add the view as a new window. However, there is
+ * logic that needs to know the size of the zoom which is determined after
+ * it's laid out. Therefore, we must post this logic onto the UI thread so
+ * it will be exceuted AFTER the layout. This is the logic.
+ */
+]"
+"[mConfigurationChangedFilter = new IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED)]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mConfigurationChangedReceiver = new BroadcastReceiver() {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (!mIsVisible)
+            return;
+        mHandler.removeMessages(MSG_POST_CONFIGURATION_CHANGED);
+        mHandler.sendEmptyMessage(MSG_POST_CONFIGURATION_CHANGED);
+    }
+}]","[]","[PRIVATE, FINAL]","Optional[/**
+ * Needed to reposition the zoom controls after configuration changes.
+ */
+]"
+"[MSG_POST_CONFIGURATION_CHANGED = 2]","[]","[PRIVATE, STATIC, FINAL]","Optional[/**
+ * When configuration changes, this is called after the UI thread is idle.
+ */
+]"
+"[MSG_DISMISS_ZOOM_CONTROLS = 3]","[]","[PRIVATE, STATIC, FINAL]","Optional[/**
+ * Used to delay the zoom controller dismissal.
+ */
+]"
+"[MSG_POST_SET_VISIBLE = 4]","[]","[PRIVATE, STATIC, FINAL]","Optional[/**
+ * If setVisible(true) is called and the owner view's window token is null,
+ * we delay the setVisible(true) call until it is not null.
+ */
+]"
+"[mHandler = new Handler() {
+
+    @Override
+    public void handleMessage(Message msg) {
+        switch(msg.what) {
+            case MSG_POST_CONFIGURATION_CHANGED:
+                onPostConfigurationChanged();
+                break;
+            case MSG_DISMISS_ZOOM_CONTROLS:
+                setVisible(false);
+                break;
+            case MSG_POST_SET_VISIBLE:
+                if (mOwnerView.getWindowToken() == null) {
+                    // Doh, it is still null, just ignore the set visible call
+                    Log.e(TAG, ""Cannot make the zoom controller visible if the owner view is "" + ""not attached to a window."");
+                } else {
+                    setVisible(true);
+                }
+                break;
+        }
+    }
+}]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[ELLIPSIS_COUNT = 4]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[COLUMNS_ELLIPSIZE = 5]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[START_MASK = 0x1FFFFFFF]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[DIR_SHIFT = 30]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[TAB_MASK = 0x20000000]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[ELLIPSIS_UNDEFINED = 0x80000000]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[CREATOR = new Parcelable.Creator<Keyphrase>() {
+
+    public Keyphrase createFromParcel(Parcel in) {
+        return Keyphrase.fromParcel(in);
+    }
+
+    public Keyphrase[] newArray(int size) {
+        return new Keyphrase[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[keyphrases]","[]","[PUBLIC, FINAL]","Optional[// keyword phrases in model
+]"
+"[CREATOR = new Parcelable.Creator<KeyphraseSoundModel>() {
+
+    public KeyphraseSoundModel createFromParcel(Parcel in) {
+        return KeyphraseSoundModel.fromParcel(in);
+    }
+
+    public KeyphraseSoundModel[] newArray(int size) {
+        return new KeyphraseSoundModel[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[RECOGNITION_MODE_VOICE_TRIGGER = 0x1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Simple recognition of the key phrase
+ */
+]"
+"[RECOGNITION_MODE_USER_IDENTIFICATION = 0x2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Trigger only if one user is identified
+ */
+]"
+"[RECOGNITION_MODE_USER_AUTHENTICATION = 0x4]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Trigger only if one user is authenticated
+ */
+]"
+"[RECOGNITION_STATUS_SUCCESS = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Recognition success
+ */
+]"
+"[RECOGNITION_STATUS_ABORT = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Recognition aborted (e.g. capture preempted by anotehr use case
+ */
+]"
+"[RECOGNITION_STATUS_FAILURE = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Recognition failure
+ */
+]"
+"[status]","[]","[PUBLIC, FINAL]","Optional[/**
+ * Recognition status e.g {@link #RECOGNITION_STATUS_SUCCESS}
+ */
+]"
+"[soundModelHandle]","[]","[PUBLIC, FINAL]","Optional[/**
+ * Sound Model corresponding to this event callback
+ */
+]"
+"[captureAvailable]","[]","[PUBLIC, FINAL]","Optional[/**
+ * True if it is possible to capture audio from this utterance buffered by the hardware
+ */
+]"
+"[captureSession]","[]","[PUBLIC, FINAL]","Optional[/**
+ * Audio session ID to be used when capturing the utterance with an AudioRecord
+ * if captureAvailable() is true.
+ */
+]"
+"[captureDelayMs]","[]","[PUBLIC, FINAL]","Optional[/**
+ * Delay in ms between end of model detection and start of audio available for capture.
+ * A negative value is possible (e.g. if keyphrase is also available for capture)
+ */
+]"
+"[capturePreambleMs]","[]","[PUBLIC, FINAL]","Optional[/**
+ * Duration in ms of audio captured before the start of the trigger. 0 if none.
+ */
+]"
+"[triggerInData]","[]","[PUBLIC, FINAL]","Optional[/**
+ * True if  the trigger (key phrase capture is present in binary data
+ */
+]"
+"[captureFormat]","[]","[PUBLIC]","Optional[/**
+ * Audio format of either the trigger in event data or to use for capture of the
+ * rest of the utterance
+ */
+]"
+"[data]","[]","[PUBLIC, FINAL]","Optional[/**
+ * Opaque data for use by system applications who know about voice engine internals,
+ * typically during enrollment.
+ */
+]"
+"[CREATOR = new Parcelable.Creator<RecognitionEvent>() {
+
+    public RecognitionEvent createFromParcel(Parcel in) {
+        return RecognitionEvent.fromParcel(in);
+    }
+
+    public RecognitionEvent[] newArray(int size) {
+        return new RecognitionEvent[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[captureRequested]","[]","[PUBLIC, FINAL]","Optional[/**
+ * True if the DSP should capture the trigger sound and make it available for further
+ * capture.
+ */
+]"
+"[allowMultipleTriggers]","[]","[PUBLIC, FINAL]","Optional[/**
+ * True if the service should restart listening after the DSP triggers.
+ * Note: This config flag is currently used at the service layer rather than by the DSP.
+ */
+]"
+"[keyphrases]","[]","[PUBLIC, FINAL]","Optional[/**
+ * List of all keyphrases in the sound model for which recognition should be performed with
+ * options for each keyphrase.
+ */
+]"
+"[data]","[]","[PUBLIC, FINAL]","Optional[/**
+ * Opaque data for use by system applications who know about voice engine internals,
+ * typically during enrollment.
+ */
+]"
+"[CREATOR = new Parcelable.Creator<RecognitionConfig>() {
+
+    public RecognitionConfig createFromParcel(Parcel in) {
+        return RecognitionConfig.fromParcel(in);
+    }
+
+    public RecognitionConfig[] newArray(int size) {
+        return new RecognitionConfig[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[userId]","[]","[PUBLIC, FINAL]","Optional.empty"
+"[confidenceLevel]","[]","[PUBLIC, FINAL]","Optional.empty"
+"[CREATOR = new Parcelable.Creator<ConfidenceLevel>() {
+
+    public ConfidenceLevel createFromParcel(Parcel in) {
+        return ConfidenceLevel.fromParcel(in);
+    }
+
+    public ConfidenceLevel[] newArray(int size) {
+        return new ConfidenceLevel[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[id]","[]","[PUBLIC, FINAL]","Optional[/**
+ * The keyphrase ID
+ */
+]"
+"[recognitionModes]","[]","[PUBLIC, FINAL]","Optional[/**
+ * Recognition modes matched for this event
+ */
+]"
+"[coarseConfidenceLevel]","[]","[PUBLIC, FINAL]","Optional[/**
+ * Confidence level for mode RECOGNITION_MODE_VOICE_TRIGGER when user identification
+ * is not performed
+ */
+]"
+"[confidenceLevels]","[]","[PUBLIC, FINAL]","Optional[/**
+ * Confidence levels for all users recognized (KeyphraseRecognitionEvent) or to
+ * be recognized (RecognitionConfig)
+ */
+]"
+"[CREATOR = new Parcelable.Creator<KeyphraseRecognitionExtra>() {
+
+    public KeyphraseRecognitionExtra createFromParcel(Parcel in) {
+        return KeyphraseRecognitionExtra.fromParcel(in);
+    }
+
+    public KeyphraseRecognitionExtra[] newArray(int size) {
+        return new KeyphraseRecognitionExtra[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[keyphraseExtras]","[]","[PUBLIC, FINAL]","Optional[/**
+ * Indicates if the key phrase is present in the buffered audio available for capture
+ */
+]"
+"[CREATOR = new Parcelable.Creator<KeyphraseRecognitionEvent>() {
+
+    public KeyphraseRecognitionEvent createFromParcel(Parcel in) {
+        return KeyphraseRecognitionEvent.fromParcel(in);
+    }
+
+    public KeyphraseRecognitionEvent[] newArray(int size) {
+        return new KeyphraseRecognitionEvent[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SOUNDMODEL_STATUS_UPDATED = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Sound Model was updated
+ */
+]"
+"[status]","[]","[PUBLIC, FINAL]","Optional[/**
+ * Status e.g {@link #SOUNDMODEL_STATUS_UPDATED}
+ */
+]"
+"[soundModelHandle]","[]","[PUBLIC, FINAL]","Optional[/**
+ * The updated sound model handle
+ */
+]"
+"[data]","[]","[PUBLIC, FINAL]","Optional[/**
+ * New sound model data
+ */
+]"
+"[CREATOR = new Parcelable.Creator<SoundModelEvent>() {
+
+    public SoundModelEvent createFromParcel(Parcel in) {
+        return SoundModelEvent.fromParcel(in);
+    }
+
+    public SoundModelEvent[] newArray(int size) {
+        return new SoundModelEvent[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SERVICE_STATE_ENABLED = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Sound trigger service is enabled
+ */
+]"
+"[SERVICE_STATE_DISABLED = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Sound trigger service is disabled
+ */
+]"
+"[mIsSingleChoice]","[]","[PUBLIC]","Optional.empty"
+"[mCheckedItem = -1]","[]","[PUBLIC]","Optional.empty"
+"[mOnCheckboxClickListener]","[]","[PUBLIC]","Optional.empty"
+"[mCursor]","[]","[PUBLIC]","Optional.empty"
+"[mLabelColumn]","[]","[PUBLIC]","Optional.empty"
+"[mIsCheckedColumn]","[]","[PUBLIC]","Optional.empty"
+"[mForceInverseBackground]","[]","[PUBLIC]","Optional.empty"
+"[mOnItemSelectedListener]","[]","[PUBLIC]","Optional.empty"
+"[mOnPrepareListViewListener]","[]","[PUBLIC]","Optional.empty"
+"[mRecycleOnMeasure = true]","[]","[PUBLIC]","Optional.empty"
+"[mLabelIndex]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mIsCheckedIndex]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[TONEMAP_MODE = new Key<Integer>(""android.tonemap.mode"", int.class)]","[@PublicKey]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>High-level global contrast/gamma/tonemapping control.</p>
+ * <p>When switching to an application-defined contrast curve by setting
+ * {@link CaptureRequest#TONEMAP_MODE android.tonemap.mode} to CONTRAST_CURVE, the curve is defined
+ * per-channel with a set of <code>(in, out)</code> points that specify the
+ * mapping from input high-bit-depth pixel value to the output
+ * low-bit-depth value.  Since the actual pixel ranges of both input
+ * and output may change depending on the camera pipeline, the values
+ * are specified by normalized floating-point numbers.</p>
+ * <p>More-complex color mapping operations such as 3D color look-up
+ * tables, selective chroma enhancement, or other non-linear color
+ * transforms will be disabled when {@link CaptureRequest#TONEMAP_MODE android.tonemap.mode} is
+ * CONTRAST_CURVE.</p>
+ * <p>When using either FAST or HIGH_QUALITY, the camera device will
+ * emit its own tonemap curve in {@link CaptureRequest#TONEMAP_CURVE android.tonemap.curve}.
+ * These values are always available, and as close as possible to the
+ * actually used nonlinear/nonglobal transforms.</p>
+ * <p>If a request is sent with CONTRAST_CURVE with the camera device's
+ * provided curve in FAST or HIGH_QUALITY, the image's tonemap will be
+ * roughly the same.</p>
+ * <p><b>Possible values:</b>
+ * <ul>
+ * <li>{@link #TONEMAP_MODE_CONTRAST_CURVE CONTRAST_CURVE}</li>
+ * <li>{@link #TONEMAP_MODE_FAST FAST}</li>
+ * <li>{@link #TONEMAP_MODE_HIGH_QUALITY HIGH_QUALITY}</li>
+ * </ul></p>
+ * <p><b>Available values for this device:</b><br>
+ * {@link CameraCharacteristics#TONEMAP_AVAILABLE_TONE_MAP_MODES android.tonemap.availableToneMapModes}</p>
+ * <p><b>Optional</b> - This value may be {@code null} on some devices.</p>
+ * <p><b>Full capability</b> -
+ * Present on all camera devices that report being {@link CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL_FULL HARDWARE_LEVEL_FULL} devices in the
+ * {@link CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL android.info.supportedHardwareLevel} key</p>
+ *
+ * @see CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL
+ * @see CameraCharacteristics#TONEMAP_AVAILABLE_TONE_MAP_MODES
+ * @see CaptureRequest#TONEMAP_CURVE
+ * @see CaptureRequest#TONEMAP_MODE
+ * @see #TONEMAP_MODE_CONTRAST_CURVE
+ * @see #TONEMAP_MODE_FAST
+ * @see #TONEMAP_MODE_HIGH_QUALITY
+ */
+]"
+"[LED_TRANSMIT = new Key<Boolean>(""android.led.transmit"", boolean.class)]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>This LED is nominally used to indicate to the user
+ * that the camera is powered on and may be streaming images back to the
+ * Application Processor. In certain rare circumstances, the OS may
+ * disable this when video is processed locally and not transmitted to
+ * any untrusted applications.</p>
+ * <p>In particular, the LED <em>must</em> always be on when the data could be
+ * transmitted off the device. The LED <em>should</em> always be on whenever
+ * data is stored locally on the device.</p>
+ * <p>The LED <em>may</em> be off if a trusted application is using the data that
+ * doesn't violate the above rules.</p>
+ * <p><b>Optional</b> - This value may be {@code null} on some devices.</p>
+ * @hide
+ */
+]"
+"[BLACK_LEVEL_LOCK = new Key<Boolean>(""android.blackLevel.lock"", boolean.class)]","[@PublicKey]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>Whether black-level compensation is locked
+ * to its current values, or is free to vary.</p>
+ * <p>Whether the black level offset was locked for this frame.  Should be
+ * ON if {@link CaptureRequest#BLACK_LEVEL_LOCK android.blackLevel.lock} was ON in the capture request, unless
+ * a change in other capture settings forced the camera device to
+ * perform a black level reset.</p>
+ * <p><b>Optional</b> - This value may be {@code null} on some devices.</p>
+ * <p><b>Full capability</b> -
+ * Present on all camera devices that report being {@link CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL_FULL HARDWARE_LEVEL_FULL} devices in the
+ * {@link CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL android.info.supportedHardwareLevel} key</p>
+ *
+ * @see CaptureRequest#BLACK_LEVEL_LOCK
+ * @see CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL
+ */
+]"
+"[SYNC_FRAME_NUMBER = new Key<Long>(""android.sync.frameNumber"", long.class)]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>The frame number corresponding to the last request
+ * with which the output result (metadata + buffers) has been fully
+ * synchronized.</p>
+ * <p>When a request is submitted to the camera device, there is usually a
+ * delay of several frames before the controls get applied. A camera
+ * device may either choose to account for this delay by implementing a
+ * pipeline and carefully submit well-timed atomic control updates, or
+ * it may start streaming control changes that span over several frame
+ * boundaries.</p>
+ * <p>In the latter case, whenever a request's settings change relative to
+ * the previous submitted request, the full set of changes may take
+ * multiple frame durations to fully take effect. Some settings may
+ * take effect sooner (in less frame durations) than others.</p>
+ * <p>While a set of control changes are being propagated, this value
+ * will be CONVERGING.</p>
+ * <p>Once it is fully known that a set of control changes have been
+ * finished propagating, and the resulting updated control settings
+ * have been read back by the camera device, this value will be set
+ * to a non-negative frame number (corresponding to the request to
+ * which the results have synchronized to).</p>
+ * <p>Older camera device implementations may not have a way to detect
+ * when all camera controls have been applied, and will always set this
+ * value to UNKNOWN.</p>
+ * <p>FULL capability devices will always have this value set to the
+ * frame number of the request corresponding to this result.</p>
+ * <p><em>Further details</em>:</p>
+ * <ul>
+ * <li>Whenever a request differs from the last request, any future
+ * results not yet returned may have this value set to CONVERGING (this
+ * could include any in-progress captures not yet returned by the camera
+ * device, for more details see pipeline considerations below).</li>
+ * <li>Submitting a series of multiple requests that differ from the
+ * previous request (e.g. r1, r2, r3 s.t. r1 != r2 != r3)
+ * moves the new synchronization frame to the last non-repeating
+ * request (using the smallest frame number from the contiguous list of
+ * repeating requests).</li>
+ * <li>Submitting the same request repeatedly will not change this value
+ * to CONVERGING, if it was already a non-negative value.</li>
+ * <li>When this value changes to non-negative, that means that all of the
+ * metadata controls from the request have been applied, all of the
+ * metadata controls from the camera device have been read to the
+ * updated values (into the result), and all of the graphics buffers
+ * corresponding to this result are also synchronized to the request.</li>
+ * </ul>
+ * <p><em>Pipeline considerations</em>:</p>
+ * <p>Submitting a request with updated controls relative to the previously
+ * submitted requests may also invalidate the synchronization state
+ * of all the results corresponding to currently in-flight requests.</p>
+ * <p>In other words, results for this current request and up to
+ * {@link CameraCharacteristics#REQUEST_PIPELINE_MAX_DEPTH android.request.pipelineMaxDepth} prior requests may have their
+ * android.sync.frameNumber change to CONVERGING.</p>
+ * <p><b>Possible values:</b>
+ * <ul>
+ * <li>{@link #SYNC_FRAME_NUMBER_CONVERGING CONVERGING}</li>
+ * <li>{@link #SYNC_FRAME_NUMBER_UNKNOWN UNKNOWN}</li>
+ * </ul></p>
+ * <p><b>Available values for this device:</b><br>
+ * Either a non-negative value corresponding to a
+ * <code>frame_number</code>, or one of the two enums (CONVERGING / UNKNOWN).</p>
+ * <p>This key is available on all devices.</p>
+ *
+ * @see CameraCharacteristics#REQUEST_PIPELINE_MAX_DEPTH
+ * @see #SYNC_FRAME_NUMBER_CONVERGING
+ * @see #SYNC_FRAME_NUMBER_UNKNOWN
+ * @hide
+ */
+]"
+"[mAudioOnNesting]","[]","[]","Optional.empty"
+"[mAudioOnTimer]","[]","[]","Optional.empty"
+"[mVideoOnNesting]","[]","[]","Optional.empty"
+"[mVideoOnTimer]","[]","[]","Optional.empty"
+"[mFlashlightOn]","[]","[]","Optional.empty"
+"[mFlashlightOnTimer]","[]","[]","Optional.empty"
+"[mPhoneSignalStrengthBin = -1]","[]","[]","Optional.empty"
+"[mPhoneSignalStrengthBinRaw = -1]","[]","[]","Optional.empty"
+"[mPhoneSignalStrengthsTimer = new StopwatchTimer[SignalStrength.NUM_SIGNAL_STRENGTH_BINS]]","[]","[FINAL]","Optional.empty"
+"[mPhoneSignalScanningTimer]","[]","[]","Optional.empty"
+"[mPhoneDataConnectionType = -1]","[]","[]","Optional.empty"
+"[mPhoneDataConnectionsTimer = new StopwatchTimer[NUM_DATA_CONNECTION_TYPES]]","[]","[FINAL]","Optional.empty"
+"[mNetworkByteActivityCounters = new LongSamplingCounter[NUM_NETWORK_ACTIVITY_TYPES]]","[]","[FINAL]","Optional.empty"
+"[mNetworkPacketActivityCounters = new LongSamplingCounter[NUM_NETWORK_ACTIVITY_TYPES]]","[]","[FINAL]","Optional.empty"
+"[mWifiOn]","[]","[]","Optional.empty"
+"[mWifiOnTimer]","[]","[]","Optional.empty"
+"[mGlobalWifiRunning]","[]","[]","Optional.empty"
+"[mGlobalWifiRunningTimer]","[]","[]","Optional.empty"
+"[mWifiState = -1]","[]","[]","Optional.empty"
+"[mWifiStateTimer = new StopwatchTimer[NUM_WIFI_STATES]]","[]","[FINAL]","Optional.empty"
+"[mWifiSupplState = -1]","[]","[]","Optional.empty"
+"[mWifiSupplStateTimer = new StopwatchTimer[NUM_WIFI_SUPPL_STATES]]","[]","[FINAL]","Optional.empty"
+"[mWifiSignalStrengthBin = -1]","[]","[]","Optional.empty"
+"[mWifiSignalStrengthsTimer = new StopwatchTimer[NUM_WIFI_SIGNAL_STRENGTH_BINS]]","[]","[FINAL]","Optional.empty"
+"[mBluetoothOn]","[]","[]","Optional.empty"
+"[mBluetoothOnTimer]","[]","[]","Optional.empty"
+"[mBluetoothState = -1]","[]","[]","Optional.empty"
+"[mBluetoothStateTimer = new StopwatchTimer[NUM_BLUETOOTH_STATES]]","[]","[FINAL]","Optional.empty"
+"[mMobileRadioPowerState = DataConnectionRealTimeInfo.DC_POWER_STATE_LOW]","[]","[]","Optional.empty"
+"[mMobileRadioActiveStartTime]","[]","[]","Optional.empty"
+"[mMobileRadioActiveTimer]","[]","[]","Optional.empty"
+"[mMobileRadioActivePerAppTimer]","[]","[]","Optional.empty"
+"[mMobileRadioActiveAdjustedTime]","[]","[]","Optional.empty"
+"[mMobileRadioActiveUnknownTime]","[]","[]","Optional.empty"
+"[mMobileRadioActiveUnknownCount]","[]","[]","Optional.empty"
+"[mBtHeadset]","[]","[]","Optional[/**
+ * Bluetooth headset object
+ */
+]"
+"[mOnBattery]","[]","[]","Optional[/**
+ * These provide time bases that discount the time the device is plugged
+ * in to power.
+ */
+]"
+"[mOnBatteryInternal]","[]","[]","Optional.empty"
+"[mDischargeStartLevel]","[]","[]","Optional[/*
+     * These keep track of battery levels (1-100) at the last plug event and the last unplug event.
+     */
+]"
+"[mDischargeUnplugLevel]","[]","[]","Optional.empty"
+"[mDischargePlugLevel]","[]","[]","Optional.empty"
+"[mDischargeCurrentLevel]","[]","[]","Optional.empty"
+"[mCurrentBatteryLevel]","[]","[]","Optional.empty"
+"[mLowDischargeAmountSinceCharge]","[]","[]","Optional.empty"
+"[mHighDischargeAmountSinceCharge]","[]","[]","Optional.empty"
+"[mDischargeScreenOnUnplugLevel]","[]","[]","Optional.empty"
+"[mDischargeScreenOffUnplugLevel]","[]","[]","Optional.empty"
+"[mDischargeAmountScreenOn]","[]","[]","Optional.empty"
+"[mDischargeAmountScreenOnSinceCharge]","[]","[]","Optional.empty"
+"[mDischargeAmountScreenOff]","[]","[]","Optional.empty"
+"[mDischargeAmountScreenOffSinceCharge]","[]","[]","Optional.empty"
+"[MAX_LEVEL_STEPS = 200]","[]","[STATIC, FINAL]","Optional.empty"
+"[mInitStepMode = 0]","[]","[]","Optional.empty"
+"[mCurStepMode = 0]","[]","[]","Optional.empty"
+"[mModStepMode = 0]","[]","[]","Optional.empty"
+"[mLastDischargeStepLevel]","[]","[]","Optional.empty"
+"[mLastDischargeStepTime]","[]","[]","Optional.empty"
+"[mMinDischargeStepLevel]","[]","[]","Optional.empty"
+"[mNumDischargeStepDurations]","[]","[]","Optional.empty"
+"[mDischargeStepDurations = new long[MAX_LEVEL_STEPS]]","[]","[FINAL]","Optional.empty"
+"[mLastChargeStepLevel]","[]","[]","Optional.empty"
+"[mLastChargeStepTime]","[]","[]","Optional.empty"
+"[mMaxChargeStepLevel]","[]","[]","Optional.empty"
+"[mNumChargeStepDurations]","[]","[]","Optional.empty"
+"[mChargeStepDurations = new long[MAX_LEVEL_STEPS]]","[]","[FINAL]","Optional.empty"
+"[mLastWriteTime = 0]","[]","[]","Optional[// Milliseconds
+]"
+"[mBluetoothPingCount]","[]","[PRIVATE]","Optional.empty"
+"[mBluetoothPingStart = -1]","[]","[PRIVATE]","Optional.empty"
+"[mPhoneServiceState = -1]","[]","[PRIVATE]","Optional.empty"
+"[mPhoneServiceStateRaw = -1]","[]","[PRIVATE]","Optional.empty"
+"[mPhoneSimStateRaw = -1]","[]","[PRIVATE]","Optional.empty"
+"[mNumConnectivityChange]","[]","[PRIVATE]","Optional.empty"
+"[mLoadedNumConnectivityChange]","[]","[PRIVATE]","Optional.empty"
+"[mUnpluggedNumConnectivityChange]","[]","[PRIVATE]","Optional.empty"
+"[mKernelWakelockStats = new HashMap<String, SamplingTimer>()]","[]","[PRIVATE, FINAL]","Optional[/*
+     * Holds a SamplingTimer associated with each kernel wakelock name being tracked.
+     */
+]"
+"[sKernelWakelockUpdateVersion = 0]","[]","[PRIVATE, STATIC]","Optional.empty"
+"[mLastWakeupReason = null]","[]","[]","Optional.empty"
+"[mLastWakeupUptimeMs = 0]","[]","[]","Optional.empty"
+"[mWakeupReasonStats = new HashMap<>()]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[PROC_WAKELOCKS_FORMAT = new int[] { // 0: name
+Process.PROC_TAB_TERM | Process.PROC_OUT_STRING | Process.PROC_QUOTES, // 1: count
+Process.PROC_TAB_TERM | Process.PROC_OUT_LONG, Process.PROC_TAB_TERM, Process.PROC_TAB_TERM, Process.PROC_TAB_TERM, // 5: totalTime
+Process.PROC_TAB_TERM | Process.PROC_OUT_LONG }]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[WAKEUP_SOURCES_FORMAT = new int[] { // 0: name
+Process.PROC_TAB_TERM | Process.PROC_OUT_STRING, Process.PROC_TAB_TERM | Process.PROC_COMBINE | // 1: count
+Process.PROC_OUT_LONG, Process.PROC_TAB_TERM | Process.PROC_COMBINE, Process.PROC_TAB_TERM | Process.PROC_COMBINE, Process.PROC_TAB_TERM | Process.PROC_COMBINE, Process.PROC_TAB_TERM | Process.PROC_COMBINE, Process.PROC_TAB_TERM | Process.PROC_COMBINE | // 6: totalTime
+Process.PROC_OUT_LONG }]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[mProcWakelocksName = new String[3]]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mProcWakelocksData = new long[3]]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mProcWakelockFileStats = new HashMap<String, KernelWakelockStats>()]","[]","[PRIVATE, FINAL]","Optional[/*
+     * Used as a buffer for reading in data from /proc/wakelocks before it is processed and added
+     * to mKernelWakelockStats.
+     */
+]"
+"[mNetworkStatsFactory = new NetworkStatsFactory()]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mCurMobileSnapshot = new NetworkStats(SystemClock.elapsedRealtime(), 50)]","[]","[PRIVATE]","Optional.empty"
+"[mLastMobileSnapshot = new NetworkStats(SystemClock.elapsedRealtime(), 50)]","[]","[PRIVATE]","Optional.empty"
+"[mCurWifiSnapshot = new NetworkStats(SystemClock.elapsedRealtime(), 50)]","[]","[PRIVATE]","Optional.empty"
+"[mLastWifiSnapshot = new NetworkStats(SystemClock.elapsedRealtime(), 50)]","[]","[PRIVATE]","Optional.empty"
+"[mTmpNetworkStats]","[]","[PRIVATE]","Optional.empty"
+"[mTmpNetworkStatsEntry = new NetworkStats.Entry()]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mMobileIfaces = new String[0]]","[@GuardedBy(""this"")]","[PRIVATE]","Optional.empty"
+"[mWifiIfaces = new String[0]]","[@GuardedBy(""this"")]","[PRIVATE]","Optional.empty"
+"[mObservers = new ArrayList<TimeBaseObs>()]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mUptime]","[]","[PRIVATE]","Optional.empty"
+"[mRealtime]","[]","[PRIVATE]","Optional.empty"
+"[mRunning]","[]","[PRIVATE]","Optional.empty"
+"[mPastUptime]","[]","[PRIVATE]","Optional.empty"
+"[mUptimeStart]","[]","[PRIVATE]","Optional.empty"
+"[mPastRealtime]","[]","[PRIVATE]","Optional.empty"
+"[mRealtimeStart]","[]","[PRIVATE]","Optional.empty"
+"[mUnpluggedUptime]","[]","[PRIVATE]","Optional.empty"
+"[mUnpluggedRealtime]","[]","[PRIVATE]","Optional.empty"
+"[mCount = new AtomicInteger()]","[]","[FINAL]","Optional.empty"
+"[mTimeBase]","[]","[FINAL]","Optional.empty"
+"[mLoadedCount]","[]","[]","Optional.empty"
+"[mLastCount]","[]","[]","Optional.empty"
+"[mUnpluggedCount]","[]","[]","Optional.empty"
+"[mPluggedCount]","[]","[]","Optional.empty"
+"[mTimeBase]","[]","[FINAL]","Optional.empty"
+"[mCount]","[]","[]","Optional.empty"
+"[mLoadedCount]","[]","[]","Optional.empty"
+"[mLastCount]","[]","[]","Optional.empty"
+"[mUnpluggedCount]","[]","[]","Optional.empty"
+"[mPluggedCount]","[]","[]","Optional.empty"
+"[mType]","[]","[FINAL]","Optional.empty"
+"[mTimeBase]","[]","[FINAL]","Optional.empty"
+"[mCount]","[]","[]","Optional.empty"
+"[mLoadedCount]","[]","[]","Optional.empty"
+"[mLastCount]","[]","[]","Optional.empty"
+"[mUnpluggedCount]","[]","[]","Optional.empty"
+"[mTotalTime]","[]","[]","Optional[/**
+ * The total time we have accumulated since the start of the original
+ * boot, to the last time something interesting happened in the
+ * current run.
+ */
+]"
+"[mLoadedTime]","[]","[]","Optional[/**
+ * The total time we loaded for the previous runs.  Subtract this from
+ * mTotalTime to find the time for the current run of the system.
+ */
+]"
+"[mLastTime]","[]","[]","Optional[/**
+ * The run time of the last run of the system, as loaded from the
+ * saved data.
+ */
+]"
+"[mUnpluggedTime]","[]","[]","Optional[/**
+ * The value of mTotalTime when unplug() was last called.  Subtract
+ * this from mTotalTime to find the time since the last unplug from
+ * power.
+ */
+]"
+"[mCurrentReportedCount]","[]","[]","Optional[/**
+ * The most recent reported count from /proc/wakelocks.
+ */
+]"
+"[mUnpluggedReportedCount]","[]","[]","Optional[/**
+ * The reported count from /proc/wakelocks when unplug() was last
+ * called.
+ */
+]"
+"[mCurrentReportedTotalTime]","[]","[]","Optional[/**
+ * The most recent reported total_time from /proc/wakelocks.
+ */
+]"
+"[mUnpluggedReportedTotalTime]","[]","[]","Optional[/**
+ * The reported total_time from /proc/wakelocks when unplug() was last
+ * called.
+ */
+]"
+"[mTimeBaseRunning]","[]","[]","Optional[/**
+ * Whether we are currently in a discharge cycle.
+ */
+]"
+"[mTrackingReportedValues]","[]","[]","Optional[/**
+ * Whether we are currently recording reported values.
+ */
+]"
+"[mUpdateVersion]","[]","[]","Optional[/*
+         * A sequence counter, incremented once for each update of the stats.
+         */
+]"
+"[mUid]","[]","[FINAL]","Optional.empty"
+"[mLastAddedTime]","[]","[]","Optional[/**
+ * The last time at which we updated the timer.  This is in elapsed realtime microseconds.
+ */
+]"
+"[mLastAddedDuration]","[]","[]","Optional[/**
+ * The last duration that we added to the timer.  This is in microseconds.
+ */
+]"
+"[mInDischarge]","[]","[]","Optional[/**
+ * Whether we are currently in a discharge cycle.
+ */
+]"
+"[mUid]","[]","[FINAL]","Optional.empty"
+"[mTimerPool]","[]","[FINAL]","Optional.empty"
+"[mNesting]","[]","[]","Optional.empty"
+"[mUpdateTime]","[]","[]","Optional[/**
+ * The last time at which we updated the timer.  If mNesting is > 0,
+ * subtract this from the current battery time to find the amount of
+ * time we have been running since we last computed an update.
+ */
+]"
+"[mAcquireTime]","[]","[]","Optional[/**
+ * The total time at which the timer was acquired, to determine if it
+ * was actually held for an interesting duration.
+ */
+]"
+"[mTimeout]","[]","[]","Optional.empty"
+"[mInList]","[]","[]","Optional[/**
+ * For partial wake locks, keep track of whether we are in the list
+ * to consume CPU cycles.
+ */
+]"
+"[OVERFLOW_NAME = ""*overflow*""]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[mMap = new ArrayMap<>()]","[]","[FINAL]","Optional.empty"
+"[mCurOverflow]","[]","[]","Optional.empty"
+"[mActiveOverflow]","[]","[]","Optional.empty"
+"[mCount]","[]","[PUBLIC]","Optional.empty"
+"[mTotalTime]","[]","[PUBLIC]","Optional.empty"
+"[mVersion]","[]","[PUBLIC]","Optional.empty"
+"[DELTA_TIME_MASK = 0x7ffff]","[]","[STATIC, FINAL]","Optional[// Part of initial delta int that specifies the time delta.
+]"
+"[DELTA_TIME_LONG = 0x7ffff]","[]","[STATIC, FINAL]","Optional[// The delta is a following long
+]"
+"[DELTA_TIME_INT = 0x7fffe]","[]","[STATIC, FINAL]","Optional[// The delta is a following int
+]"
+"[DELTA_TIME_ABS = 0x7fffd]","[]","[STATIC, FINAL]","Optional[// Following is an entire abs update.
+]"
+"[DELTA_BATTERY_LEVEL_FLAG = 0x00080000]","[]","[STATIC, FINAL]","Optional[// Flag in delta int: a new battery level int follows.
+]"
+"[DELTA_STATE_FLAG = 0x00100000]","[]","[STATIC, FINAL]","Optional[// Flag in delta int: a new full state and battery status int follows.
+]"
+"[DELTA_STATE2_FLAG = 0x00200000]","[]","[STATIC, FINAL]","Optional[// Flag in delta int: a new full state2 int follows.
+]"
+"[DELTA_WAKELOCK_FLAG = 0x00400000]","[]","[STATIC, FINAL]","Optional[// Flag in delta int: contains a wakelock or wakeReason tag.
+]"
+"[DELTA_EVENT_FLAG = 0x00800000]","[]","[STATIC, FINAL]","Optional[// Flag in delta int: contains an event description.
+]"
+"[DELTA_STATE_MASK = 0xff000000]","[]","[STATIC, FINAL]","Optional[// These upper bits are the frequently changing state bits.
+]"
+"[STATE_BATTERY_STATUS_MASK = 0x00000007]","[]","[STATIC, FINAL]","Optional[// in DELTA_STATE_MASK.
+]"
+"[STATE_BATTERY_STATUS_SHIFT = 29]","[]","[STATIC, FINAL]","Optional.empty"
+"[STATE_BATTERY_HEALTH_MASK = 0x00000007]","[]","[STATIC, FINAL]","Optional.empty"
+"[STATE_BATTERY_HEALTH_SHIFT = 26]","[]","[STATIC, FINAL]","Optional.empty"
+"[STATE_BATTERY_PLUG_MASK = 0x00000003]","[]","[STATIC, FINAL]","Optional.empty"
+"[STATE_BATTERY_PLUG_SHIFT = 24]","[]","[STATIC, FINAL]","Optional.empty"
+"[mChangedStates = 0]","[]","[]","Optional.empty"
+"[mChangedStates2 = 0]","[]","[]","Optional.empty"
+"[mInitialAcquireWakeName]","[]","[PRIVATE]","Optional.empty"
+"[mInitialAcquireWakeUid = -1]","[]","[PRIVATE]","Optional.empty"
+"[mSensorNesting]","[]","[]","Optional.empty"
+"[mGpsNesting]","[]","[]","Optional.empty"
+"[mWifiFullLockNesting = 0]","[]","[]","Optional.empty"
+"[mWifiScanNesting = 0]","[]","[]","Optional.empty"
+"[mWifiMulticastNesting = 0]","[]","[]","Optional.empty"
+"[mUid]","[]","[FINAL]","Optional.empty"
+"[mWifiRunning]","[]","[]","Optional.empty"
+"[mWifiRunningTimer]","[]","[]","Optional.empty"
+"[mFullWifiLockOut]","[]","[]","Optional.empty"
+"[mFullWifiLockTimer]","[]","[]","Optional.empty"
+"[mWifiScanStarted]","[]","[]","Optional.empty"
+"[mWifiScanTimer]","[]","[]","Optional.empty"
+"[NO_BATCHED_SCAN_STARTED = -1]","[]","[STATIC, FINAL]","Optional.empty"
+"[mWifiBatchedScanBinStarted = NO_BATCHED_SCAN_STARTED]","[]","[]","Optional.empty"
+"[mWifiBatchedScanTimer]","[]","[]","Optional.empty"
+"[mWifiMulticastEnabled]","[]","[]","Optional.empty"
+"[mWifiMulticastTimer]","[]","[]","Optional.empty"
+"[mAudioTurnedOnTimer]","[]","[]","Optional.empty"
+"[mVideoTurnedOnTimer]","[]","[]","Optional.empty"
+"[mForegroundActivityTimer]","[]","[]","Optional.empty"
+"[PROCESS_STATE_NONE = NUM_PROCESS_STATE]","[]","[STATIC, FINAL]","Optional.empty"
+"[mProcessState = PROCESS_STATE_NONE]","[]","[]","Optional.empty"
+"[mProcessStateTimer]","[]","[]","Optional.empty"
+"[mVibratorOnTimer]","[]","[]","Optional.empty"
+"[mUserActivityCounters]","[]","[]","Optional.empty"
+"[mNetworkByteActivityCounters]","[]","[]","Optional.empty"
+"[mNetworkPacketActivityCounters]","[]","[]","Optional.empty"
+"[mMobileRadioActiveTime]","[]","[]","Optional.empty"
+"[mMobileRadioActiveCount]","[]","[]","Optional.empty"
+"[mWakelockStats = new OverflowArrayMap<Wakelock>() {
+
+    @Override
+    public Wakelock instantiateObject() {
+        return new Wakelock();
+    }
+}]","[]","[FINAL]","Optional[/**
+ * The statistics we have collected for this uid's wake locks.
+ */
+]"
+"[mSyncStats = new OverflowArrayMap<StopwatchTimer>() {
+
+    @Override
+    public StopwatchTimer instantiateObject() {
+        return new StopwatchTimer(Uid.this, SYNC, null, mOnBatteryTimeBase);
+    }
+}]","[]","[FINAL]","Optional[/**
+ * The statistics we have collected for this uid's syncs.
+ */
+]"
+"[mJobStats = new OverflowArrayMap<StopwatchTimer>() {
+
+    @Override
+    public StopwatchTimer instantiateObject() {
+        return new StopwatchTimer(Uid.this, JOB, null, mOnBatteryTimeBase);
+    }
+}]","[]","[FINAL]","Optional[/**
+ * The statistics we have collected for this uid's jobs.
+ */
+]"
+"[mSensorStats = new SparseArray<Sensor>()]","[]","[FINAL]","Optional[/**
+ * The statistics we have collected for this uid's sensor activations.
+ */
+]"
+"[mProcessStats = new ArrayMap<String, Proc>()]","[]","[FINAL]","Optional[/**
+ * The statistics we have collected for this uid's processes.
+ */
+]"
+"[mPackageStats = new ArrayMap<String, Pkg>()]","[]","[FINAL]","Optional[/**
+ * The statistics we have collected for this uid's processes.
+ */
+]"
+"[mPids = new SparseArray<Pid>()]","[]","[FINAL]","Optional[/**
+ * The transient wake stats we have collected for this uid's pids.
+ */
+]"
+"[mTimerPartial]","[]","[]","Optional[/**
+ * How long (in ms) this uid has been keeping the device partially awake.
+ */
+]"
+"[mTimerFull]","[]","[]","Optional[/**
+ * How long (in ms) this uid has been keeping the device fully awake.
+ */
+]"
+"[mTimerWindow]","[]","[]","Optional[/**
+ * How long (in ms) this uid has had a window keeping the device awake.
+ */
+]"
+"[mHandle]","[]","[FINAL]","Optional.empty"
+"[mTimer]","[]","[]","Optional.empty"
+"[mName]","[]","[FINAL]","Optional[/**
+ * The name of this process.
+ */
+]"
+"[mActive = true]","[]","[]","Optional[/**
+ * Remains true until removed from the stats.
+ */
+]"
+"[mUserTime]","[]","[]","Optional[/**
+ * Total time (in 1/100 sec) spent executing in user code.
+ */
+]"
+"[mSystemTime]","[]","[]","Optional[/**
+ * Total time (in 1/100 sec) spent executing in kernel code.
+ */
+]"
+"[mForegroundTime]","[]","[]","Optional[/**
+ * Amount of time the process was running in the foreground.
+ */
+]"
+"[mStarts]","[]","[]","Optional[/**
+ * Number of times the process has been started.
+ */
+]"
+"[mNumCrashes]","[]","[]","Optional[/**
+ * Number of times the process has crashed.
+ */
+]"
+"[mNumAnrs]","[]","[]","Optional[/**
+ * Number of times the process has had an ANR.
+ */
+]"
+"[mLoadedUserTime]","[]","[]","Optional[/**
+ * The amount of user time loaded from a previous save.
+ */
+]"
+"[mLoadedSystemTime]","[]","[]","Optional[/**
+ * The amount of system time loaded from a previous save.
+ */
+]"
+"[mLoadedForegroundTime]","[]","[]","Optional[/**
+ * The amount of foreground time loaded from a previous save.
+ */
+]"
+"[mLoadedStarts]","[]","[]","Optional[/**
+ * The number of times the process has started from a previous save.
+ */
+]"
+"[mLoadedNumCrashes]","[]","[]","Optional[/**
+ * Number of times the process has crashed from a previous save.
+ */
+]"
+"[mLoadedNumAnrs]","[]","[]","Optional[/**
+ * Number of times the process has had an ANR from a previous save.
+ */
+]"
+"[mUnpluggedUserTime]","[]","[]","Optional[/**
+ * The amount of user time when last unplugged.
+ */
+]"
+"[mUnpluggedSystemTime]","[]","[]","Optional[/**
+ * The amount of system time when last unplugged.
+ */
+]"
+"[mUnpluggedForegroundTime]","[]","[]","Optional[/**
+ * The amount of foreground time since unplugged.
+ */
+]"
+"[mUnpluggedStarts]","[]","[]","Optional[/**
+ * The number of times the process has started before unplugged.
+ */
+]"
+"[mUnpluggedNumCrashes]","[]","[]","Optional[/**
+ * Number of times the process has crashed before unplugged.
+ */
+]"
+"[mUnpluggedNumAnrs]","[]","[]","Optional[/**
+ * Number of times the process has had an ANR before unplugged.
+ */
+]"
+"[mProcessState = PROCESS_STATE_NONE]","[]","[]","Optional[/**
+ * Current process state.
+ */
+]"
+"[mSpeedBins]","[]","[]","Optional.empty"
+"[mExcessivePower]","[]","[]","Optional.empty"
+"[mWakeups]","[]","[]","Optional[/**
+ * Number of times this package has done something that could wake up the
+ * device from sleep.
+ */
+]"
+"[mLoadedWakeups]","[]","[]","Optional[/**
+ * Number of things that could wake up the device loaded from a
+ * previous save.
+ */
+]"
+"[mLastWakeups]","[]","[]","Optional[/**
+ * Number of things that could wake up the device as of the
+ * last run.
+ */
+]"
+"[mUnpluggedWakeups]","[]","[]","Optional[/**
+ * Number of things that could wake up the device as of the
+ * last run.
+ */
+]"
+"[mServiceStats = new HashMap<String, Serv>()]","[]","[FINAL]","Optional[/**
+ * The statics we have collected for this package's services.
+ */
+]"
+"[mStartTime]","[]","[]","Optional[/**
+ * Total time (ms in battery uptime) the service has been left started.
+ */
+]"
+"[mRunningSince]","[]","[]","Optional[/**
+ * If service has been started and not yet stopped, this is
+ * when it was started.
+ */
+]"
+"[mRunning]","[]","[]","Optional[/**
+ * True if we are currently running.
+ */
+]"
+"[mStarts]","[]","[]","Optional[/**
+ * Total number of times startService() has been called.
+ */
+]"
+"[mLaunchedTime]","[]","[]","Optional[/**
+ * Total time (ms in battery uptime) the service has been left launched.
+ */
+]"
+"[mLaunchedSince]","[]","[]","Optional[/**
+ * If service has been launched and not yet exited, this is
+ * when it was launched (ms in battery uptime).
+ */
+]"
+"[mLaunched]","[]","[]","Optional[/**
+ * True if we are currently launched.
+ */
+]"
+"[mLaunches]","[]","[]","Optional[/**
+ * Total number times the service has been launched.
+ */
+]"
+"[mLoadedStartTime]","[]","[]","Optional[/**
+ * The amount of time spent started loaded from a previous save
+ * (ms in battery uptime).
+ */
+]"
+"[mLoadedStarts]","[]","[]","Optional[/**
+ * The number of starts loaded from a previous save.
+ */
+]"
+"[mLoadedLaunches]","[]","[]","Optional[/**
+ * The number of launches loaded from a previous save.
+ */
+]"
+"[mLastStartTime]","[]","[]","Optional[/**
+ * The amount of time spent started as of the last run (ms
+ * in battery uptime).
+ */
+]"
+"[mLastStarts]","[]","[]","Optional[/**
+ * The number of starts as of the last run.
+ */
+]"
+"[mLastLaunches]","[]","[]","Optional[/**
+ * The number of launches as of the last run.
+ */
+]"
+"[mUnpluggedStartTime]","[]","[]","Optional[/**
+ * The amount of time spent started when last unplugged (ms
+ * in battery uptime).
+ */
+]"
+"[mUnpluggedStarts]","[]","[]","Optional[/**
+ * The number of starts when last unplugged.
+ */
+]"
+"[mUnpluggedLaunches]","[]","[]","Optional[/**
+ * The number of launches when last unplugged.
+ */
+]"
+"[BATTERY_PLUGGED_NONE = 0]","[]","[PRIVATE, STATIC, FINAL]","Optional[// This should probably be exposed in the API, though it's not critical
+]"
+"[NET_UPDATE_MOBILE = 1 << 0]","[]","[STATIC, FINAL]","Optional.empty"
+"[NET_UPDATE_WIFI = 1 << 1]","[]","[STATIC, FINAL]","Optional.empty"
+"[NET_UPDATE_ALL = 0xffff]","[]","[STATIC, FINAL]","Optional.empty"
+"[mPendingWrite = null]","[]","[]","Optional.empty"
+"[mWriteLock = new ReentrantLock()]","[]","[FINAL]","Optional.empty"
+"[CREATOR = new Parcelable.Creator<BatteryStatsImpl>() {
+
+    public BatteryStatsImpl createFromParcel(Parcel in) {
+        return new BatteryStatsImpl(in);
+    }
+
+    public BatteryStatsImpl[] newArray(int size) {
+        return new BatteryStatsImpl[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[POSTCODE = DATA9]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Postal code. Usually country-wide, but sometimes specific to the
+ * city (e.g. ""2"" in ""Dublin 2, Ireland"" addresses).
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[COUNTRY = DATA10]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The name or code of the country.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/im""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_HOME = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_WORK = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL = DATA5]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This column should be populated with one of the defined
+ * constants, e.g. {@link #PROTOCOL_YAHOO}. If the value of this
+ * column is {@link #PROTOCOL_CUSTOM}, the {@link #CUSTOM_PROTOCOL}
+ * should contain the name of the custom protocol.
+ */
+]"
+"[CUSTOM_PROTOCOL = DATA6]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_CUSTOM = -1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/*
+             * The predefined IM protocol types.
+             */
+]"
+"[PROTOCOL_AIM = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_MSN = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_YAHOO = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_SKYPE = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_QQ = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_GOOGLE_TALK = 5]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_ICQ = 6]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_JABBER = 7]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTOCOL_NETMEETING = 8]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/organization""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_WORK = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[COMPANY = DATA]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The company as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[TITLE = DATA4]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The position title at this company as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[DEPARTMENT = DATA5]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The department at this company as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[JOB_DESCRIPTION = DATA6]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The job description at this company as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[SYMBOL = DATA7]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The symbol of this company as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[PHONETIC_NAME = DATA8]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The phonetic name of this company as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[OFFICE_LOCATION = DATA9]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The office location of this organization.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[PHONETIC_NAME_STYLE = DATA10]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The alphabet used for capturing the phonetic name.
+ * See {@link ContactsContract.PhoneticNameStyle}.
+ * @hide
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/relation""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_ASSISTANT = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_BROTHER = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_CHILD = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_DOMESTIC_PARTNER = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_FATHER = 5]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_FRIEND = 6]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_MANAGER = 7]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_MOTHER = 8]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_PARENT = 9]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_PARTNER = 10]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_REFERRED_BY = 11]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_RELATIVE = 12]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_SISTER = 13]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_SPOUSE = 14]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[NAME = DATA]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The name of the relative as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/contact_event""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_ANNIVERSARY = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_BIRTHDAY = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[START_DATE = DATA]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The event start date as the user entered it.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/photo""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[PHOTO_FILE_ID = DATA14]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Photo file ID for the display photo of the raw contact.
+ * See {@link ContactsContract.DisplayPhoto}.
+ * <p>
+ * Type: NUMBER
+ */
+]"
+"[PHOTO = DATA15]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Thumbnail photo of the raw contact. This is the raw bytes of an image
+ * that could be inflated using {@link android.graphics.BitmapFactory}.
+ * <p>
+ * Type: BLOB
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/note""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[NOTE = DATA1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The note text.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/group_membership""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[GROUP_ROW_ID = DATA1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The row id of the group that this group membership refers to. Exactly one of
+ * this or {@link #GROUP_SOURCE_ID} must be set when inserting a row.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[GROUP_SOURCE_ID = ""group_sourceid""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The sourceid of the group that this group membership refers to.  Exactly one of
+ * this or {@link #GROUP_ROW_ID} must be set when inserting a row.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/website""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_HOMEPAGE = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_BLOG = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_PROFILE = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_HOME = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_WORK = 5]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_FTP = 6]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 7]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[URL = DATA]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The website URL string.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/sip_address""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[TYPE_HOME = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_WORK = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SIP_ADDRESS = DATA1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The SIP address.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/identity""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * MIME type used when storing this in data table.
+ */
+]"
+"[IDENTITY = DataColumns.DATA1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The identity string.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[NAMESPACE = DataColumns.DATA2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The namespace of the identity string, e.g. ""com.google""
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(Data.CONTENT_URI, ""callables"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Similar to {@link Phone#CONTENT_URI}, but returns callable data instead of only
+ * phone numbers.
+ */
+]"
+"[CONTENT_FILTER_URI = Uri.withAppendedPath(CONTENT_URI, ""filter"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Similar to {@link Phone#CONTENT_FILTER_URI}, but allows users to filter callable
+ * data.
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(Data.CONTENT_URI, ""contactables"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for these data items, which requests a directory of data
+ * rows matching the selection criteria.
+ */
+]"
+"[CONTENT_FILTER_URI = Uri.withAppendedPath(Contactables.CONTENT_URI, ""filter"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for these data items, which allows for a query parameter to
+ * be appended onto the end to filter for data items matching the query.
+ */
+]"
+"[VISIBLE_CONTACTS_ONLY = ""visible_contacts_only""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A boolean parameter for {@link Data#CONTENT_URI}.
+ * This specifies whether or not the returned data items should be filtered to show
+ * data items belonging to visible contacts only.
+ */
+]"
+"[DATA_SET = ""data_set""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The data set within the account that this group belongs to.  This allows
+ * multiple sync adapters for the same account type to distinguish between
+ * each others' group data.
+ *
+ * This is empty by default, and is completely optional.  It only needs to
+ * be populated if multiple sync adapters are entering distinct group data
+ * for the same account type and account name.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[ACCOUNT_TYPE_AND_DATA_SET = ""account_type_and_data_set""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A concatenation of the account type and data set (delimited by a forward
+ * slash) - if the data set is empty, this will be the same as the account
+ * type.  For applications that need to be aware of the data set, this can
+ * be used instead of account type to distinguish sets of data.  This is
+ * never intended to be used for specifying accounts.
+ * @hide
+ */
+]"
+"[TITLE = ""title""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The display title of this group.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[RES_PACKAGE = ""res_package""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The package name to use when creating {@link Resources} objects for
+ * this group. This value is only designed for use when building user
+ * interfaces, and should not be used to infer the owner.
+ */
+]"
+"[TITLE_RES = ""title_res""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The display title of this group to load as a resource from
+ * {@link #RES_PACKAGE}, which may be localized.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[NOTES = ""notes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Notes about the group.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[SYSTEM_ID = ""system_id""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The ID of this group if it is a System Group, i.e. a group that has a special meaning
+ * to the sync adapter, null otherwise.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[SUMMARY_COUNT = ""summ_count""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The total number of {@link Contacts} that have
+ * {@link CommonDataKinds.GroupMembership} in this group. Read-only value that is only
+ * present when querying {@link Groups#CONTENT_SUMMARY_URI}.
+ * <p>
+ * Type: INTEGER
+ */
+]"
+"[PARAM_RETURN_GROUP_COUNT_PER_ACCOUNT = ""return_group_count_per_account""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A boolean query parameter that can be used with {@link Groups#CONTENT_SUMMARY_URI}.
+ * It will additionally return {@link #SUMMARY_GROUP_COUNT_PER_ACCOUNT}.
+ *
+ * @hide
+ */
+]"
+"[SUMMARY_GROUP_COUNT_PER_ACCOUNT = ""group_count_per_account""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The total number of groups of the account that a group belongs to.
+ * This column is available only when the parameter
+ * {@link #PARAM_RETURN_GROUP_COUNT_PER_ACCOUNT} is specified in
+ * {@link Groups#CONTENT_SUMMARY_URI}.
+ *
+ * For example, when the account ""A"" has two groups ""group1"" and ""group2"", and the account
+ * ""B"" has a group ""group3"", the rows for ""group1"" and ""group2"" return ""2"" and the row for
+ * ""group3"" returns ""1"" for this column.
+ *
+ * Note: This counts only non-favorites, non-auto-add, and not deleted groups.
+ *
+ * Type: INTEGER
+ * @hide
+ */
+]"
+"[SUMMARY_WITH_PHONES = ""summ_phones""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The total number of {@link Contacts} that have both
+ * {@link CommonDataKinds.GroupMembership} in this group, and also have phone numbers.
+ * Read-only value that is only present when querying
+ * {@link Groups#CONTENT_SUMMARY_URI}.
+ * <p>
+ * Type: INTEGER
+ */
+]"
+"[GROUP_VISIBLE = ""group_visible""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Flag indicating if the contacts belonging to this group should be
+ * visible in any user interface.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[DELETED = ""deleted""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The ""deleted"" flag: ""0"" by default, ""1"" if the row has been marked
+ * for deletion. When {@link android.content.ContentResolver#delete} is
+ * called on a group, it is marked for deletion. The sync adaptor
+ * deletes the group on the server and then calls ContactResolver.delete
+ * once more, this time setting the the
+ * {@link ContactsContract#CALLER_IS_SYNCADAPTER} query parameter to
+ * finalize the data removal.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[SHOULD_SYNC = ""should_sync""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether this group should be synced if the SYNC_EVERYTHING settings
+ * is false for this group's account.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[AUTO_ADD = ""auto_add""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Any newly created contacts will automatically be added to groups that have this
+ * flag set to true.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[FAVORITES = ""favorites""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * When a contacts is marked as a favorites it will be automatically added
+ * to the groups that have this flag set, and when it is removed from favorites
+ * it will be removed from these groups.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[GROUP_IS_READ_ONLY = ""group_is_read_only""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The ""read-only"" flag: ""0"" by default, ""1"" if the row cannot be modified or
+ * deleted except by a sync adapter.  See {@link ContactsContract#CALLER_IS_SYNCADAPTER}.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""groups"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table
+ */
+]"
+"[CONTENT_SUMMARY_URI = Uri.withAppendedPath(AUTHORITY_URI, ""groups_summary"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table joined with details data from
+ * {@link ContactsContract.Data}.
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/group""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of a directory of groups.
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/group""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of a single group.
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""aggregation_exceptions"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/aggregation_exception""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of {@link #CONTENT_URI} providing a directory of data.
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/aggregation_exception""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of a {@link #CONTENT_URI} subdirectory of an aggregation exception
+ */
+]"
+"[TYPE = ""type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The type of exception: {@link #TYPE_KEEP_TOGETHER}, {@link #TYPE_KEEP_SEPARATE} or
+ * {@link #TYPE_AUTOMATIC}.
+ *
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[TYPE_AUTOMATIC = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Allows the provider to automatically decide whether the specified raw contacts should
+ * be included in the same aggregate contact or not.
+ */
+]"
+"[TYPE_KEEP_TOGETHER = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Makes sure that the specified raw contacts are included in the same
+ * aggregate contact.
+ */
+]"
+"[TYPE_KEEP_SEPARATE = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Makes sure that the specified raw contacts are NOT included in the same
+ * aggregate contact.
+ */
+]"
+"[RAW_CONTACT_ID1 = ""raw_contact_id1""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A reference to the {@link RawContacts#_ID} of the raw contact that the rule applies to.
+ */
+]"
+"[RAW_CONTACT_ID2 = ""raw_contact_id2""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A reference to the other {@link RawContacts#_ID} of the raw contact that the rule
+ * applies to.
+ */
+]"
+"[ACCOUNT_NAME = ""account_name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The name of the account instance to which this row belongs.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[ACCOUNT_TYPE = ""account_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The type of account to which this row belongs, which when paired with
+ * {@link #ACCOUNT_NAME} identifies a specific account.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[DATA_SET = ""data_set""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The data set within the account that this row belongs to.  This allows
+ * multiple sync adapters for the same account type to distinguish between
+ * each others' data.
+ *
+ * This is empty by default, and is completely optional.  It only needs to
+ * be populated if multiple sync adapters are entering distinct data for
+ * the same account type and account name.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[SHOULD_SYNC = ""should_sync""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Depending on the mode defined by the sync-adapter, this flag controls
+ * the top-level sync behavior for this data source.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[UNGROUPED_VISIBLE = ""ungrouped_visible""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Flag indicating if contacts without any {@link CommonDataKinds.GroupMembership}
+ * entries should be visible in any user interface.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[ANY_UNSYNCED = ""any_unsynced""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Read-only flag indicating if this {@link #SHOULD_SYNC} or any
+ * {@link Groups#SHOULD_SYNC} under this account have been marked as
+ * unsynced.
+ */
+]"
+"[UNGROUPED_COUNT = ""summ_count""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Read-only count of {@link Contacts} from a specific source that have
+ * no {@link CommonDataKinds.GroupMembership} entries.
+ * <p>
+ * Type: INTEGER
+ */
+]"
+"[UNGROUPED_WITH_PHONES = ""summ_phones""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Read-only count of {@link Contacts} from a specific source that have
+ * no {@link CommonDataKinds.GroupMembership} entries, and also have phone numbers.
+ * <p>
+ * Type: INTEGER
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""settings"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/setting""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME-type of {@link #CONTENT_URI} providing a directory of
+ * settings.
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/setting""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME-type of {@link #CONTENT_URI} providing a single setting.
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""provider_status"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table.  Requests to this URI can be
+ * performed on the UI thread because they are always unblocking.
+ *
+ * @hide
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/provider_status""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME-type of {@link #CONTENT_URI} providing a directory of
+ * settings.
+ *
+ * @hide
+ */
+]"
+"[STATUS = ""status""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * An integer representing the current status of the provider.
+ *
+ * @hide
+ */
+]"
+"[STATUS_NORMAL = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Default status of the provider.
+ *
+ * @hide
+ */
+]"
+"[STATUS_UPGRADING = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The status used when the provider is in the process of upgrading.  Contacts
+ * are temporarily unaccessible.
+ *
+ * @hide
+ */
+]"
+"[STATUS_UPGRADE_OUT_OF_MEMORY = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The status used if the provider was in the process of upgrading but ran
+ * out of storage. The DATA1 column will contain the estimated amount of
+ * storage required (in bytes). Update status to STATUS_NORMAL to force
+ * the provider to retry the upgrade.
+ *
+ * @hide
+ */
+]"
+"[STATUS_CHANGING_LOCALE = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The status used during a locale change.
+ *
+ * @hide
+ */
+]"
+"[STATUS_NO_ACCOUNTS_NO_CONTACTS = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The status that indicates that there are no accounts and no contacts
+ * on the device.
+ *
+ * @hide
+ */
+]"
+"[DATA1 = ""data1""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Additional data associated with the status.
+ *
+ * @hide
+ */
+]"
+"[FEEDBACK_URI = Uri.withAppendedPath(Data.CONTENT_URI, ""usagefeedback"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for sending usage feedback.
+ * Must be used with {@link ContentResolver#update(Uri, ContentValues, String, String[])}.
+ */
+]"
+"[DELETE_USAGE_URI = Uri.withAppendedPath(Contacts.CONTENT_URI, ""delete_usage"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for deleting all usage information.
+ * Must be used with {@link ContentResolver#delete(Uri, String, String[])}.
+ * The {@code where} and {@code selectionArgs} parameters are ignored.
+ */
+]"
+"[USAGE_TYPE = ""type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>
+ * Name for query parameter specifying the type of data usage.
+ * </p>
+ */
+]"
+"[USAGE_TYPE_CALL = ""call""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>
+ * Type of usage for voice interaction, which includes phone call, voice chat, and
+ * video chat.
+ * </p>
+ */
+]"
+"[USAGE_TYPE_LONG_TEXT = ""long_text""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>
+ * Type of usage for text interaction involving longer messages, which includes email.
+ * </p>
+ */
+]"
+"[USAGE_TYPE_SHORT_TEXT = ""short_text""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * <p>
+ * Type of usage for text interaction involving shorter messages, which includes SMS,
+ * text chat with email addresses.
+ * </p>
+ */
+]"
+"[UNDEMOTE_METHOD = ""undemote""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The method to invoke in order to undemote a formerly demoted contact. The contact id of
+ * the contact must be provided as an argument. If the contact was not previously demoted,
+ * nothing will be done.
+ * @hide
+ */
+]"
+"[UNPINNED = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Default value for the pinned position of an unpinned contact.
+ */
+]"
+"[DEMOTED = -1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Value of pinned position for a contact that a user has indicated should be considered
+ * of the lowest priority. It is up to the client application to determine how to present
+ * such a contact - for example all the way at the bottom of a contact list, or simply
+ * just hidden from view.
+ */
+]"
+"[ACTION_QUICK_CONTACT = ""android.provider.action.QUICK_CONTACT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Action used to launch the system contacts application and bring up a QuickContact dialog
+ * for the provided {@link Contacts} entry.
+ */
+]"
+"[EXTRA_TARGET_RECT = ""android.provider.extra.TARGET_RECT""]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Extra used to specify pivot dialog location in screen coordinates.
+ * @deprecated Use {@link Intent#setSourceBounds(Rect)} instead.
+ * @hide
+ */
+]"
+"[EXTRA_MODE = ""android.provider.extra.MODE""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Extra used to specify size of pivot dialog.
+ * @hide
+ */
+]"
+"[EXTRA_EXCLUDE_MIMES = ""android.provider.extra.EXCLUDE_MIMES""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Extra used to indicate a list of specific MIME-types to exclude and not display in the
+ * QuickContacts dialog. Stored as a {@link String} array.
+ */
+]"
+"[MODE_SMALL = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Small QuickContact mode, usually presented with minimal actions.
+ */
+]"
+"[MODE_MEDIUM = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Medium QuickContact mode, includes actions and light summary describing
+ * the {@link Contacts} entry being shown. This may include social
+ * status and presence details.
+ */
+]"
+"[MODE_LARGE = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Large QuickContact mode, includes actions and larger, card-like summary
+ * of the {@link Contacts} entry being shown. This may include detailed
+ * information, such as a photo.
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""display_photo"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this class, which allows access to full-size photos,
+ * given a key.
+ */
+]"
+"[CONTENT_MAX_DIMENSIONS_URI = Uri.withAppendedPath(AUTHORITY_URI, ""photo_dimensions"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This URI allows the caller to query for the maximum dimensions of a display photo
+ * or thumbnail.  Requests to this URI can be performed on the UI thread because
+ * they are always unblocking.
+ */
+]"
+"[DISPLAY_MAX_DIM = ""display_max_dim""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Queries to {@link ContactsContract.DisplayPhoto#CONTENT_MAX_DIMENSIONS_URI} will
+ * contain this column, populated with the maximum height and width (in pixels)
+ * that will be stored for a display photo.  Larger photos will be down-sized to
+ * fit within a square of this many pixels.
+ */
+]"
+"[THUMBNAIL_MAX_DIM = ""thumbnail_max_dim""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Queries to {@link ContactsContract.DisplayPhoto#CONTENT_MAX_DIMENSIONS_URI} will
+ * contain this column, populated with the height and width (in pixels) for photo
+ * thumbnails.
+ */
+]"
+"[SEARCH_SUGGESTION_CLICKED = ""android.provider.Contacts.SEARCH_SUGGESTION_CLICKED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when a search suggestion is clicked on.
+ */
+]"
+"[SEARCH_SUGGESTION_DIAL_NUMBER_CLICKED = ""android.provider.Contacts.SEARCH_SUGGESTION_DIAL_NUMBER_CLICKED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when a search suggestion for dialing a number
+ * is clicked on.
+ */
+]"
+"[SEARCH_SUGGESTION_CREATE_CONTACT_CLICKED = ""android.provider.Contacts.SEARCH_SUGGESTION_CREATE_CONTACT_CLICKED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when a search suggestion for creating a contact
+ * is clicked on.
+ */
+]"
+"[CONTACTS_DATABASE_CREATED = ""android.provider.Contacts.DATABASE_CREATED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when the contacts database is created. <p> The
+ * READ_CONTACT permission is required to receive these broadcasts.
+ */
+]"
+"[ATTACH_IMAGE = ""com.android.contacts.action.ATTACH_IMAGE""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Starts an Activity that lets the user pick a contact to attach an image to.
+ * After picking the contact it launches the image cropper in face detection mode.
+ */
+]"
+"[INVITE_CONTACT = ""com.android.contacts.action.INVITE_CONTACT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when the user clicks the ""invite to the network"" button
+ * on a contact.  Only sent to an activity which is explicitly registered by a contact
+ * provider which supports the ""invite to the network"" feature.
+ * <p>
+ * {@link Intent#getData()} contains the lookup URI for the contact.
+ */
+]"
+"[SHOW_OR_CREATE_CONTACT = ""com.android.contacts.action.SHOW_OR_CREATE_CONTACT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Takes as input a data URI with a mailto: or tel: scheme. If a single
+ * contact exists with the given data it will be shown. If no contact
+ * exists, a dialog will ask the user if they want to create a new
+ * contact with the provided details filled in. If multiple contacts
+ * share the data the user will be prompted to pick which contact they
+ * want to view.
+ * <p>
+ * For <code>mailto:</code> URIs, the scheme specific portion must be a
+ * raw email address, such as one built using
+ * {@link Uri#fromParts(String, String, String)}.
+ * <p>
+ * For <code>tel:</code> URIs, the scheme specific portion is compared
+ * to existing numbers using the standard caller ID lookup algorithm.
+ * The number must be properly encoded, for example using
+ * {@link Uri#fromParts(String, String, String)}.
+ * <p>
+ * Any extras from the {@link Insert} class will be passed along to the
+ * create activity if there are no contacts to show.
+ * <p>
+ * Passing true for the {@link #EXTRA_FORCE_CREATE} extra will skip
+ * prompting the user when the contact doesn't exist.
+ */
+]"
+"[ACTION_GET_MULTIPLE_PHONES = ""com.android.contacts.action.GET_MULTIPLE_PHONES""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Starts an Activity that lets the user select the multiple phones from a
+ * list of phone numbers which come from the contacts or
+ * {@link #EXTRA_PHONE_URIS}.
+ * <p>
+ * The phone numbers being passed in through {@link #EXTRA_PHONE_URIS}
+ * could belong to the contacts or not, and will be selected by default.
+ * <p>
+ * The user's selection will be returned from
+ * {@link android.app.Activity#onActivityResult(int, int, android.content.Intent)}
+ * if the resultCode is
+ * {@link android.app.Activity#RESULT_OK}, the array of picked phone
+ * numbers are in the Intent's
+ * {@link #EXTRA_PHONE_URIS}; otherwise, the
+ * {@link android.app.Activity#RESULT_CANCELED} is returned if the user
+ * left the Activity without changing the selection.
+ *
+ * @hide
+ */
+]"
+"[ACTION_PROFILE_CHANGED = ""android.provider.Contacts.PROFILE_CHANGED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A broadcast action which is sent when any change has been made to the profile, such
+ * as the profile name or the picture.  A receiver must have
+ * the android.permission.READ_PROFILE permission.
+ *
+ * @hide
+ */
+]"
+"[EXTRA_FORCE_CREATE = ""com.android.contacts.action.FORCE_CREATE""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used with {@link #SHOW_OR_CREATE_CONTACT} to force creating a new
+ * contact if no matching contact found. Otherwise, default behavior is
+ * to prompt user with dialog before creating.
+ * <p>
+ * Type: BOOLEAN
+ */
+]"
+"[EXTRA_CREATE_DESCRIPTION = ""com.android.contacts.action.CREATE_DESCRIPTION""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used with {@link #SHOW_OR_CREATE_CONTACT} to specify an exact
+ * description to be shown when prompting user about creating a new
+ * contact.
+ * <p>
+ * Type: STRING
+ */
+]"
+"[EXTRA_PHONE_URIS = ""com.android.contacts.extra.PHONE_URIS""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used with {@link #ACTION_GET_MULTIPLE_PHONES} as the input or output value.
+ * <p>
+ * The phone numbers want to be picked by default should be passed in as
+ * input value. These phone numbers could belong to the contacts or not.
+ * <p>
+ * The phone numbers which were picked by the user are returned as output
+ * value.
+ * <p>
+ * Type: array of URIs, the tel URI is used for the phone numbers which don't
+ * belong to any contact, the content URI is used for phone id in contacts.
+ *
+ * @hide
+ */
+]"
+"[EXTRA_TARGET_RECT = ""target_rect""]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Optional extra used with {@link #SHOW_OR_CREATE_CONTACT} to specify a
+ * dialog location using screen coordinates. When not specified, the
+ * dialog will be centered.
+ *
+ * @hide
+ */
+]"
+"[EXTRA_MODE = ""mode""]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Optional extra used with {@link #SHOW_OR_CREATE_CONTACT} to specify a
+ * desired dialog style, usually a variation on size. One of
+ * {@link #MODE_SMALL}, {@link #MODE_MEDIUM}, or {@link #MODE_LARGE}.
+ *
+ * @hide
+ */
+]"
+"[MODE_SMALL = 1]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Value for {@link #EXTRA_MODE} to show a small-sized dialog.
+ *
+ * @hide
+ */
+]"
+"[MODE_MEDIUM = 2]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Value for {@link #EXTRA_MODE} to show a medium-sized dialog.
+ *
+ * @hide
+ */
+]"
+"[MODE_LARGE = 3]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Value for {@link #EXTRA_MODE} to show a large-sized dialog.
+ *
+ * @hide
+ */
+]"
+"[EXTRA_EXCLUDE_MIMES = ""exclude_mimes""]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Optional extra used with {@link #SHOW_OR_CREATE_CONTACT} to indicate
+ * a list of specific MIME-types to exclude and not display. Stored as a
+ * {@link String} array.
+ *
+ * @hide
+ */
+]"
+"[LIST_DEFAULT = ""com.android.contacts.action.LIST_DEFAULT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the default contacts list tab.
+ */
+]"
+"[LIST_GROUP_ACTION = ""com.android.contacts.action.LIST_GROUP""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the contacts list tab.
+ */
+]"
+"[GROUP_NAME_EXTRA_KEY = ""com.android.contacts.extra.GROUP""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * When in LIST_GROUP_ACTION mode, this is the group to display.
+ */
+]"
+"[LIST_ALL_CONTACTS_ACTION = ""com.android.contacts.action.LIST_ALL_CONTACTS""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the all contacts list tab.
+ */
+]"
+"[LIST_CONTACTS_WITH_PHONES_ACTION = ""com.android.contacts.action.LIST_CONTACTS_WITH_PHONES""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the contacts with phone numbers list tab.
+ */
+]"
+"[LIST_STARRED_ACTION = ""com.android.contacts.action.LIST_STARRED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the starred contacts list tab.
+ */
+]"
+"[LIST_FREQUENT_ACTION = ""com.android.contacts.action.LIST_FREQUENT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the frequent contacts list tab.
+ */
+]"
+"[PICK_JOIN_CONTACT_ACTION = ""com.android.contacts.action.JOIN_CONTACT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the ""Join Contact"" picker.
+ */
+]"
+"[LIST_STREQUENT_ACTION = ""com.android.contacts.action.LIST_STREQUENT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the ""strequent"" contacts list tab. It first lists the starred
+ * contacts in alphabetical order and then the frequent contacts in descending
+ * order of the number of times they have been contacted.
+ */
+]"
+"[TITLE_EXTRA_KEY = ""com.android.contacts.extra.TITLE_EXTRA""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A key for to be used as an intent extra to set the activity
+ * title to a custom String value.
+ */
+]"
+"[FILTER_CONTACTS_ACTION = ""com.android.contacts.action.FILTER_CONTACTS""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Activity Action: Display a filtered list of contacts
+ * <p>
+ * Input: Extra field {@link #FILTER_TEXT_EXTRA_KEY} is the text to use for
+ * filtering
+ * <p>
+ * Output: Nothing.
+ */
+]"
+"[FILTER_TEXT_EXTRA_KEY = ""com.android.contacts.extra.FILTER_TEXT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used as an int extra field in {@link #FILTER_CONTACTS_ACTION}
+ * intents to supply the text on which to filter.
+ */
+]"
+"[TARGET_CONTACT_ID_EXTRA_KEY = ""com.android.contacts.action.CONTACT_ID""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used with JOIN_CONTACT action to set the target for aggregation. This action type
+ * uses contact ids instead of contact uris for the sake of backwards compatibility.
+ * <p>
+ * Type: LONG
+ */
+]"
+"[ACTION = Intent.ACTION_INSERT]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action code to use when adding a contact
+ */
+]"
+"[FULL_MODE = ""full_mode""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If present, forces a bypass of quick insert mode.
+ */
+]"
+"[NAME = ""name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact name.
+ * <P>Type: String</P>
+ */
+]"
+"[PHONETIC_NAME = ""phonetic_name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact phonetic name.
+ * <P>Type: String</P>
+ */
+]"
+"[COMPANY = ""company""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact company.
+ * <P>Type: String</P>
+ */
+]"
+"[JOB_TITLE = ""job_title""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact job title.
+ * <P>Type: String</P>
+ */
+]"
+"[NOTES = ""notes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact notes.
+ * <P>Type: String</P>
+ */
+]"
+"[PHONE = ""phone""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact phone number.
+ * <P>Type: String</P>
+ */
+]"
+"[PHONE_TYPE = ""phone_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact phone number type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Phone},
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[PHONE_ISPRIMARY = ""phone_isprimary""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the phone isprimary flag.
+ * <P>Type: boolean</P>
+ */
+]"
+"[SECONDARY_PHONE = ""secondary_phone""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional second contact phone number.
+ * <P>Type: String</P>
+ */
+]"
+"[SECONDARY_PHONE_TYPE = ""secondary_phone_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional second contact phone number type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Phone},
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[TERTIARY_PHONE = ""tertiary_phone""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional third contact phone number.
+ * <P>Type: String</P>
+ */
+]"
+"[TERTIARY_PHONE_TYPE = ""tertiary_phone_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional third contact phone number type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Phone},
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[EMAIL = ""email""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact email address.
+ * <P>Type: String</P>
+ */
+]"
+"[EMAIL_TYPE = ""email_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact email type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Email}
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[EMAIL_ISPRIMARY = ""email_isprimary""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the email isprimary flag.
+ * <P>Type: boolean</P>
+ */
+]"
+"[SECONDARY_EMAIL = ""secondary_email""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional second contact email address.
+ * <P>Type: String</P>
+ */
+]"
+"[SECONDARY_EMAIL_TYPE = ""secondary_email_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional second contact email type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Email}
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[TERTIARY_EMAIL = ""tertiary_email""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional third contact email address.
+ * <P>Type: String</P>
+ */
+]"
+"[TERTIARY_EMAIL_TYPE = ""tertiary_email_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional third contact email type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Email}
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[POSTAL = ""postal""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact postal address.
+ * <P>Type: String</P>
+ */
+]"
+"[POSTAL_TYPE = ""postal_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact postal address type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.StructuredPostal}
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[POSTAL_ISPRIMARY = ""postal_isprimary""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the postal isprimary flag.
+ * <P>Type: boolean</P>
+ */
+]"
+"[IM_HANDLE = ""im_handle""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an IM handle.
+ * <P>Type: String</P>
+ */
+]"
+"[IM_PROTOCOL = ""im_protocol""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the IM protocol
+ */
+]"
+"[IM_ISPRIMARY = ""im_isprimary""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the IM isprimary flag.
+ * <P>Type: boolean</P>
+ */
+]"
+"[DATA = ""data""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field that allows the client to supply multiple rows of
+ * arbitrary data for a single contact created using the {@link Intent#ACTION_INSERT}
+ * or edited using {@link Intent#ACTION_EDIT}. It is an ArrayList of
+ * {@link ContentValues}, one per data row. Supplying this extra is
+ * similar to inserting multiple rows into the {@link Data} table,
+ * except the user gets a chance to see and edit them before saving.
+ * Each ContentValues object must have a value for {@link Data#MIMETYPE}.
+ * If supplied values are not visible in the editor UI, they will be
+ * dropped.  Duplicate data will dropped.  Some fields
+ * like {@link CommonDataKinds.Email#TYPE Email.TYPE} may be automatically
+ * adjusted to comply with the constraints of the specific account type.
+ * For example, an Exchange contact can only have one phone numbers of type Home,
+ * so the contact editor may choose a different type for this phone number to
+ * avoid dropping the valueable part of the row, which is the phone number.
+ * <p>
+ * Example:
+ * <pre>
+ * ArrayList&lt;ContentValues&gt; data = new ArrayList&lt;ContentValues&gt;();
+ *
+ * ContentValues row1 = new ContentValues();
+ * row1.put(Data.MIMETYPE, Organization.CONTENT_ITEM_TYPE);
+ * row1.put(Organization.COMPANY, ""Android"");
+ * data.add(row1);
+ *
+ * ContentValues row2 = new ContentValues();
+ * row2.put(Data.MIMETYPE, Email.CONTENT_ITEM_TYPE);
+ * row2.put(Email.TYPE, Email.TYPE_CUSTOM);
+ * row2.put(Email.LABEL, ""Green Bot"");
+ * row2.put(Email.ADDRESS, ""android@android.com"");
+ * data.add(row2);
+ *
+ * Intent intent = new Intent(Intent.ACTION_INSERT, Contacts.CONTENT_URI);
+ * intent.putParcelableArrayListExtra(Insert.DATA, data);
+ *
+ * startActivity(intent);
+ * </pre>
+ */
+]"
+"[ACCOUNT = ""com.android.contacts.extra.ACCOUNT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used to specify the account in which to create the new contact.
+ * <p>
+ * If this value is not provided, the user is presented with a disambiguation
+ * dialog to chose an account
+ * <p>
+ * Type: {@link Account}
+ *
+ * @hide
+ */
+]"
+"[DATA_SET = ""com.android.contacts.extra.DATA_SET""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used to specify the data set within the account in which to create the
+ * new contact.
+ * <p>
+ * This value is optional - if it is not specified, the contact will be
+ * created in the base account, with no data set.
+ * <p>
+ * Type: String
+ *
+ * @hide
+ */
+]"
+"[DATA_STALL_ALARM_NON_AGGRESSIVE_DELAY_IN_MS = ""data_stall_alarm_non_aggressive_delay_in_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of milliseconds to delay when checking for data stalls during
+ * non-aggressive detection. (screen is turned off.)
+ * @hide
+ */
+]"
+"[DATA_STALL_ALARM_AGGRESSIVE_DELAY_IN_MS = ""data_stall_alarm_aggressive_delay_in_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of milliseconds to delay when checking for data stalls during
+ * aggressive detection. (screen on or suspected data stall)
+ * @hide
+ */
+]"
+"[PROVISIONING_APN_ALARM_DELAY_IN_MS = ""provisioning_apn_alarm_delay_in_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of milliseconds to allow the provisioning apn to remain active
+ * @hide
+ */
+]"
+"[GPRS_REGISTER_CHECK_PERIOD_MS = ""gprs_register_check_period_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The interval in milliseconds at which to check gprs registration
+ * after the first registration mismatch of gprs and voice service,
+ * to detect possible data network registration problems.
+ *
+ * @hide
+ */
+]"
+"[WTF_IS_FATAL = ""wtf_is_fatal""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Nonzero causes Log.wtf() to crash.
+ * @hide
+ */
+]"
+"[MODE_RINGER = ""mode_ringer""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Ringer mode. This is used internally, changing this value will not
+ * change the ringer mode. See AudioManager.
+ */
+]"
+"[OVERLAY_DISPLAY_DEVICES = ""overlay_display_devices""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Overlay display devices setting.
+ * The associated value is a specially formatted string that describes the
+ * size and density of simulated secondary display devices.
+ * <p>
+ * Format: {width}x{height}/{dpi};...
+ * </p><p>
+ * Example:
+ * <ul>
+ * <li><code>1280x720/213</code>: make one overlay that is 1280x720 at 213dpi.</li>
+ * <li><code>1920x1080/320;1280x720/213</code>: make two overlays, the first
+ * at 1080p and the second at 720p.</li>
+ * <li>If the value is empty, then no overlay display devices are created.</li>
+ * </ul></p>
+ *
+ * @hide
+ */
+]"
+"[BATTERY_DISCHARGE_DURATION_THRESHOLD = ""battery_discharge_duration_threshold""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Threshold values for the duration and level of a discharge cycle,
+ * under which we log discharge cycle info.
+ *
+ * @hide
+ */
+]"
+"[BATTERY_DISCHARGE_THRESHOLD = ""battery_discharge_threshold""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * @hide
+ */
+]"
+"[SEND_ACTION_APP_ERROR = ""send_action_app_error""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Flag for allowing ActivityManagerService to send ACTION_APP_ERROR
+ * intents on application crashes and ANRs. If this is disabled, the
+ * crash/ANR dialog will never display the ""Report"" button.
+ * <p>
+ * Type: int (0 = disallow, 1 = allow)
+ *
+ * @hide
+ */
+]"
+"[DROPBOX_AGE_SECONDS = ""dropbox_age_seconds""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Maximum age of entries kept by {@link DropBoxManager}.
+ *
+ * @hide
+ */
+]"
+"[DROPBOX_MAX_FILES = ""dropbox_max_files""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Maximum number of entry files which {@link DropBoxManager} will keep
+ * around.
+ *
+ * @hide
+ */
+]"
+"[DROPBOX_QUOTA_KB = ""dropbox_quota_kb""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Maximum amount of disk space used by {@link DropBoxManager} no matter
+ * what.
+ *
+ * @hide
+ */
+]"
+"[DROPBOX_QUOTA_PERCENT = ""dropbox_quota_percent""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Percent of free disk (excluding reserve) which {@link DropBoxManager}
+ * will use.
+ *
+ * @hide
+ */
+]"
+"[DROPBOX_RESERVE_PERCENT = ""dropbox_reserve_percent""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Percent of total disk which {@link DropBoxManager} will never dip
+ * into.
+ *
+ * @hide
+ */
+]"
+"[DROPBOX_TAG_PREFIX = ""dropbox:""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Prefix for per-tag dropbox disable/enable settings.
+ *
+ * @hide
+ */
+]"
+"[ERROR_LOGCAT_PREFIX = ""logcat_for_""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Lines of logcat to include with system crash/ANR/etc. reports, as a
+ * prefix of the dropbox tag of the report type. For example,
+ * ""logcat_for_system_server_anr"" controls the lines of logcat captured
+ * with system server ANR reports. 0 to disable.
+ *
+ * @hide
+ */
+]"
+"[SYS_FREE_STORAGE_LOG_INTERVAL = ""sys_free_storage_log_interval""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The interval in minutes after which the amount of free storage left
+ * on the device is logged to the event log
+ *
+ * @hide
+ */
+]"
+"[DISK_FREE_CHANGE_REPORTING_THRESHOLD = ""disk_free_change_reporting_threshold""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Threshold for the amount of change in disk free space required to
+ * report the amount of free space. Used to prevent spamming the logs
+ * when the disk free space isn't changing frequently.
+ *
+ * @hide
+ */
+]"
+"[SYS_STORAGE_THRESHOLD_PERCENTAGE = ""sys_storage_threshold_percentage""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Minimum percentage of free storage on the device that is used to
+ * determine if the device is running low on storage. The default is 10.
+ * <p>
+ * Say this value is set to 10, the device is considered running low on
+ * storage if 90% or more of the device storage is filled up.
+ *
+ * @hide
+ */
+]"
+"[SYS_STORAGE_THRESHOLD_MAX_BYTES = ""sys_storage_threshold_max_bytes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Maximum byte size of the low storage threshold. This is to ensure
+ * that {@link #SYS_STORAGE_THRESHOLD_PERCENTAGE} does not result in an
+ * overly large threshold for large storage devices. Currently this must
+ * be less than 2GB. This default is 500MB.
+ *
+ * @hide
+ */
+]"
+"[SYS_STORAGE_FULL_THRESHOLD_BYTES = ""sys_storage_full_threshold_bytes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Minimum bytes of free storage on the device before the data partition
+ * is considered full. By default, 1 MB is reserved to avoid system-wide
+ * SQLite disk full exceptions.
+ *
+ * @hide
+ */
+]"
+"[SYNC_MAX_RETRY_DELAY_IN_SECONDS = ""sync_max_retry_delay_in_seconds""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximum reconnect delay for short network outages or when the
+ * network is suspended due to phone use.
+ *
+ * @hide
+ */
+]"
+"[CONNECTIVITY_CHANGE_DELAY = ""connectivity_change_delay""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of milliseconds to delay before sending out
+ * {@link ConnectivityManager#CONNECTIVITY_ACTION} broadcasts. Ignored.
+ *
+ * @hide
+ */
+]"
+"[CONNECTIVITY_SAMPLING_INTERVAL_IN_SECONDS = ""connectivity_sampling_interval_in_seconds""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PAC_CHANGE_DELAY = ""pac_change_delay""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The series of successively longer delays used in retrying to download PAC file.
+ * Last delay is used between successful PAC downloads.
+ *
+ * @hide
+ */
+]"
+"[CAPTIVE_PORTAL_DETECTION_ENABLED = ""captive_portal_detection_enabled""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Setting to turn off captive portal detection. Feature is enabled by
+ * default and the setting needs to be set to 0 to disable it.
+ *
+ * @hide
+ */
+]"
+"[CAPTIVE_PORTAL_SERVER = ""captive_portal_server""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The server used for captive portal detection upon a new conection. A
+ * 204 response code from the server is used for validation.
+ *
+ * @hide
+ */
+]"
+"[NSD_ON = ""nsd_on""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether network service discovery is enabled.
+ *
+ * @hide
+ */
+]"
+"[SET_INSTALL_LOCATION = ""set_install_location""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Let user pick default install location.
+ *
+ * @hide
+ */
+]"
+"[DEFAULT_INSTALL_LOCATION = ""default_install_location""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Default install location value.
+ * 0 = auto, let system decide
+ * 1 = internal
+ * 2 = sdcard
+ * @hide
+ */
+]"
+"[INET_CONDITION_DEBOUNCE_UP_DELAY = ""inet_condition_debounce_up_delay""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * ms during which to consume extra events related to Inet connection
+ * condition after a transtion to fully-connected
+ *
+ * @hide
+ */
+]"
+"[INET_CONDITION_DEBOUNCE_DOWN_DELAY = ""inet_condition_debounce_down_delay""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * ms during which to consume extra events related to Inet connection
+ * condtion after a transtion to partly-connected
+ *
+ * @hide
+ */
+]"
+"[READ_EXTERNAL_STORAGE_ENFORCED_DEFAULT = ""read_external_storage_enforced_default""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * {@hide}
+ */
+]"
+"[HTTP_PROXY = ""http_proxy""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Host name and port for global http proxy. Uses ':' seperator for
+ * between host and port.
+ */
+]"
+"[GLOBAL_HTTP_PROXY_HOST = ""global_http_proxy_host""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Host name for global http proxy. Set via ConnectivityManager.
+ *
+ * @hide
+ */
+]"
+"[GLOBAL_HTTP_PROXY_PORT = ""global_http_proxy_port""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Integer host port for global http proxy. Set via ConnectivityManager.
+ *
+ * @hide
+ */
+]"
+"[GLOBAL_HTTP_PROXY_EXCLUSION_LIST = ""global_http_proxy_exclusion_list""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Exclusion list for global proxy. This string contains a list of
+ * comma-separated domains where the global proxy does not apply.
+ * Domains should be listed in a comma- separated list. Example of
+ * acceptable formats: "".domain1.com,my.domain2.com"" Use
+ * ConnectivityManager to set/get.
+ *
+ * @hide
+ */
+]"
+"[GLOBAL_HTTP_PROXY_PAC = ""global_proxy_pac_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The location PAC File for the proxy.
+ * @hide
+ */
+]"
+"[SET_GLOBAL_HTTP_PROXY = ""set_global_http_proxy""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Enables the UI setting to allow the user to specify the global HTTP
+ * proxy and associated exclusion list.
+ *
+ * @hide
+ */
+]"
+"[DEFAULT_DNS_SERVER = ""default_dns_server""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Setting for default DNS in case nobody suggests one
+ *
+ * @hide
+ */
+]"
+"[BLUETOOTH_HEADSET_PRIORITY_PREFIX = ""bluetooth_headset_priority_""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * {@hide}
+ */
+]"
+"[BLUETOOTH_A2DP_SINK_PRIORITY_PREFIX = ""bluetooth_a2dp_sink_priority_""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * {@hide}
+ */
+]"
+"[BLUETOOTH_INPUT_DEVICE_PRIORITY_PREFIX = ""bluetooth_input_device_priority_""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * {@hide}
+ */
+]"
+"[BLUETOOTH_MAP_PRIORITY_PREFIX = ""bluetooth_map_priority_""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * {@hide}
+ */
+]"
+"[WINDOW_ANIMATION_SCALE = ""window_animation_scale""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Scaling factor for normal window animations. Setting to 0 will
+ * disable window animations.
+ */
+]"
+"[TRANSITION_ANIMATION_SCALE = ""transition_animation_scale""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Scaling factor for activity transition animations. Setting to 0 will
+ * disable window animations.
+ */
+]"
+"[ANIMATOR_DURATION_SCALE = ""animator_duration_scale""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Scaling factor for Animator-based animations. This affects both the
+ * start delay and duration of all such animations. Setting to 0 will
+ * cause animations to end immediately. The default value is 1.
+ */
+]"
+"[FANCY_IME_ANIMATIONS = ""fancy_ime_animations""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Scaling factor for normal window animations. Setting to 0 will
+ * disable window animations.
+ *
+ * @hide
+ */
+]"
+"[COMPATIBILITY_MODE = ""compatibility_mode""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If 0, the compatibility mode is off for all applications.
+ * If 1, older applications run under compatibility mode.
+ * TODO: remove this settings before code freeze (bug/1907571)
+ * @hide
+ */
+]"
+"[EMERGENCY_TONE = ""emergency_tone""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * CDMA only settings
+ * Emergency Tone  0 = Off
+ * 1 = Alert
+ * 2 = Vibrate
+ * @hide
+ */
+]"
+"[CALL_AUTO_RETRY = ""call_auto_retry""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * CDMA only settings
+ * Whether the auto retry is enabled. The value is
+ * boolean (1 or 0).
+ * @hide
+ */
+]"
+"[PREFERRED_NETWORK_MODE = ""preferred_network_mode""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The preferred network mode   7 = Global
+ * 6 = EvDo only
+ * 5 = CDMA w/o EvDo
+ * 4 = CDMA / EvDo auto
+ * 3 = GSM / WCDMA auto
+ * 2 = WCDMA only
+ * 1 = GSM only
+ * 0 = GSM / WCDMA preferred
+ * @hide
+ */
+]"
+"[HIDE_CARRIER_NETWORK_SETTINGS = ""hide_carrier_network_settings""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Setting to 1 will hide carrier network settings.
+ * Default is 0.
+ * @hide
+ */
+]"
+"[DEBUG_APP = ""debug_app""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Name of an application package to be debugged.
+ */
+]"
+"[WAIT_FOR_DEBUGGER = ""wait_for_debugger""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If 1, when launching DEBUG_APP it will wait for the debugger before
+ * starting user code.  If 0, it will run normally.
+ */
+]"
+"[SHOW_PROCESSES = ""show_processes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Control whether the process CPU usage meter should be shown.
+ */
+]"
+"[LOW_POWER_MODE = ""low_power""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If 1 low power mode is enabled.
+ * @hide
+ */
+]"
+"[LOW_POWER_MODE_TRIGGER_LEVEL = ""low_power_trigger_level""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Battery level [1-99] at which low power mode automatically turns on.
+ * If 0, it will not automatically turn on.
+ * @hide
+ */
+]"
+"[ALWAYS_FINISH_ACTIVITIES = ""always_finish_activities""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If 1, the activity manager will aggressively finish activities and
+ * processes as soon as they are no longer needed.  If 0, the normal
+ * extended lifetime is used.
+ */
+]"
+"[DOCK_AUDIO_MEDIA_ENABLED = ""dock_audio_media_enabled""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Use Dock audio output for media:
+ * 0 = disabled
+ * 1 = enabled
+ * @hide
+ */
+]"
+"[AUDIO_SAFE_VOLUME_STATE = ""audio_safe_volume_state""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Persisted safe headphone volume management state by AudioService
+ * @hide
+ */
+]"
+"[TZINFO_UPDATE_CONTENT_URL = ""tzinfo_content_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL for tzinfo (time zone) updates
+ * @hide
+ */
+]"
+"[TZINFO_UPDATE_METADATA_URL = ""tzinfo_metadata_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL for tzinfo (time zone) update metadata
+ * @hide
+ */
+]"
+"[SELINUX_UPDATE_CONTENT_URL = ""selinux_content_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL for selinux (mandatory access control) updates
+ * @hide
+ */
+]"
+"[SELINUX_UPDATE_METADATA_URL = ""selinux_metadata_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL for selinux (mandatory access control) update metadata
+ * @hide
+ */
+]"
+"[SMS_SHORT_CODES_UPDATE_CONTENT_URL = ""sms_short_codes_content_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL for sms short code updates
+ * @hide
+ */
+]"
+"[SMS_SHORT_CODES_UPDATE_METADATA_URL = ""sms_short_codes_metadata_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL for sms short code update metadata
+ * @hide
+ */
+]"
+"[CERT_PIN_UPDATE_CONTENT_URL = ""cert_pin_content_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL for cert pinlist updates
+ * @hide
+ */
+]"
+"[CERT_PIN_UPDATE_METADATA_URL = ""cert_pin_metadata_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL for cert pinlist updates
+ * @hide
+ */
+]"
+"[INTENT_FIREWALL_UPDATE_CONTENT_URL = ""intent_firewall_content_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL for intent firewall updates
+ * @hide
+ */
+]"
+"[INTENT_FIREWALL_UPDATE_METADATA_URL = ""intent_firewall_metadata_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL for intent firewall update metadata
+ * @hide
+ */
+]"
+"[SELINUX_STATUS = ""selinux_status""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * SELinux enforcement status. If 0, permissive; if 1, enforcing.
+ * @hide
+ */
+]"
+"[DEVELOPMENT_FORCE_RTL = ""debug.force_rtl""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Developer setting to force RTL layout.
+ * @hide
+ */
+]"
+"[LOW_BATTERY_SOUND_TIMEOUT = ""low_battery_sound_timeout""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Milliseconds after screen-off after which low battery sounds will be silenced.
+ *
+ * If zero, battery sounds will always play.
+ * Defaults to @integer/def_low_battery_sound_timeout in SettingsProvider.
+ *
+ * @hide
+ */
+]"
+"[WIFI_BOUNCE_DELAY_OVERRIDE_MS = ""wifi_bounce_delay_override_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Milliseconds to wait before bouncing Wi-Fi after settings is restored. Note that after
+ * the caller is done with this, they should call {@link ContentResolver#delete} to
+ * clean up any value that they may have written.
+ *
+ * @hide
+ */
+]"
+"[POLICY_CONTROL = ""policy_control""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Defines global runtime overrides to window policy.
+ *
+ * See {@link com.android.internal.policy.impl.PolicyControl} for value format.
+ *
+ * @hide
+ */
+]"
+"[ZEN_MODE = ""zen_mode""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Defines global zen mode.  ZEN_MODE_OFF, ZEN_MODE_IMPORTANT_INTERRUPTIONS,
+ * or ZEN_MODE_NO_INTERRUPTIONS.
+ *
+ * @hide
+ */
+]"
+"[ZEN_MODE_OFF = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * @hide
+ */
+]"
+"[ZEN_MODE_IMPORTANT_INTERRUPTIONS = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * @hide
+ */
+]"
+"[ZEN_MODE_NO_INTERRUPTIONS = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * @hide
+ */
+]"
+"[ZEN_MODE_CONFIG_ETAG = ""zen_mode_config_etag""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Opaque value, changes when persisted zen mode configuration changes.
+ *
+ * @hide
+ */
+]"
+"[HEADS_UP_NOTIFICATIONS_ENABLED = ""heads_up_notifications_enabled""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Defines global heads up toggle.  One of HEADS_UP_OFF, HEADS_UP_ON.
+ *
+ * @hide
+ */
+]"
+"[HEADS_UP_OFF = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * @hide
+ */
+]"
+"[HEADS_UP_ON = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * @hide
+ */
+]"
+"[DEVICE_NAME = ""device_name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The name of the device
+ *
+ * @hide
+ */
+]"
+"[GUEST_USER_ENABLED = ""guest_user_enabled""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether it should be possible to create a guest user on the device.
+ * <p>
+ * Type: int (0 for disabled, 1 for enabled)
+ * @hide
+ */
+]"
+"[NETWORK_SCORING_PROVISIONED = ""network_scoring_provisioned""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether the NetworkScoringService has been first initialized.
+ * <p>
+ * Type: int (0 for false, 1 for true)
+ * @hide
+ */
+]"
+"[REQUIRE_PASSWORD_TO_DECRYPT = ""require_password_to_decrypt""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether the user wants to be prompted for password to decrypt the device on boot.
+ * This only matters if the storage is encrypted.
+ * <p>
+ * Type: int (0 for false, 1 for true)
+ * @hide
+ */
+]"
+"[ENHANCED_4G_MODE_ENABLED = ""volte_vt_enabled""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether the Volte/VT is enabled
+ * <p>
+ * Type: int (0 for false, 1 for true)
+ * @hide
+ */
+]"
+"[VOLTE_FEATURE_DISABLED = ""volte_feature_disabled""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Global override to disable VoLTE (independent of user setting)
+ * <p>
+ * Type: int (1 for disable VoLTE, 0 to use user configuration)
+ * @hide
+ */
+]"
+"[LTE_SERVICE_FORCED = ""lte_service_forced""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether user can enable/disable LTE as a preferred network. A carrier might control
+ * this via gservices, OMA-DM, carrier app, etc.
+ * <p>
+ * Type: int (0 for false, 1 for true)
+ * @hide
+ */
+]"
+"[SETTINGS_TO_BACKUP = { BUGREPORT_IN_POWER_MENU, STAY_ON_WHILE_PLUGGED_IN, AUTO_TIME, AUTO_TIME_ZONE, POWER_SOUNDS_ENABLED, DOCK_SOUNDS_ENABLED, USB_MASS_STORAGE_ENABLED, ENABLE_ACCESSIBILITY_GLOBAL_GESTURE_ENABLED, WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON, WIFI_NETWORKS_AVAILABLE_REPEAT_DELAY, WIFI_WATCHDOG_POOR_NETWORK_TEST_ENABLED, WIFI_NUM_OPEN_NETWORKS_KEPT, EMERGENCY_TONE, CALL_AUTO_RETRY, DOCK_AUDIO_MEDIA_ENABLED, LOW_POWER_MODE_TRIGGER_LEVEL }]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Settings to backup. This is here so that it's in the same place as the settings
+ * keys and easy to update.
+ *
+ * These keys may be mentioned in the SETTINGS_TO_BACKUP arrays in System
+ * and Secure as well.  This is because those tables drive both backup and
+ * restore, and restore needs to properly whitelist keys that used to live
+ * in those namespaces.  The keys will only actually be backed up / restored
+ * if they are also mentioned in this table (Global.SETTINGS_TO_BACKUP).
+ *
+ * NOTE: Settings are backed up and restored in the order they appear
+ * in this array. If you have one setting depending on another,
+ * make sure that they are ordered appropriately.
+ *
+ * @hide
+ */
+]"
+"[sNameValueCache = new NameValueCache(SYS_PROP_SETTING_VERSION, CONTENT_URI, CALL_METHOD_GET_GLOBAL, CALL_METHOD_PUT_GLOBAL)]","[]","[PRIVATE, STATIC]","Optional[// Populated lazily, guarded by class object:
+]"
+"[MOVED_TO_SECURE]","[]","[PRIVATE, STATIC, FINAL]","Optional[// Certain settings have been moved from global to the per-user secure namespace
+]"
+"[MULTI_SIM_VOICE_CALL_SUBSCRIPTION = ""multi_sim_voice_call""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Subscription to be used for voice call on a multi sim device. The supported values
+ * are 0 = SUB1, 1 = SUB2 and etc.
+ * @hide
+ */
+]"
+"[MULTI_SIM_VOICE_PROMPT = ""multi_sim_voice_prompt""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used to provide option to user to select subscription during dial.
+ * The supported values are 0 = disable or 1 = enable prompt.
+ * @hide
+ */
+]"
+"[MULTI_SIM_DATA_CALL_SUBSCRIPTION = ""multi_sim_data_call""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Subscription to be used for data call on a multi sim device. The supported values
+ * are 0 = SUB1, 1 = SUB2 and etc.
+ * @hide
+ */
+]"
+"[MULTI_SIM_SMS_SUBSCRIPTION = ""multi_sim_sms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Subscription to be used for SMS on a multi sim device. The supported values
+ * are 0 = SUB1, 1 = SUB2 and etc.
+ * @hide
+ */
+]"
+"[MULTI_SIM_SMS_PROMPT = ""multi_sim_sms_prompt""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used to provide option to user to select subscription during send SMS.
+ * The value 1 - enable, 0 - disable
+ * @hide
+ */
+]"
+"[MULTI_SIM_USER_PREFERRED_SUBS = { ""user_preferred_sub1"", ""user_preferred_sub2"", ""user_preferred_sub3"" }]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * User preferred subscriptions setting.
+ * This holds the details of the user selected subscription from the card and
+ * the activation status. Each settings string have the coma separated values
+ * iccId,appType,appId,activationStatus,3gppIndex,3gpp2Index
+ * @hide
+ */
+]"
+"[TAG = ""Bookmarks""]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[CONTENT_URI = Uri.parse(""content://"" + AUTHORITY + ""/bookmarks"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URL for this table
+ */
+]"
+"[ID = ""_id""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The row ID.
+ * <p>Type: INTEGER</p>
+ */
+]"
+"[TITLE = ""title""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Descriptive name of the bookmark that can be displayed to the user.
+ * If this is empty, the title should be resolved at display time (use
+ * {@link #getTitle(Context, Cursor)} any time you want to display the
+ * title of a bookmark.)
+ * <P>
+ * Type: TEXT
+ * </P>
+ */
+]"
+"[FOLDER = ""folder""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Arbitrary string (displayed to the user) that allows bookmarks to be
+ * organized into categories.  There are some special names for
+ * standard folders, which all start with '@'.  The label displayed for
+ * the folder changes with the locale (via {@link #getLabelForFolder}) but
+ * the folder name does not change so you can consistently query for
+ * the folder regardless of the current locale.
+ *
+ * <P>Type: TEXT</P>
+ */
+]"
+"[INTENT = ""intent""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The Intent URL of the bookmark, describing what it points to.  This
+ * value is given to {@link android.content.Intent#getIntent} to create
+ * an Intent that can be launched.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[SHORTCUT = ""shortcut""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Optional shortcut character associated with this bookmark.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[ORDERING = ""ordering""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The order in which the bookmark should be displayed
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[sIntentProjection = { INTENT }]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[sShortcutProjection = { ID, SHORTCUT }]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[sShortcutSelection = SHORTCUT + ""=?""]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"

@@ -1,0 +1,1735 @@
+"Variable","Annotation","Modifier","Comment"
+"[TAG = ""GDataClient""]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[DEBUG = false]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[X_HTTP_METHOD_OVERRIDE = ""X-HTTP-Method-Override""]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[DEFAULT_USER_AGENT_APP_VERSION = ""Android-GData/1.2""]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[MAX_REDIRECTS = 10]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[DEFAULT_GDATA_VERSION = ""2.0""]","[]","[PRIVATE, STATIC]","Optional.empty"
+"[NO_GZIP_SYSTEM_PROPERTY = ""sync.nogzip""]","[]","[PRIVATE, STATIC, FINAL]","Optional[// requests/responses are gzip'd.
+]"
+"[mGDataVersion]","[]","[PRIVATE]","Optional.empty"
+"[mHttpClient]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mResolver]","[]","[PRIVATE]","Optional.empty"
+"[mMethodOverride]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mEntity]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mMediaInputStream]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mContentType]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mReleaseTouchListenerOnUp]","[]","[PRIVATE]","Optional[/**
+ * If the zoom controller is dismissed but the user is still in a touch
+ * interaction, we set this to true. This will ignore all touch events until
+ * up/cancel, and then set the owner's touch listener to null.
+ * <p>
+ * Otherwise, the owner view would get mismatched events (i.e., touch move
+ * even though it never got the touch down.)
+ */
+]"
+"[mIsVisible]","[]","[PRIVATE]","Optional[/**
+ * Whether the container has been added to the window manager.
+ */
+]"
+"[mTempRect = new Rect()]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mTempIntArray = new int[2]]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mCallback]","[]","[PRIVATE]","Optional.empty"
+"[mPostedVisibleInitializer]","[]","[PRIVATE]","Optional[/**
+ * When showing the zoom, we add the view as a new window. However, there is
+ * logic that needs to know the size of the zoom which is determined after
+ * it's laid out. Therefore, we must post this logic onto the UI thread so
+ * it will be exceuted AFTER the layout. This is the logic.
+ */
+]"
+"[mConfigurationChangedFilter = new IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED)]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[mConfigurationChangedReceiver = new BroadcastReceiver() {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (!mIsVisible)
+            return;
+        mHandler.removeMessages(MSG_POST_CONFIGURATION_CHANGED);
+        mHandler.sendEmptyMessage(MSG_POST_CONFIGURATION_CHANGED);
+    }
+}]","[]","[PRIVATE, FINAL]","Optional[/**
+ * Needed to reposition the zoom controls after configuration changes.
+ */
+]"
+"[MSG_POST_CONFIGURATION_CHANGED = 2]","[]","[PRIVATE, STATIC, FINAL]","Optional[/**
+ * When configuration changes, this is called after the UI thread is idle.
+ */
+]"
+"[MSG_DISMISS_ZOOM_CONTROLS = 3]","[]","[PRIVATE, STATIC, FINAL]","Optional[/**
+ * Used to delay the zoom controller dismissal.
+ */
+]"
+"[MSG_POST_SET_VISIBLE = 4]","[]","[PRIVATE, STATIC, FINAL]","Optional[/**
+ * If setVisible(true) is called and the owner view's window token is null,
+ * we delay the setVisible(true) call until it is not null.
+ */
+]"
+"[mHandler = new Handler() {
+
+    @Override
+    public void handleMessage(Message msg) {
+        switch(msg.what) {
+            case MSG_POST_CONFIGURATION_CHANGED:
+                onPostConfigurationChanged();
+                break;
+            case MSG_DISMISS_ZOOM_CONTROLS:
+                setVisible(false);
+                break;
+            case MSG_POST_SET_VISIBLE:
+                if (mOwnerView.getWindowToken() == null) {
+                    // Doh, it is still null, just ignore the set visible call
+                    Log.e(TAG, ""Cannot make the zoom controller visible if the owner view is "" + ""not attached to a window."");
+                } else {
+                    setVisible(true);
+                }
+                break;
+        }
+    }
+}]","[]","[PRIVATE, FINAL]","Optional.empty"
+"[ELLIPSIS_UNDEFINED = 0x80000000]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[HIDDEN = ""hidden""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Should the calendar be hidden in the calendar selection panel?
+ * <P>Type: INTEGER (boolean)</P>
+ */
+]"
+"[OWNER_ACCOUNT = ""ownerAccount""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The owner account for this calendar, based on the calendar feed.
+ * This will be different from the _SYNC_ACCOUNT for delegated calendars.
+ * <P>Type: String</P>
+ */
+]"
+"[EVENT_ID = ""event_id""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The id of the event.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[ATTENDEE_NAME = ""attendeeName""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The name of the attendee.
+ * <P>Type: STRING</P>
+ */
+]"
+"[ATTENDEE_EMAIL = ""attendeeEmail""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The email address of the attendee.
+ * <P>Type: STRING</P>
+ */
+]"
+"[ATTENDEE_RELATIONSHIP = ""attendeeRelationship""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The relationship of the attendee to the user.
+ * <P>Type: INTEGER (one of {@link #RELATIONSHIP_ATTENDEE}, ...}.
+ */
+]"
+"[RELATIONSHIP_NONE = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[RELATIONSHIP_ATTENDEE = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[RELATIONSHIP_ORGANIZER = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[RELATIONSHIP_PERFORMER = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[RELATIONSHIP_SPEAKER = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ATTENDEE_TYPE = ""attendeeType""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The type of attendee.
+ * <P>Type: Integer (one of {@link #TYPE_REQUIRED}, {@link #TYPE_OPTIONAL})
+ */
+]"
+"[TYPE_NONE = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_REQUIRED = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OPTIONAL = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ATTENDEE_STATUS = ""attendeeStatus""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The attendance status of the attendee.
+ * <P>Type: Integer (one of {@link #ATTENDEE_STATUS_ACCEPTED}, ...}.
+ */
+]"
+"[ATTENDEE_STATUS_NONE = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ATTENDEE_STATUS_ACCEPTED = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ATTENDEE_STATUS_DECLINED = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ATTENDEE_STATUS_INVITED = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ATTENDEE_STATUS_TENTATIVE = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_URI = Uri.parse(""content://calendar/attendees"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CALENDAR_ID = ""calendar_id""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The calendar the event belongs to
+ * <P>Type: INTEGER (foreign key to the Calendars table)</P>
+ */
+]"
+"[HTML_URI = ""htmlUri""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The URI for an HTML version of this event.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[TITLE = ""title""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The title of the event
+ * <P>Type: TEXT</P>
+ */
+]"
+"[DESCRIPTION = ""description""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The description of the event
+ * <P>Type: TEXT</P>
+ */
+]"
+"[EVENT_LOCATION = ""eventLocation""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Where the event takes place.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[STATUS = ""eventStatus""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The event status
+ * <P>Type: INTEGER (int)</P>
+ */
+]"
+"[STATUS_TENTATIVE = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[STATUS_CONFIRMED = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[STATUS_CANCELED = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SELF_ATTENDEE_STATUS = ""selfAttendeeStatus""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is a copy of the attendee status for the owner of this event.
+ * This field is copied here so that we can efficiently filter out
+ * events that are declined without having to look in the Attendees
+ * table.
+ *
+ * <P>Type: INTEGER (int)</P>
+ */
+]"
+"[COMMENTS_URI = ""commentsUri""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The comments feed uri.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[DTSTART = ""dtstart""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The time the event starts
+ * <P>Type: INTEGER (long; millis since epoch)</P>
+ */
+]"
+"[DTEND = ""dtend""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The time the event ends
+ * <P>Type: INTEGER (long; millis since epoch)</P>
+ */
+]"
+"[DURATION = ""duration""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The duration of the event
+ * <P>Type: TEXT (duration in RFC2445 format)</P>
+ */
+]"
+"[EVENT_TIMEZONE = ""eventTimezone""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The timezone for the event.
+ * <P>Type: TEXT
+ */
+]"
+"[ALL_DAY = ""allDay""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether the event lasts all day or not
+ * <P>Type: INTEGER (boolean)</P>
+ */
+]"
+"[VISIBILITY = ""visibility""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Visibility for the event.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[VISIBILITY_DEFAULT = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[VISIBILITY_CONFIDENTIAL = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[VISIBILITY_PRIVATE = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[VISIBILITY_PUBLIC = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TRANSPARENCY = ""transparency""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Transparency for the event -- does the event consume time on the calendar?
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[TRANSPARENCY_OPAQUE = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TRANSPARENCY_TRANSPARENT = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[HAS_ALARM = ""hasAlarm""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether the event has an alarm or not
+ * <P>Type: INTEGER (boolean)</P>
+ */
+]"
+"[HAS_EXTENDED_PROPERTIES = ""hasExtendedProperties""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether the event has extended properties or not
+ * <P>Type: INTEGER (boolean)</P>
+ */
+]"
+"[RRULE = ""rrule""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The recurrence rule for the event.
+ * than one.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[RDATE = ""rdate""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The recurrence dates for the event.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[EXRULE = ""exrule""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The recurrence exception rule for the event.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[EXDATE = ""exdate""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The recurrence exception dates for the event.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[ORIGINAL_EVENT = ""originalEvent""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The _sync_id of the original recurring event for which this event is
+ * an exception.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[ORIGINAL_INSTANCE_TIME = ""originalInstanceTime""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The original instance time of the recurring event for which this
+ * event is an exception.
+ * <P>Type: INTEGER (long; millis since epoch)</P>
+ */
+]"
+"[ORIGINAL_ALL_DAY = ""originalAllDay""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The allDay status (true or false) of the original recurring event
+ * for which this event is an exception.
+ * <P>Type: INTEGER (boolean)</P>
+ */
+]"
+"[LAST_DATE = ""lastDate""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The last date this event repeats on, or NULL if it never ends
+ * <P>Type: INTEGER (long; millis since epoch)</P>
+ */
+]"
+"[HAS_ATTENDEE_DATA = ""hasAttendeeData""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether the event has attendee information.  True if the event
+ * has full attendee data, false if the event has information about
+ * self only.
+ * <P>Type: INTEGER (boolean)</P>
+ */
+]"
+"[GUESTS_CAN_MODIFY = ""guestsCanModify""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether guests can modify the event.
+ * <P>Type: INTEGER (boolean)</P>
+ */
+]"
+"[GUESTS_CAN_INVITE_OTHERS = ""guestsCanInviteOthers""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether guests can invite other guests.
+ * <P>Type: INTEGER (boolean)</P>
+ */
+]"
+"[GUESTS_CAN_SEE_GUESTS = ""guestsCanSeeGuests""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether guests can see the list of attendees.
+ * <P>Type: INTEGER (boolean)</P>
+ */
+]"
+"[ORGANIZER = ""organizer""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Email of the organizer (owner) of the event.
+ * <P>Type: STRING</P>
+ */
+]"
+"[CAN_INVITE_OTHERS = ""canInviteOthers""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether the user can invite others to the event.
+ * The GUESTS_CAN_INVITE_OTHERS is a setting that applies to an arbitrary guest,
+ * while CAN_INVITE_OTHERS indicates if the user can invite others (either through
+ * GUESTS_CAN_INVITE_OTHERS or because the user has modify access to the event).
+ * <P>Type: INTEGER (boolean, readonly)</P>
+ */
+]"
+"[OWNER_ACCOUNT = ""ownerAccount""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The owner account for this calendar, based on the calendar (foreign
+ * key into the calendars table).
+ * <P>Type: String</P>
+ */
+]"
+"[FETCH_ENTRY_COLUMNS = new String[] { Events._SYNC_ACCOUNT, Events._SYNC_ID }]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[ATTENDEES_COLUMNS = new String[] { AttendeesColumns.ATTENDEE_NAME, AttendeesColumns.ATTENDEE_EMAIL, AttendeesColumns.ATTENDEE_RELATIONSHIP, AttendeesColumns.ATTENDEE_TYPE, AttendeesColumns.ATTENDEE_STATUS }]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[sCalendarClient = null]","[]","[PRIVATE, STATIC]","Optional.empty"
+"[CONTENT_URI = Uri.parse(""content://calendar/events"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URL for this table
+ */
+]"
+"[DELETED_CONTENT_URI = Uri.parse(""content://calendar/deleted_events"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[DEFAULT_SORT_ORDER = """"]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The default sort order for this table
+ */
+]"
+"[CONTENT_URI = Uri.parse(""content://calendar/instances/when"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URL for this table
+ */
+]"
+"[CONTENT_BY_DAY_URI = Uri.parse(""content://calendar/instances/whenbyday"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[DEFAULT_SORT_ORDER = ""begin ASC""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The default sort order for this table.
+ */
+]"
+"[SORT_CALENDAR_VIEW = ""begin ASC, end DESC, title ASC""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The sort order is: events with an earlier start time occur
+ * first and if the start times are the same, then events with
+ * a later end time occur first. The later end time is ordered
+ * first so that long-running events in the calendar views appear
+ * first.  If the start and end times of two events are
+ * the same then we sort alphabetically on the title.  This isn't
+ * required for correctness, it just adds a nice touch.
+ */
+]"
+"[BEGIN = ""begin""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The beginning time of the instance, in UTC milliseconds
+ * <P>Type: INTEGER (long; millis since epoch)</P>
+ */
+]"
+"[END = ""end""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The ending time of the instance, in UTC milliseconds
+ * <P>Type: INTEGER (long; millis since epoch)</P>
+ */
+]"
+"[EVENT_ID = ""event_id""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The event for this instance
+ * <P>Type: INTEGER (long, foreign key to the Events table)</P>
+ */
+]"
+"[START_DAY = ""startDay""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The Julian start day of the instance, relative to the local timezone
+ * <P>Type: INTEGER (int)</P>
+ */
+]"
+"[END_DAY = ""endDay""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The Julian end day of the instance, relative to the local timezone
+ * <P>Type: INTEGER (int)</P>
+ */
+]"
+"[START_MINUTE = ""startMinute""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The start minute of the instance measured from midnight in the
+ * local timezone.
+ * <P>Type: INTEGER (int)</P>
+ */
+]"
+"[END_MINUTE = ""endMinute""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The end minute of the instance measured from midnight in the
+ * local timezone.
+ * <P>Type: INTEGER (int)</P>
+ */
+]"
+"[LOCAL_TIMEZONE = ""localTimezone""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The local timezone that was used for precomputing the fields
+ * in the Instances table.
+ */
+]"
+"[MIN_INSTANCE = ""minInstance""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The minimum time used in expanding the Instances table,
+ * in UTC milliseconds.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[MAX_INSTANCE = ""maxInstance""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximum time used in expanding the Instances table,
+ * in UTC milliseconds.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[MIN_BUSYBITS = ""minBusyBits""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The minimum Julian day in the BusyBits table.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[MAX_BUSYBITS = ""maxBusyBits""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximum Julian day in the BusyBits table.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[DAY = ""day""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The Julian day number.
+ * <P>Type: INTEGER (int)</P>
+ */
+]"
+"[BUSYBITS = ""busyBits""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The 24 bits representing the 24 1-hour time slots in a day.
+ * If an event in the Instances table overlaps part of a 1-hour
+ * time slot then the corresponding bit is set.  The first time slot
+ * (12am to 1am) is bit 0.  The last time slot (11pm to midnight)
+ * is bit 23.
+ * <P>Type: INTEGER (int)</P>
+ */
+]"
+"[ALL_DAY_COUNT = ""allDayCount""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of all-day events that occur on this day.
+ * <P>Type: INTEGER (int)</P>
+ */
+]"
+"[CONTENT_URI = Uri.parse(""content://calendar/busybits/when"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROJECTION = { DAY, BUSYBITS, ALL_DAY_COUNT }]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[MINUTES_PER_BUSY_INTERVAL = 60]","[]","[PUBLIC, STATIC, FINAL]","Optional[// The number of minutes represented by one busy bit
+]"
+"[INTERVALS_PER_DAY = 24 * 60 / MINUTES_PER_BUSY_INTERVAL]","[]","[PUBLIC, STATIC, FINAL]","Optional[// The number of intervals in a day
+]"
+"[EVENT_ID = ""event_id""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The event the reminder belongs to
+ * <P>Type: INTEGER (foreign key to the Events table)</P>
+ */
+]"
+"[MINUTES = ""minutes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The minutes prior to the event that the alarm should ring.  -1
+ * specifies that we should use the default value for the system.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[MINUTES_DEFAULT = -1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[METHOD = ""method""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The alarm method, as set on the server.  DEFAULT, ALERT, EMAIL, and
+ * SMS are possible values; the device will only process DEFAULT and
+ * ALERT reminders (the other types are simply stored so we can send the
+ * same reminder info back to the server when we make changes).
+ */
+]"
+"[METHOD_DEFAULT = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[METHOD_ALERT = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[METHOD_EMAIL = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[METHOD_SMS = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TABLE_NAME = ""Reminders""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_URI = Uri.parse(""content://calendar/reminders"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[EVENT_ID = ""event_id""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The event that the alert belongs to
+ * <P>Type: INTEGER (foreign key to the Events table)</P>
+ */
+]"
+"[BEGIN = ""begin""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The start time of the event, in UTC
+ * <P>Type: INTEGER (long; millis since epoch)</P>
+ */
+]"
+"[END = ""end""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The end time of the event, in UTC
+ * <P>Type: INTEGER (long; millis since epoch)</P>
+ */
+]"
+"[ALARM_TIME = ""alarmTime""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The alarm time of the event, in UTC
+ * <P>Type: INTEGER (long; millis since epoch)</P>
+ */
+]"
+"[CREATION_TIME = ""creationTime""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The creation time of this database entry, in UTC.
+ * (Useful for debugging missed reminders.)
+ * <P>Type: INTEGER (long; millis since epoch)</P>
+ */
+]"
+"[RECEIVED_TIME = ""receivedTime""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The time that the alarm broadcast was received by the Calendar app,
+ * in UTC. (Useful for debugging missed reminders.)
+ * <P>Type: INTEGER (long; millis since epoch)</P>
+ */
+]"
+"[NOTIFY_TIME = ""notifyTime""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The time that the notification was created by the Calendar app,
+ * in UTC. (Useful for debugging missed reminders.)
+ * <P>Type: INTEGER (long; millis since epoch)</P>
+ */
+]"
+"[STATE = ""state""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The state of this alert.  It starts out as SCHEDULED, then when
+ * the alarm goes off, it changes to FIRED, and then when the user
+ * dismisses the alarm it changes to DISMISSED.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[SCHEDULED = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[FIRED = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[DISMISSED = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[MINUTES = ""minutes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of minutes that this alarm precedes the start time
+ * <P>Type: INTEGER </P>
+ */
+]"
+"[DEFAULT_SORT_ORDER = ""alarmTime ASC,begin ASC,title ASC""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The default sort order for this table
+ */
+]"
+"[TABLE_NAME = ""CalendarAlerts""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_URI = Uri.parse(""content://calendar/calendar_alerts"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_URI_BY_INSTANCE = Uri.parse(""content://calendar/calendar_alerts/by_instance"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This URI is for grouping the query results by event_id and begin
+ * time.  This will return one result per instance of an event.  So
+ * events with multiple alarms will appear just once, but multiple
+ * instances of a repeating event will show up multiple times.
+ */
+]"
+"[EVENT_ID = ""event_id""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The event the extended property belongs to
+ * <P>Type: INTEGER (foreign key to the Events table)</P>
+ */
+]"
+"[NAME = ""name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The name of the extended property.  This is a uri of the form
+ * {scheme}#{local-name} convention.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[VALUE = ""value""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The value of the extended property.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[CONTENT_URI = Uri.parse(""content://calendar/extendedproperties"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[mUnpluggedForegroundTime]","[]","[]","Optional[/**
+ * The amount of foreground time since unplugged.
+ */
+]"
+"[mSpeedBins]","[]","[]","Optional.empty"
+"[mWakeups]","[]","[]","Optional[/**
+ * Number of times this package has done something that could wake up the
+ * device from sleep.
+ */
+]"
+"[mLoadedWakeups]","[]","[]","Optional[/**
+ * Number of things that could wake up the device loaded from a
+ * previous save.
+ */
+]"
+"[mLastWakeups]","[]","[]","Optional[/**
+ * Number of things that could wake up the device as of the
+ * last run.
+ */
+]"
+"[mUnpluggedWakeups]","[]","[]","Optional[/**
+ * Number of things that could wake up the device as of the
+ * last run.
+ */
+]"
+"[mServiceStats = new HashMap<String, Serv>()]","[]","[FINAL]","Optional[/**
+ * The statics we have collected for this package's services.
+ */
+]"
+"[mStartTime]","[]","[]","Optional[/**
+ * Total time (ms in battery uptime) the service has been left started.
+ */
+]"
+"[mRunningSince]","[]","[]","Optional[/**
+ * If service has been started and not yet stopped, this is
+ * when it was started.
+ */
+]"
+"[mRunning]","[]","[]","Optional[/**
+ * True if we are currently running.
+ */
+]"
+"[mStarts]","[]","[]","Optional[/**
+ * Total number of times startService() has been called.
+ */
+]"
+"[mLaunchedTime]","[]","[]","Optional[/**
+ * Total time (ms in battery uptime) the service has been left launched.
+ */
+]"
+"[mLaunchedSince]","[]","[]","Optional[/**
+ * If service has been launched and not yet exited, this is
+ * when it was launched (ms in battery uptime).
+ */
+]"
+"[mLaunched]","[]","[]","Optional[/**
+ * True if we are currently launched.
+ */
+]"
+"[mLaunches]","[]","[]","Optional[/**
+ * Total number times the service has been launched.
+ */
+]"
+"[mLoadedStartTime]","[]","[]","Optional[/**
+ * The amount of time spent started loaded from a previous save
+ * (ms in battery uptime).
+ */
+]"
+"[mLoadedStarts]","[]","[]","Optional[/**
+ * The number of starts loaded from a previous save.
+ */
+]"
+"[mLoadedLaunches]","[]","[]","Optional[/**
+ * The number of launches loaded from a previous save.
+ */
+]"
+"[mLastStartTime]","[]","[]","Optional[/**
+ * The amount of time spent started as of the last run (ms
+ * in battery uptime).
+ */
+]"
+"[mLastStarts]","[]","[]","Optional[/**
+ * The number of starts as of the last run.
+ */
+]"
+"[mLastLaunches]","[]","[]","Optional[/**
+ * The number of launches as of the last run.
+ */
+]"
+"[mUnpluggedStartTime]","[]","[]","Optional[/**
+ * The amount of time spent started when last unplugged (ms
+ * in battery uptime).
+ */
+]"
+"[mUnpluggedStarts]","[]","[]","Optional[/**
+ * The number of starts when last unplugged.
+ */
+]"
+"[mUnpluggedLaunches]","[]","[]","Optional[/**
+ * The number of launches when last unplugged.
+ */
+]"
+"[CREATOR = new Parcelable.Creator<BatteryStatsImpl>() {
+
+    public BatteryStatsImpl createFromParcel(Parcel in) {
+        return new BatteryStatsImpl(in);
+    }
+
+    public BatteryStatsImpl[] newArray(int size) {
+        return new BatteryStatsImpl[size];
+    }
+}]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TEXT = ""text""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_URI = Uri.withAppendedPath(Mms.CONTENT_URI, ""rate"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SENT_TIME = ""sent_time""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * When a message was successfully sent.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[CONTENT_URI = Uri.parse(""content://mms/scrapSpace"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URL for this table
+ */
+]"
+"[SCRAP_FILE_PATH = ""/sdcard/mms/scrapSpace/.temp.jpg""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the scrap file we use to store the media attachment when the user
+ * chooses to capture a photo to be attached . We pass {#link@Uri} to the Camera app,
+ * which streams the captured image to the uri. Internally we write the media content
+ * to this file. It's named '.temp.jpg' so Gallery won't pick it up.
+ */
+]"
+"[EXTRA_CONTENTS = ""contents""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field to store the contents of the Intent,
+ * which should be an array of Uri.
+ */
+]"
+"[EXTRA_TYPES = ""types""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field to store the type of the contents,
+ * which should be an array of String.
+ */
+]"
+"[EXTRA_CC = ""cc""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field to store the 'Cc' addresses.
+ */
+]"
+"[EXTRA_BCC = ""bcc""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field to store the 'Bcc' addresses;
+ */
+]"
+"[EXTRA_SUBJECT = ""subject""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field to store the 'Subject'.
+ */
+]"
+"[CONTENT_CHANGED_ACTION = ""android.intent.action.CONTENT_CHANGED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Indicates that the contents of specified URIs were changed.
+ * The application which is showing or caching these contents
+ * should be updated.
+ */
+]"
+"[DELETED_CONTENTS = ""deleted_contents""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * An extra field which stores the URI of deleted contents.
+ */
+]"
+"[TYPE_DISCRIMINATOR_COLUMN = ""transport_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The column to distinguish SMS &amp; MMS messages in query results.
+ */
+]"
+"[CONTENT_URI = Uri.parse(""content://mms-sms/"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_CONVERSATIONS_URI = Uri.parse(""content://mms-sms/conversations"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_FILTER_BYPHONE_URI = Uri.parse(""content://mms-sms/messages/byphone"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_UNDELIVERED_URI = Uri.parse(""content://mms-sms/undelivered"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_DRAFT_URI = Uri.parse(""content://mms-sms/draft"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_LOCKED_URI = Uri.parse(""content://mms-sms/locked"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SEARCH_URI = Uri.parse(""content://mms-sms/search"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Pass in a query parameter called ""pattern"" which is the text
+ * to search for.
+ * The sort order is fixed to be thread_id ASC,date DESC.
+ */
+]"
+"[SMS_PROTO = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[// Constants for message protocol types.
+]"
+"[MMS_PROTO = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[NO_ERROR = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[// Constants for error types of pending messages.
+]"
+"[ERR_TYPE_GENERIC = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ERR_TYPE_SMS_PROTO_TRANSIENT = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ERR_TYPE_MMS_PROTO_TRANSIENT = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ERR_TYPE_TRANSPORT_FAILURE = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ERR_TYPE_GENERIC_PERMANENT = 10]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ERR_TYPE_SMS_PROTO_PERMANENT = 11]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ERR_TYPE_MMS_PROTO_PERMANENT = 12]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CONTENT_URI = Uri.withAppendedPath(MmsSms.CONTENT_URI, ""pending"")]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROTO_TYPE = ""proto_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The type of transport protocol(MMS or SMS).
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[MSG_ID = ""msg_id""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The ID of the message to be sent or downloaded.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[MSG_TYPE = ""msg_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The type of the message to be sent or downloaded.
+ * This field is only valid for MM. For SM, its value is always
+ * set to 0.
+ */
+]"
+"[ERROR_TYPE = ""err_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The type of the error code.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[ERROR_CODE = ""err_code""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The error code of sending/retrieving process.
+ * <P>Type:  INTEGER</P>
+ */
+]"
+"[RETRY_INDEX = ""retry_index""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * How many times we tried to send or download the message.
+ * <P>Type:  INTEGER</P>
+ */
+]"
+"[DUE_TIME = ""due_time""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The time to do next retry.
+ */
+]"
+"[LAST_TRY = ""last_try""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The time we last tried to send or download the message.
+ */
+]"
+"[CONTENT_URI = Uri.parse(""content://telephony/carriers"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URL for this table
+ */
+]"
+"[DEFAULT_SORT_ORDER = ""name ASC""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The default sort order for this table
+ */
+]"
+"[NAME = ""name""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[APN = ""apn""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PROXY = ""proxy""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PORT = ""port""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[MMSPROXY = ""mmsproxy""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[MMSPORT = ""mmsport""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SERVER = ""server""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[USER = ""user""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[PASSWORD = ""password""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[MMSC = ""mmsc""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[MCC = ""mcc""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[MNC = ""mnc""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[NUMERIC = ""numeric""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[AUTH_TYPE = ""authtype""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE = ""type""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[CURRENT = ""current""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[SECRET_CODE_ACTION = ""android.provider.Telephony.SECRET_CODE""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Broadcast Action: A ""secret code"" has been entered in the dialer. Secret codes are
+ * of the form *#*#<code>#*#*. The intent will have the data URI:</p>
+ *
+ * <p><code>android_secret_code://&lt;code&gt;</code></p>
+ */
+]"
+"[SPN_STRINGS_UPDATED_ACTION = ""android.provider.Telephony.SPN_STRINGS_UPDATED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Broadcast Action: The Service Provider string(s) have been updated.  Activities or
+ * services that use these strings should update their display.
+ * The intent will have the following extra values:</p>
+ * <ul>
+ * <li><em>showPlmn</em> - Boolean that indicates whether the PLMN should be shown.</li>
+ * <li><em>plmn</em> - The operator name of the registered network, as a string.</li>
+ * <li><em>showSpn</em> - Boolean that indicates whether the SPN should be shown.</li>
+ * <li><em>spn</em> - The service provider name, as a string.</li>
+ * </ul>
+ * Note that <em>showPlmn</em> may indicate that <em>plmn</em> should be displayed, even
+ * though the value for <em>plmn</em> is null.  This can happen, for example, if the phone
+ * has not registered to a network yet.  In this case the receiver may substitute an
+ * appropriate placeholder string (eg, ""No service"").
+ *
+ * It is recommended to display <em>plmn</em> before / above <em>spn</em> if
+ * both are displayed.
+ *
+ * <p>Note this is a protected intent that can only be sent
+ * by the system.
+ */
+]"
+"[EXTRA_SHOW_PLMN = ""showPlmn""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[EXTRA_PLMN = ""plmn""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[EXTRA_SHOW_SPN = ""showSpn""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[EXTRA_SPN = ""spn""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_PROFILE = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_HOME = 4]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_WORK = 5]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_FTP = 6]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[TYPE_OTHER = 7]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[URL = DATA]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The website URL string.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[TITLE = ""title""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The display title of this group.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[RES_PACKAGE = ""res_package""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The package name to use when creating {@link Resources} objects for
+ * this group. This value is only designed for use when building user
+ * interfaces, and should not be used to infer the owner.
+ *
+ * @hide
+ */
+]"
+"[TITLE_RES = ""title_res""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The display title of this group to load as a resource from
+ * {@link #RES_PACKAGE}, which may be localized.
+ * <P>Type: TEXT</P>
+ *
+ * @hide
+ */
+]"
+"[NOTES = ""notes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Notes about the group.
+ * <p>
+ * Type: TEXT
+ */
+]"
+"[SYSTEM_ID = ""system_id""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The ID of this group if it is a System Group, i.e. a group that has a special meaning
+ * to the sync adapter, null otherwise.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[SUMMARY_COUNT = ""summ_count""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The total number of {@link Contacts} that have
+ * {@link CommonDataKinds.GroupMembership} in this group. Read-only value that is only
+ * present when querying {@link Groups#CONTENT_SUMMARY_URI}.
+ * <p>
+ * Type: INTEGER
+ */
+]"
+"[SUMMARY_WITH_PHONES = ""summ_phones""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The total number of {@link Contacts} that have both
+ * {@link CommonDataKinds.GroupMembership} in this group, and also have phone numbers.
+ * Read-only value that is only present when querying
+ * {@link Groups#CONTENT_SUMMARY_URI}.
+ * <p>
+ * Type: INTEGER
+ */
+]"
+"[GROUP_VISIBLE = ""group_visible""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Flag indicating if the contacts belonging to this group should be
+ * visible in any user interface.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[DELETED = ""deleted""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The ""deleted"" flag: ""0"" by default, ""1"" if the row has been marked
+ * for deletion. When {@link android.content.ContentResolver#delete} is
+ * called on a group, it is marked for deletion. The sync adaptor
+ * deletes the group on the server and then calls ContactResolver.delete
+ * once more, this time setting the the
+ * {@link ContactsContract#CALLER_IS_SYNCADAPTER} query parameter to
+ * finalize the data removal.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[SHOULD_SYNC = ""should_sync""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Whether this group should be synced if the SYNC_EVERYTHING settings
+ * is false for this group's account.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""groups"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table
+ */
+]"
+"[CONTENT_SUMMARY_URI = Uri.withAppendedPath(AUTHORITY_URI, ""groups_summary"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table joined with details data from
+ * {@link ContactsContract.Data}.
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/group""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of a directory of groups.
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/group""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of a single group.
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""aggregation_exceptions"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/aggregation_exception""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of {@link #CONTENT_URI} providing a directory of data.
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/aggregation_exception""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME type of a {@link #CONTENT_URI} subdirectory of an aggregation exception
+ */
+]"
+"[TYPE = ""type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The type of exception: {@link #TYPE_KEEP_TOGETHER}, {@link #TYPE_KEEP_SEPARATE} or
+ * {@link #TYPE_AUTOMATIC}.
+ *
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[TYPE_AUTOMATIC = 0]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Allows the provider to automatically decide whether the specified raw contacts should
+ * be included in the same aggregate contact or not.
+ */
+]"
+"[TYPE_KEEP_TOGETHER = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Makes sure that the specified raw contacts are included in the same
+ * aggregate contact.
+ */
+]"
+"[TYPE_KEEP_SEPARATE = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Makes sure that the specified raw contacts are NOT included in the same
+ * aggregate contact.
+ */
+]"
+"[RAW_CONTACT_ID1 = ""raw_contact_id1""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A reference to the {@link RawContacts#_ID} of the raw contact that the rule applies to.
+ */
+]"
+"[RAW_CONTACT_ID2 = ""raw_contact_id2""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A reference to the other {@link RawContacts#_ID} of the raw contact that the rule
+ * applies to.
+ */
+]"
+"[ACCOUNT_NAME = ""account_name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The name of the account instance to which this row belongs.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[ACCOUNT_TYPE = ""account_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The type of account to which this row belongs, which when paired with
+ * {@link #ACCOUNT_NAME} identifies a specific account.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[SHOULD_SYNC = ""should_sync""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Depending on the mode defined by the sync-adapter, this flag controls
+ * the top-level sync behavior for this data source.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[UNGROUPED_VISIBLE = ""ungrouped_visible""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Flag indicating if contacts without any {@link CommonDataKinds.GroupMembership}
+ * entries should be visible in any user interface.
+ * <p>
+ * Type: INTEGER (boolean)
+ */
+]"
+"[ANY_UNSYNCED = ""any_unsynced""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Read-only flag indicating if this {@link #SHOULD_SYNC} or any
+ * {@link Groups#SHOULD_SYNC} under this account have been marked as
+ * unsynced.
+ */
+]"
+"[UNGROUPED_COUNT = ""summ_count""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Read-only count of {@link Contacts} from a specific source that have
+ * no {@link CommonDataKinds.GroupMembership} entries.
+ * <p>
+ * Type: INTEGER
+ */
+]"
+"[UNGROUPED_WITH_PHONES = ""summ_phones""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Read-only count of {@link Contacts} from a specific source that have
+ * no {@link CommonDataKinds.GroupMembership} entries, and also have phone numbers.
+ * <p>
+ * Type: INTEGER
+ */
+]"
+"[CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ""settings"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URI for this table
+ */
+]"
+"[CONTENT_TYPE = ""vnd.android.cursor.dir/setting""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME-type of {@link #CONTENT_URI} providing a directory of
+ * settings.
+ */
+]"
+"[CONTENT_ITEM_TYPE = ""vnd.android.cursor.item/setting""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The MIME-type of {@link #CONTENT_URI} providing a single setting.
+ */
+]"
+"[ACTION_QUICK_CONTACT = ""com.android.contacts.action.QUICK_CONTACT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Action used to trigger person pivot dialog.
+ * @hide
+ */
+]"
+"[EXTRA_TARGET_RECT = ""target_rect""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Extra used to specify pivot dialog location in screen coordinates.
+ * @hide
+ */
+]"
+"[EXTRA_MODE = ""mode""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Extra used to specify size of pivot dialog.
+ * @hide
+ */
+]"
+"[EXTRA_EXCLUDE_MIMES = ""exclude_mimes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Extra used to indicate a list of specific MIME-types to exclude and
+ * not display. Stored as a {@link String} array.
+ * @hide
+ */
+]"
+"[MODE_SMALL = 1]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Small QuickContact mode, usually presented with minimal actions.
+ */
+]"
+"[MODE_MEDIUM = 2]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Medium QuickContact mode, includes actions and light summary describing
+ * the {@link Contacts} entry being shown. This may include social
+ * status and presence details.
+ */
+]"
+"[MODE_LARGE = 3]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Large QuickContact mode, includes actions and larger, card-like summary
+ * of the {@link Contacts} entry being shown. This may include detailed
+ * information, such as a photo.
+ */
+]"
+"[SEARCH_SUGGESTION_CLICKED = ""android.provider.Contacts.SEARCH_SUGGESTION_CLICKED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when a search suggestion is clicked on.
+ */
+]"
+"[SEARCH_SUGGESTION_DIAL_NUMBER_CLICKED = ""android.provider.Contacts.SEARCH_SUGGESTION_DIAL_NUMBER_CLICKED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when a search suggestion for dialing a number
+ * is clicked on.
+ */
+]"
+"[SEARCH_SUGGESTION_CREATE_CONTACT_CLICKED = ""android.provider.Contacts.SEARCH_SUGGESTION_CREATE_CONTACT_CLICKED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * This is the intent that is fired when a search suggestion for creating a contact
+ * is clicked on.
+ */
+]"
+"[ATTACH_IMAGE = ""com.android.contacts.action.ATTACH_IMAGE""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Starts an Activity that lets the user pick a contact to attach an image to.
+ * After picking the contact it launches the image cropper in face detection mode.
+ */
+]"
+"[SHOW_OR_CREATE_CONTACT = ""com.android.contacts.action.SHOW_OR_CREATE_CONTACT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Takes as input a data URI with a mailto: or tel: scheme. If a single
+ * contact exists with the given data it will be shown. If no contact
+ * exists, a dialog will ask the user if they want to create a new
+ * contact with the provided details filled in. If multiple contacts
+ * share the data the user will be prompted to pick which contact they
+ * want to view.
+ * <p>
+ * For <code>mailto:</code> URIs, the scheme specific portion must be a
+ * raw email address, such as one built using
+ * {@link Uri#fromParts(String, String, String)}.
+ * <p>
+ * For <code>tel:</code> URIs, the scheme specific portion is compared
+ * to existing numbers using the standard caller ID lookup algorithm.
+ * The number must be properly encoded, for example using
+ * {@link Uri#fromParts(String, String, String)}.
+ * <p>
+ * Any extras from the {@link Insert} class will be passed along to the
+ * create activity if there are no contacts to show.
+ * <p>
+ * Passing true for the {@link #EXTRA_FORCE_CREATE} extra will skip
+ * prompting the user when the contact doesn't exist.
+ */
+]"
+"[EXTRA_FORCE_CREATE = ""com.android.contacts.action.FORCE_CREATE""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used with {@link #SHOW_OR_CREATE_CONTACT} to force creating a new
+ * contact if no matching contact found. Otherwise, default behavior is
+ * to prompt user with dialog before creating.
+ * <p>
+ * Type: BOOLEAN
+ */
+]"
+"[EXTRA_CREATE_DESCRIPTION = ""com.android.contacts.action.CREATE_DESCRIPTION""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used with {@link #SHOW_OR_CREATE_CONTACT} to specify an exact
+ * description to be shown when prompting user about creating a new
+ * contact.
+ * <p>
+ * Type: STRING
+ */
+]"
+"[EXTRA_TARGET_RECT = ""target_rect""]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Optional extra used with {@link #SHOW_OR_CREATE_CONTACT} to specify a
+ * dialog location using screen coordinates. When not specified, the
+ * dialog will be centered.
+ *
+ * @hide
+ */
+]"
+"[EXTRA_MODE = ""mode""]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Optional extra used with {@link #SHOW_OR_CREATE_CONTACT} to specify a
+ * desired dialog style, usually a variation on size. One of
+ * {@link #MODE_SMALL}, {@link #MODE_MEDIUM}, or {@link #MODE_LARGE}.
+ *
+ * @hide
+ */
+]"
+"[MODE_SMALL = 1]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Value for {@link #EXTRA_MODE} to show a small-sized dialog.
+ *
+ * @hide
+ */
+]"
+"[MODE_MEDIUM = 2]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Value for {@link #EXTRA_MODE} to show a medium-sized dialog.
+ *
+ * @hide
+ */
+]"
+"[MODE_LARGE = 3]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Value for {@link #EXTRA_MODE} to show a large-sized dialog.
+ *
+ * @hide
+ */
+]"
+"[EXTRA_EXCLUDE_MIMES = ""exclude_mimes""]","[@Deprecated]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Optional extra used with {@link #SHOW_OR_CREATE_CONTACT} to indicate
+ * a list of specific MIME-types to exclude and not display. Stored as a
+ * {@link String} array.
+ *
+ * @hide
+ */
+]"
+"[LIST_DEFAULT = ""com.android.contacts.action.LIST_DEFAULT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the default contacts list tab.
+ */
+]"
+"[LIST_GROUP_ACTION = ""com.android.contacts.action.LIST_GROUP""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the contacts list tab.
+ */
+]"
+"[GROUP_NAME_EXTRA_KEY = ""com.android.contacts.extra.GROUP""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * When in LIST_GROUP_ACTION mode, this is the group to display.
+ */
+]"
+"[LIST_ALL_CONTACTS_ACTION = ""com.android.contacts.action.LIST_ALL_CONTACTS""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the all contacts list tab.
+ */
+]"
+"[LIST_CONTACTS_WITH_PHONES_ACTION = ""com.android.contacts.action.LIST_CONTACTS_WITH_PHONES""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the contacts with phone numbers list tab.
+ */
+]"
+"[LIST_STARRED_ACTION = ""com.android.contacts.action.LIST_STARRED""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the starred contacts list tab.
+ */
+]"
+"[LIST_FREQUENT_ACTION = ""com.android.contacts.action.LIST_FREQUENT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the frequent contacts list tab.
+ */
+]"
+"[LIST_STREQUENT_ACTION = ""com.android.contacts.action.LIST_STREQUENT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action for the ""strequent"" contacts list tab. It first lists the starred
+ * contacts in alphabetical order and then the frequent contacts in descending
+ * order of the number of times they have been contacted.
+ */
+]"
+"[TITLE_EXTRA_KEY = ""com.android.contacts.extra.TITLE_EXTRA""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * A key for to be used as an intent extra to set the activity
+ * title to a custom String value.
+ */
+]"
+"[FILTER_CONTACTS_ACTION = ""com.android.contacts.action.FILTER_CONTACTS""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Activity Action: Display a filtered list of contacts
+ * <p>
+ * Input: Extra field {@link #FILTER_TEXT_EXTRA_KEY} is the text to use for
+ * filtering
+ * <p>
+ * Output: Nothing.
+ */
+]"
+"[FILTER_TEXT_EXTRA_KEY = ""com.android.contacts.extra.FILTER_TEXT""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Used as an int extra field in {@link #FILTER_CONTACTS_ACTION}
+ * intents to supply the text on which to filter.
+ */
+]"
+"[ACTION = Intent.ACTION_INSERT]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The action code to use when adding a contact
+ */
+]"
+"[FULL_MODE = ""full_mode""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If present, forces a bypass of quick insert mode.
+ */
+]"
+"[NAME = ""name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact name.
+ * <P>Type: String</P>
+ */
+]"
+"[PHONETIC_NAME = ""phonetic_name""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact phonetic name.
+ * <P>Type: String</P>
+ */
+]"
+"[COMPANY = ""company""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact company.
+ * <P>Type: String</P>
+ */
+]"
+"[JOB_TITLE = ""job_title""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact job title.
+ * <P>Type: String</P>
+ */
+]"
+"[NOTES = ""notes""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact notes.
+ * <P>Type: String</P>
+ */
+]"
+"[PHONE = ""phone""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact phone number.
+ * <P>Type: String</P>
+ */
+]"
+"[PHONE_TYPE = ""phone_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact phone number type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Phone},
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[PHONE_ISPRIMARY = ""phone_isprimary""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the phone isprimary flag.
+ * <P>Type: boolean</P>
+ */
+]"
+"[SECONDARY_PHONE = ""secondary_phone""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional second contact phone number.
+ * <P>Type: String</P>
+ */
+]"
+"[SECONDARY_PHONE_TYPE = ""secondary_phone_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional second contact phone number type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Phone},
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[TERTIARY_PHONE = ""tertiary_phone""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional third contact phone number.
+ * <P>Type: String</P>
+ */
+]"
+"[TERTIARY_PHONE_TYPE = ""tertiary_phone_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional third contact phone number type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Phone},
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[EMAIL = ""email""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact email address.
+ * <P>Type: String</P>
+ */
+]"
+"[EMAIL_TYPE = ""email_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact email type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Email}
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[EMAIL_ISPRIMARY = ""email_isprimary""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the email isprimary flag.
+ * <P>Type: boolean</P>
+ */
+]"
+"[SECONDARY_EMAIL = ""secondary_email""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional second contact email address.
+ * <P>Type: String</P>
+ */
+]"
+"[SECONDARY_EMAIL_TYPE = ""secondary_email_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional second contact email type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Email}
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[TERTIARY_EMAIL = ""tertiary_email""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional third contact email address.
+ * <P>Type: String</P>
+ */
+]"
+"[TERTIARY_EMAIL_TYPE = ""tertiary_email_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an optional third contact email type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.Email}
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[POSTAL = ""postal""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact postal address.
+ * <P>Type: String</P>
+ */
+]"
+"[POSTAL_TYPE = ""postal_type""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the contact postal address type.
+ * <P>Type: Either an integer value from
+ * {@link CommonDataKinds.StructuredPostal}
+ * or a string specifying a custom label.</P>
+ */
+]"
+"[POSTAL_ISPRIMARY = ""postal_isprimary""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the postal isprimary flag.
+ * <P>Type: boolean</P>
+ */
+]"
+"[IM_HANDLE = ""im_handle""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for an IM handle.
+ * <P>Type: String</P>
+ */
+]"
+"[IM_PROTOCOL = ""im_protocol""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the IM protocol
+ */
+]"
+"[IM_ISPRIMARY = ""im_isprimary""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The extra field for the IM isprimary flag.
+ * <P>Type: boolean</P>
+ */
+]"
+"[SETTINGS_CONTRIBUTORS_PRETTY_URL = ""settings_contributors_pretty_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL that points to the contributors to display in Settings.
+ * <p>
+ * This should be a pretty http URL. For the URL the device will access
+ * via Settings, use {@link #SETTINGS_CONTRIBUTORS_URL}.
+ */
+]"
+"[SETUP_GOOGLE_TOS_URL = ""setup_google_tos_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL that points to the Terms Of Service for the device.
+ * <p>
+ * This should be a pretty http URL.
+ */
+]"
+"[SETUP_ANDROID_PRIVACY_URL = ""setup_android_privacy_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL that points to the Android privacy policy for the device.
+ * <p>
+ * This should be a pretty http URL.
+ */
+]"
+"[SETUP_GOOGLE_PRIVACY_URL = ""setup_google_privacy_url""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * URL that points to the Google privacy policy for the device.
+ * <p>
+ * This should be a pretty http URL.
+ */
+]"
+"[USE_MSISDN_TOKEN = ""use_msisdn_token""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Request an MSISDN token for various Google services.
+ */
+]"
+"[GLS_PUBLIC_KEY = ""google_login_public_key""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * RSA public key used to encrypt passwords stored in the database.
+ */
+]"
+"[PARENTAL_CONTROL_CHECK_ENABLED = ""parental_control_check_enabled""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Only check parental control status if this is set to ""true"".
+ */
+]"
+"[PARENTAL_CONTROL_APPS_LIST = ""parental_control_apps_list""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The list of applications we need to block if parental control is
+ * enabled.
+ */
+]"
+"[PARENTAL_CONTROL_TIMEOUT_IN_MS = ""parental_control_timeout_in_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Duration in which parental control status is valid.
+ */
+]"
+"[PARENTAL_CONTROL_EXPECTED_RESPONSE = ""parental_control_expected_response""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * When parental control is off, we expect to get this string from the
+ * litmus url.
+ */
+]"
+"[PARENTAL_CONTROL_REDIRECT_REGEX = ""parental_control_redirect_regex""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * When the litmus url returns a 302, declare parental control to be on
+ * only if the redirect url matches this regular expression.
+ */
+]"
+"[DISK_FREE_CHANGE_REPORTING_THRESHOLD = ""disk_free_change_reporting_threshold""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Threshold for the amount of change in disk free space required to report the amount of
+ * free space. Used to prevent spamming the logs when the disk free space isn't changing
+ * frequently.
+ */
+]"
+"[GOOGLE_SERVICES_PREFIX = ""google_services:""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Prefix for new Google services published by the checkin
+ * server.
+ */
+]"
+"[SYNC_MAX_RETRY_DELAY_IN_SECONDS = ""sync_max_retry_delay_in_seconds""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximum reconnect delay for short network outages or when the network is suspended
+ * due to phone use.
+ */
+]"
+"[SYS_STORAGE_THRESHOLD_PERCENTAGE = ""sys_storage_threshold_percentage""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Minimum percentage of free storage on the device that is used to determine if
+ * the device is running low on storage.
+ * Say this value is set to 10, the device is considered running low on storage
+ * if 90% or more of the device storage is filled up.
+ */
+]"
+"[SYS_FREE_STORAGE_LOG_INTERVAL = ""sys_free_storage_log_interval""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The interval in minutes after which the amount of free storage left on the
+ * device is logged to the event log
+ */
+]"
+"[SMS_OUTGOING_CHECK_INTERVAL_MS = ""sms_outgoing_check_interval_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The interval in milliseconds at which to check the number of SMS sent
+ * out without asking for use permit, to limit the un-authorized SMS
+ * usage.
+ */
+]"
+"[SMS_OUTGOING_CEHCK_MAX_COUNT = ""sms_outgoing_check_max_count""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of outgoing SMS sent without asking for user permit
+ * (of {@link #SMS_OUTGOING_CHECK_INTERVAL_MS}
+ */
+]"
+"[PDP_WATCHDOG_POLL_INTERVAL_MS = ""pdp_watchdog_poll_interval_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The interval in milliseconds at which to check packet counts on the
+ * mobile data interface when screen is on, to detect possible data
+ * connection problems.
+ */
+]"
+"[PDP_WATCHDOG_LONG_POLL_INTERVAL_MS = ""pdp_watchdog_long_poll_interval_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The interval in milliseconds at which to check packet counts on the
+ * mobile data interface when screen is off, to detect possible data
+ * connection problems.
+ */
+]"
+"[PDP_WATCHDOG_ERROR_POLL_INTERVAL_MS = ""pdp_watchdog_error_poll_interval_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The interval in milliseconds at which to check packet counts on the
+ * mobile data interface after {@link #PDP_WATCHDOG_TRIGGER_PACKET_COUNT}
+ * outgoing packets has been reached without incoming packets.
+ */
+]"
+"[PDP_WATCHDOG_TRIGGER_PACKET_COUNT = ""pdp_watchdog_trigger_packet_count""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of outgoing packets sent without seeing an incoming packet
+ * that triggers a countdown (of {@link #PDP_WATCHDOG_ERROR_POLL_COUNT}
+ * device is logged to the event log
+ */
+]"
+"[PDP_WATCHDOG_ERROR_POLL_COUNT = ""pdp_watchdog_error_poll_count""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of polls to perform (at {@link #PDP_WATCHDOG_ERROR_POLL_INTERVAL_MS})
+ * after hitting {@link #PDP_WATCHDOG_TRIGGER_PACKET_COUNT} before
+ * attempting data connection recovery.
+ */
+]"
+"[PDP_WATCHDOG_MAX_PDP_RESET_FAIL_COUNT = ""pdp_watchdog_max_pdp_reset_fail_count""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of failed PDP reset attempts before moving to something more
+ * drastic: re-registering to the network.
+ */
+]"
+"[PDP_WATCHDOG_PING_ADDRESS = ""pdp_watchdog_ping_address""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Address to ping as a last sanity check before attempting any recovery.
+ * Unset or set to ""0.0.0.0"" to skip this check.
+ */
+]"
+"[PDP_WATCHDOG_PING_DEADLINE = ""pdp_watchdog_ping_deadline""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The ""-w deadline"" parameter for the ping, ie, the max time in
+ * seconds to spend pinging.
+ */
+]"
+"[GPRS_REGISTER_CHECK_PERIOD_MS = ""gprs_register_check_period_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The interval in milliseconds at which to check gprs registration
+ * after the first registration mismatch of gprs and voice service,
+ * to detect possible data network registration problems.
+ */
+]"
+"[WIFI_IDLE_MS = ""wifi_idle_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The interval in milliseconds after which Wi-Fi is considered idle.
+ * When idle, it is possible for the device to be switched from Wi-Fi to
+ * the mobile data network.
+ */
+]"
+"[SHORT_KEYLIGHT_DELAY_MS = ""short_keylight_delay_ms""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Screen timeout in milliseconds corresponding to the
+ * PowerManager's POKE_LOCK_SHORT_TIMEOUT flag (i.e. the fastest
+ * possible screen timeout behavior.)
+ */
+]"
+"[AUTOTEST_SUITES_FILE = ""autotest_suites_file""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * List of test suites (local disk filename) for the automatic instrumentation test runner.
+ * The file format is similar to automated_suites.xml, see AutoTesterService.
+ * If this setting is missing or empty, the automatic test runner will not start.
+ */
+]"
+"[AUTOTEST_CHECKIN_SECONDS = ""autotest_checkin_seconds""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Interval between synchronous checkins forced by the automatic test runner.
+ * If you set this to a value smaller than CHECKIN_INTERVAL, then the test runner's
+ * frequent checkins will prevent asynchronous background checkins from interfering
+ * with any performance measurements.
+ */
+]"
+"[AUTOTEST_REBOOT_SECONDS = ""autotest_reboot_seconds""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Interval between reboots forced by the automatic test runner.
+ */
+]"
+"[BATTERY_DISCHARGE_DURATION_THRESHOLD = ""battery_discharge_duration_threshold""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Threshold values for the duration and level of a discharge cycle, under
+ * which we log discharge cycle info.
+ */
+]"
+"[BATTERY_DISCHARGE_THRESHOLD = ""battery_discharge_threshold""]","[]","[PUBLIC, STATIC, FINAL]","Optional.empty"
+"[ANR_BUGREPORT_RECIPIENT = ""anr_bugreport_recipient""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * An email address that anr bugreports should be sent to.
+ */
+]"
+"[USE_LOCATION_FOR_SERVICES = ""use_location""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Flag for allowing service provider to use location information to improve products and
+ * services.
+ * Type: int ( 0 = disallow, 1 = allow )
+ * @deprecated
+ */
+]"
+"[GOOGLE_CALENDAR_SYNC_WINDOW_DAYS = ""google_calendar_sync_window_days""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The length of the calendar sync window into the future.
+ * This specifies the number of days into the future for the sliding window sync.
+ * Setting this to zero will disable sliding sync.
+ */
+]"
+"[GOOGLE_CALENDAR_SYNC_WINDOW_UPDATE_DAYS = ""google_calendar_sync_window_update_days""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * How often to update the calendar sync window.
+ * The window will be advanced every n days.
+ */
+]"
+"[SEARCH_NUM_PROMOTED_SOURCES = ""search_num_promoted_sources""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of promoted sources in GlobalSearch.
+ */
+]"
+"[SEARCH_MAX_RESULTS_TO_DISPLAY = ""search_max_results_to_display""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximum number of suggestions returned by GlobalSearch.
+ */
+]"
+"[SEARCH_MAX_RESULTS_PER_SOURCE = ""search_max_results_per_source""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of suggestions GlobalSearch will ask each non-web search source for.
+ */
+]"
+"[SEARCH_WEB_RESULTS_OVERRIDE_LIMIT = ""search_web_results_override_limit""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of suggestions the GlobalSearch will ask the web search source for.
+ */
+]"
+"[SEARCH_PROMOTED_SOURCE_DEADLINE_MILLIS = ""search_promoted_source_deadline_millis""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of milliseconds that GlobalSearch will wait for suggestions from
+ * promoted sources before continuing with all other sources.
+ */
+]"
+"[SEARCH_SOURCE_TIMEOUT_MILLIS = ""search_source_timeout_millis""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The number of milliseconds before GlobalSearch aborts search suggesiton queries.
+ */
+]"
+"[SEARCH_PREFILL_MILLIS = ""search_prefill_millis""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximum number of milliseconds that GlobalSearch shows the previous results
+ * after receiving a new query.
+ */
+]"
+"[SEARCH_MAX_STAT_AGE_MILLIS = ""search_max_stat_age_millis""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximum age of log data used for shortcuts in GlobalSearch.
+ */
+]"
+"[SEARCH_MAX_SOURCE_EVENT_AGE_MILLIS = ""search_max_source_event_age_millis""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximum age of log data used for source ranking in GlobalSearch.
+ */
+]"
+"[SEARCH_MIN_IMPRESSIONS_FOR_SOURCE_RANKING = ""search_min_impressions_for_source_ranking""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The minimum number of impressions needed to rank a source in GlobalSearch.
+ */
+]"
+"[SEARCH_MIN_CLICKS_FOR_SOURCE_RANKING = ""search_min_clicks_for_source_ranking""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The minimum number of clicks needed to rank a source in GlobalSearch.
+ */
+]"
+"[SEARCH_MAX_SHORTCUTS_RETURNED = ""search_max_shortcuts_returned""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximum number of shortcuts shown by GlobalSearch.
+ */
+]"
+"[SEARCH_QUERY_THREAD_CORE_POOL_SIZE = ""search_query_thread_core_pool_size""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The size of the core thread pool for suggestion queries in GlobalSearch.
+ */
+]"
+"[SEARCH_QUERY_THREAD_MAX_POOL_SIZE = ""search_query_thread_max_pool_size""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximum size of the thread pool for suggestion queries in GlobalSearch.
+ */
+]"
+"[SEARCH_SHORTCUT_REFRESH_CORE_POOL_SIZE = ""search_shortcut_refresh_core_pool_size""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The size of the core thread pool for shortcut refreshing in GlobalSearch.
+ */
+]"
+"[SEARCH_SHORTCUT_REFRESH_MAX_POOL_SIZE = ""search_shortcut_refresh_max_pool_size""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximum size of the thread pool for shortcut refreshing in GlobalSearch.
+ */
+]"
+"[SEARCH_THREAD_KEEPALIVE_SECONDS = ""search_thread_keepalive_seconds""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximun time that excess threads in the GlobalSeach thread pools will
+ * wait before terminating.
+ */
+]"
+"[SEARCH_PER_SOURCE_CONCURRENT_QUERY_LIMIT = ""search_per_source_concurrent_query_limit""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The maximum number of concurrent suggestion queries to each source.
+ */
+]"
+"[SEND_ACTION_APP_ERROR = ""send_action_app_error""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Flag for allowing ActivityManagerService to send ACTION_APP_ERROR intents
+ * on application crashes and ANRs. If this is disabled, the crash/ANR dialog
+ * will never display the ""Report"" button.
+ * Type: int ( 0 = disallow, 1 = allow )
+ */
+]"
+"[LAST_KMSG_KB = ""last_kmsg_kb""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Maximum size of /proc/last_kmsg content to upload after reboot.
+ */
+]"
+"[NITZ_UPDATE_SPACING = ""nitz_update_spacing""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The length of time in milli-seconds that automatic small adjustments to
+ * SystemClock are ignored if NITZ_UPDATE_DIFF is not exceeded.
+ */
+]"
+"[NITZ_UPDATE_DIFF = ""nitz_update_diff""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * If the NITZ_UPDATE_DIFF time is exceeded then an automatic adjustment
+ * to SystemClock will be allowed even if NITZ_UPDATE_SPACING has not been
+ * exceeded.
+ */
+]"
+"[TAG = ""Bookmarks""]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[CONTENT_URI = Uri.parse(""content://"" + AUTHORITY + ""/bookmarks"")]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The content:// style URL for this table
+ */
+]"
+"[ID = ""_id""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The row ID.
+ * <p>Type: INTEGER</p>
+ */
+]"
+"[TITLE = ""title""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Descriptive name of the bookmark that can be displayed to the user.
+ * If this is empty, the title should be resolved at display time (use
+ * {@link #getTitle(Context, Cursor)} any time you want to display the
+ * title of a bookmark.)
+ * <P>
+ * Type: TEXT
+ * </P>
+ */
+]"
+"[FOLDER = ""folder""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Arbitrary string (displayed to the user) that allows bookmarks to be
+ * organized into categories.  There are some special names for
+ * standard folders, which all start with '@'.  The label displayed for
+ * the folder changes with the locale (via {@link #getLabelForFolder}) but
+ * the folder name does not change so you can consistently query for
+ * the folder regardless of the current locale.
+ *
+ * <P>Type: TEXT</P>
+ */
+]"
+"[INTENT = ""intent""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The Intent URL of the bookmark, describing what it points to.  This
+ * value is given to {@link android.content.Intent#getIntent} to create
+ * an Intent that can be launched.
+ * <P>Type: TEXT</P>
+ */
+]"
+"[SHORTCUT = ""shortcut""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * Optional shortcut character associated with this bookmark.
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[ORDERING = ""ordering""]","[]","[PUBLIC, STATIC, FINAL]","Optional[/**
+ * The order in which the bookmark should be displayed
+ * <P>Type: INTEGER</P>
+ */
+]"
+"[sIntentProjection = { INTENT }]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[sShortcutProjection = { ID, SHORTCUT }]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
+"[sShortcutSelection = SHORTCUT + ""=?""]","[]","[PRIVATE, STATIC, FINAL]","Optional.empty"
